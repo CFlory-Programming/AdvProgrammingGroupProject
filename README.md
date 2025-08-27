@@ -9,5 +9,11 @@ This is a timing-oriented platformer game, with entertaining mechanics such as l
 
 Game Refrences: Donkey Kong Country, Super Mario Wii
 
+### Brainstorming
+* Tile based level like Mario
+* Lives Counter like Mario
+* Collectable system like DK
+* Level features from DK (e.i. launcher barrels)
+
 ### UML
 ![UML](https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/UML.png?raw=true)
