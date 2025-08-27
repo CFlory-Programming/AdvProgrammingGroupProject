@@ -13,7 +13,7 @@ Game Refrences: Donkey Kong Country, Super Mario Wii
 * Tile based level like Mario
 * Lives Counter like Mario
 * Collectable system like DK
-* Level features from DK (e.i. launcher barrels)
+* Level features from DK (i.e. launcher barrels)
 
 ### UML
 ![UML](https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/UML.png?raw=true)
