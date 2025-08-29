@@ -9,11 +9,10 @@ This is a timing-oriented retro style 2D platformer game, with entertaining mech
 
 Game Refrences: Donkey Kong Country, Super Mario Wii
 
-### To-Do List
-
 ### Feature List
+* Mountable Rhino to quickly attack enimies
 
-### Brainstorming
+### Brainstorming / To-Do List
 * Tile based level like Mario
 * Lives Counter like Mario
 * Collectable system like DK
