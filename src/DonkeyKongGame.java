@@ -1,4 +1,4 @@
-public class EntryPoint
+public class DonkeyKongGame
 {
     public static void main(String[] args)
     {
