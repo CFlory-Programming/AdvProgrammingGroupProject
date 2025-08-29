@@ -9,6 +9,10 @@ This is a timing-oriented platformer game, with entertaining mechanics such as l
 
 Game Refrences: Donkey Kong Country, Super Mario Wii
 
+### To-Do List
+
+### Feature List
+
 ### Brainstorming
 * Tile based level like Mario
 * Lives Counter like Mario
