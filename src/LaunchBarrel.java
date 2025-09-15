@@ -1,6 +1,6 @@
 public class LaunchBarrel
 {
-    public static void main(String[] args)
+    public LaunchBarrel()
     {
         int direction = 0;
     }
