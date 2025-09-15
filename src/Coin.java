@@ -1,6 +1,6 @@
 public class Coin
 {
-    public static void main(String[] args)
+    public Coin()
     {
         int x = 0;
         int y = 0;
