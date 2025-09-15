@@ -1,6 +1,6 @@
 public class Player
 {
-    public static void main(String[] args)
+    public Player()
     {
         int height = 0;
         int width = 0;
