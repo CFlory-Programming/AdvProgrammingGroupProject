@@ -24,9 +24,9 @@ public class Enemy
         
     }
     
-    public void hit()
+    public boolean isHit()
     {
-        
+        return true;
     }
     
     public void display()
