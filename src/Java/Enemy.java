@@ -1,12 +1,19 @@
 public class Enemy
 {
+
+    int height;
+    int width;
+    int x;
+    int y;
+    int health;
+    
     public Enemy()
     {
-        int height = 0;
-        int width = 0;
-        int x = 0;
-        int y = 0;
-        int health = 100;
+        height = 0;
+        width = 0;
+        x = 0;
+        y = 0;
+        health = 100;
     }
     
     public void jump(int height, char dir)

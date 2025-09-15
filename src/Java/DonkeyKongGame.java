@@ -1,12 +1,14 @@
+import java.util.ArrayList;
+
 public class DonkeyKongGame
 {
     public static void main(String[] args)
     {
 
         Player p1 = new Player();
-        List<Enemy> enemies = new ArrayList<>();
-        List<Coin> coins = new ArrayList<>();
-        List<LevelObject> objects = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        ArrayList<Coin> coins = new ArrayList<>();
+        ArrayList<LevelObject> objects = new ArrayList<>();
 
         int score = 0;
         int level = 0;

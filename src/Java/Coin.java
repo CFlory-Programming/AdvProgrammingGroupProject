@@ -1,10 +1,15 @@
 public class Coin
 {
+
+    public int x;
+    public int y;
+    public int value;
+
     public Coin()
     {
-        int x = 0;
-        int y = 0;
-        int value = 1;
+        x = 0;
+        y = 0;
+        value = 1;
     }
 
     public boolean isCollected()

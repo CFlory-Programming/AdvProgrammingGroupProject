@@ -1,8 +1,10 @@
 public class LaunchBarrel
 {
+    int direction;
+
     public LaunchBarrel()
     {
-        int direction = 0;
+        direction = 0;
     }
     
     public void launch()

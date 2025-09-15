@@ -1,13 +1,21 @@
 public class Player
 {
+
+    int height;
+    int width;
+    int x;
+    int y;
+    int score;
+    int lives;
+
     public Player()
     {
-        int height = 0;
-        int width = 0;
-        int x = 0;
-        int y = 0;
-        int score = 0;
-        int lives = 3;
+        height = 0;
+        width = 0;
+        x = 0;
+        y = 0;
+        score = 0;
+        lives = 3;
     }
     
     public void jump()

@@ -1,9 +1,12 @@
 public class LevelObject
 {
+    int x;
+    int y;
+
     public LevelObject()
     {
-        int x = 0;
-        int y = 0;
+        x = 0;
+        y = 0;
     }
     
     public void display()

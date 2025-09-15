@@ -1,8 +1,10 @@
 public class Crate
 {
+    public String loot;
+
     public Crate()
     {
-        String loot = new String("");
+        loot = new String("");
     }
     
     public boolean isBroken()
