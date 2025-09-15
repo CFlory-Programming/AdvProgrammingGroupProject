@@ -1,6 +1,6 @@
 public class LevelObject
 {
-    public static void main(String[] args)
+    public LevelObject()
     {
         int x = 0;
         int y = 0;
