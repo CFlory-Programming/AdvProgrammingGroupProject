@@ -1,6 +1,6 @@
 public class Crate
 {
-    public static void main(String[] args)
+    public Crate()
     {
         String loot = new String("");
     }
