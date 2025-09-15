@@ -11,7 +11,18 @@ public class Enemy
     
     public void jump(int height, char dir)
     {
-            
+        if (dir == 'u')
+        {
+            y += height;
+        } else if (dir == 'r')
+        {
+            x += height;
+            y += height;
+        } else if (dir == 'l')
+        {
+            x -= height;
+            y += height;
+        }
     }
     
     public void walk(int distance, char dir)
