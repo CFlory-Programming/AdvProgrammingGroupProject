@@ -1,6 +1,6 @@
 public class Enemy
 {
-    public static void main(String[] args)
+    public Enemy()
     {
         int height = 0;
         int width = 0;
