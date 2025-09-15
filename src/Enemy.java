@@ -14,12 +14,12 @@ public class Enemy
             
     }
     
-    public void walk()
+    public void walk(int distance)
     {
         
     }
     
-    public void run()
+    public void run(int distance)
     {
         
     }
