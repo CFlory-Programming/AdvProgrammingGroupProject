@@ -25,12 +25,20 @@ public class Enemy
         }
     }
     
-    public void walk(int distance, char dir)
+    public void move(int distance, char dir, boolean isRunning)
     {
-        if (dir == 'r') {
-            x += distance;
-        } else if (dir == 'l') {
-            x -= distance;
+        if (isRunning) {
+            if (dir == 'r') {
+                x += distance*2;
+            } else if (dir == 'l') {
+                x -= distance*2;
+            }
+        } else {
+            if (dir == 'r') {
+                x += distance;
+            } else if (dir == 'l') {
+                x -= distance;
+            }
         }
     }
     
