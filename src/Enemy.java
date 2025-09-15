@@ -9,17 +9,17 @@ public class Enemy
         int health = 100;
     }
     
-    public void jump(int height)
+    public void jump(int height, char dir)
     {
             
     }
     
-    public void walk(int distance)
+    public void walk(int distance, char dir)
     {
         
     }
     
-    public void run(int distance)
+    public void run(int distance, char dir)
     {
         
     }
