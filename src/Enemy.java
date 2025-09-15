@@ -9,7 +9,7 @@ public class Enemy
         int health = 100;
     }
     
-    public void jump()
+    public void jump(int height)
     {
             
     }
