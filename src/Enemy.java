@@ -42,11 +42,6 @@ public class Enemy
         }
     }
     
-    public void run(int distance, char dir)
-    {
-        
-    }
-    
     public boolean isHit()
     {
         return true;
