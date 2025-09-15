@@ -34,7 +34,6 @@ void draw() {
     for (int i = 0; i < tiles.length; i++) {
         for (int j = 0; j < tiles[i].length; j++) {
         if (tiles[i][j] == 1) {
-            fill(100, 200, 100);
             rect(i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
         }
         }
