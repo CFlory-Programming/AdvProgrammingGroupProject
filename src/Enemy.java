@@ -16,7 +16,11 @@ public class Enemy
     
     public void walk(int distance, char dir)
     {
-        
+        if (dir == 'r') {
+            x += distance;
+        } else if (dir == 'l') {
+            x -= distance;
+        }
     }
     
     public void run(int distance, char dir)
