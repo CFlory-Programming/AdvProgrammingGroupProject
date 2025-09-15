@@ -5,8 +5,8 @@ public class Crate
         String loot = new String("");
     }
     
-    public void break()
+    public boolean isBroken()
     {
-        
+        return true;
     }
 }
