@@ -23,8 +23,8 @@ Game Refrences: Donkey Kong Country, Super Mario Brothers Wii
 2. Click "Download ZIP"
 3. Unzip the file
 4. Navigate to project src directory in a new terminal
-5. Type "javac DonkeyKongGame.java"
-6. Type "java DonkeyKongGame"
+5. Type ```javac DonkeyKongGame.java```
+6. Type ```java DonkeyKongGame```
 
 ### UML
 ![UML](https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/UML.png?raw=true)
