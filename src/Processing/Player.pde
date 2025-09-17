@@ -87,10 +87,6 @@ public class Player
 
     public boolean checkCollision(int tileX, int tileY, int tileSize)
     {
-        // Simple AABB collision detection
-        if (x < tileX + tileSize && x + width > tileX && y < tileY + tileSize && y + height > tileY) {
-            return true;
-        }
-        return false;
+        return tiles[tileX / tileSize][tileY / tileSize] == 1;
     }
 }
