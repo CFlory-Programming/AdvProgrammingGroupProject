@@ -46,15 +46,32 @@ void draw() {
     p1.display(camX, camY);
 
     // Move player with WASD keys
+    // if (keyPressed) {
+    //     if (key == 'a' || key == 'A') {
+    //         p1.x -= 5;
+    //     } else if (key == 'd' || key == 'D') {
+    //         p1.x += 5;
+    //     } else if (key == 'w' || key == 'W') {
+    //         p1.y -= 5;
+    //     } else if (key == 's' || key == 'S') {
+    //         p1.y += 5;
+    //     }
+    // }
+
+    // Change player speed with arrow keys or WASD
     if (keyPressed) {
         if (key == 'a' || key == 'A') {
-            p1.x -= 5;
+            p1.speedX = -5;
         } else if (key == 'd' || key == 'D') {
-            p1.x += 5;
-        } else if (key == 'w' || key == 'W') {
-            p1.y -= 5;
-        } else if (key == 's' || key == 'S') {
-            p1.y += 5;
+            p1.speedX = 5;
+        } else {
+            p1.speedX = 0;
+        }
+        if (key == 'w' || key == 'W') {
+            if (!p1.inAir) {
+                p1.speedY = -10;
+                p1.inAir = true;
+            }
         }
     }
 
