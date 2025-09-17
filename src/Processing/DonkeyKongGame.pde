@@ -59,16 +59,20 @@ void draw() {
     }
 
     // Move Camera with arrow keys
-    if (keyPressed) {
-        if (keyCode == LEFT) {
-            camX -= 5;
-        } else if (keyCode == RIGHT) {
-            camX += 5;
-        } else if (keyCode == UP) {
-            camY -= 5;
-        } else if (keyCode == DOWN) {
-            camY += 5;
-        }
-    }
+    // if (keyPressed) {
+    //     if (keyCode == LEFT) {
+    //         camX -= 5;
+    //     } else if (keyCode == RIGHT) {
+    //         camX += 5;
+    //     } else if (keyCode == UP) {
+    //         camY -= 5;
+    //     } else if (keyCode == DOWN) {
+    //         camY += 5;
+    //     }
+    // }
+
+    // Camera slowly follows player
+    camX += (p1.x - camX - width / 2) * 0.05;
+    camY += (p1.y - camY - height / 2) * 0.05;
 
 }
