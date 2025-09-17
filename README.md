@@ -19,8 +19,8 @@ Game Refrences: Donkey Kong Country, Super Mario Brothers Wii
 * Level features from DK (e.g. launcher barrels)
 
 ### How to Aquire / Run the Project
-1. Click the green "Code" button at the top
-2. Click "Download ZIP"
+1. Click the green ```Code``` button at the top
+2. Click ```Download ZIP```
 3. Unzip the file
 4. Navigate to project src directory in a new terminal
 5. Type ```javac DonkeyKongGame.java```
