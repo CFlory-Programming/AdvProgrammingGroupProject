@@ -60,8 +60,8 @@ public class Player
 
         // Collision detection for x direction
         x += speedX;
-        if (checkCollision(x, y + height, 50)) {
-            while (checkCollision(x, y + height, 50)) {
+        if (checkCollision(x, y + height, 50) || checkCollision(x + width, y + height, 50) || checkCollision(x, y, 50) || checkCollision(x + width, y, 50)) {
+            while (checkCollision(x, y + height, 50) || checkCollision(x + width, y + height, 50) || checkCollision(x, y, 50) || checkCollision(x + width, y, 50)) {
                 x -= speedX/abs(speedX);
             }
             speedX = 0;
@@ -70,8 +70,8 @@ public class Player
 
         // Collision detection for y direction
         y += speedY;
-        if (checkCollision(x, y + height, 50)) {
-            while (checkCollision(x, y + height, 50)) {
+        if (checkCollision(x, y + height, 50) || checkCollision(x + width, y + height, 50) || checkCollision(x, y, 50) || checkCollision(x + width, y, 50)) {
+            while (checkCollision(x, y + height, 50) || checkCollision(x + width, y + height, 50) || checkCollision(x, y, 50) || checkCollision(x + width, y, 50)) {
                 y -= speedY/abs(speedY);
             }
             speedY = 0;
