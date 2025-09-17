@@ -72,7 +72,19 @@ void draw() {
     // }
 
     // Camera slowly follows player
-    camX += (p1.x - camX - width / 2) * 0.05;
-    camY += (p1.y - camY - height / 2) * 0.05;
+    if (p1.x < width / 2) {
+        camX += -camX * 0.05;
+    } else if (p1.x > tiles.length * tileSize - width / 2) {
+        camX += (tiles.length * tileSize - camX - width) * 0.05;
+    } else {
+        camX += (p1.x - camX - width / 2) * 0.05;
+    }
+    if (p1.y < height / 2) {
+        camY += -camY * 0.05;
+    } else if (p1.y > tiles[0].length * tileSize - height / 2) {
+        camY += (tiles[0].length * tileSize - camY - height) * 0.05;
+    } else {
+        camY += (p1.y - camY - height / 2) * 0.05;
+    }
 
 }
