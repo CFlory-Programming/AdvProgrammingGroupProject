@@ -1,5 +1,6 @@
 int score, lives, level, camX, camY, tileSize;
 int[][] tiles = new int[100][100];
+Player p1;
 
 void setup() {
   score = 0;
@@ -13,6 +14,7 @@ void setup() {
   noStroke();
   background(0);
   fill(#FFFFFF);
+  p1 = new Player(2*tileSize, tileSize, width/2, height - 3*tileSize, score, lives);
 
     for (int i = 0; i < tiles.length; i++) {
         for (int j = 0; j < tiles[i].length; j++) {
@@ -38,6 +40,9 @@ void draw() {
         }
         }
     }
+
+    // Display Player
+    p1.display();
 
     // Move Camera with arrow keys
     if (keyPressed) {
