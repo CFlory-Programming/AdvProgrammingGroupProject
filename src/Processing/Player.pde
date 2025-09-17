@@ -45,10 +45,10 @@ public class Player
     {
         
     }
-    
-    public void display()
+
+    public void display(int camX, int camY)
     {
         //draw player
-        rect(x, y, width, height);
+        rect(x - camX, y - camY, width, height);
     }
 }

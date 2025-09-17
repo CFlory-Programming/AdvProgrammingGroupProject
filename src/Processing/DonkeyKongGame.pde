@@ -14,7 +14,7 @@ void setup() {
   noStroke();
   background(0);
   fill(#FFFFFF);
-  p1 = new Player(2*tileSize, tileSize, width/2, height - 3*tileSize, score, lives);
+  p1 = new Player(2*tileSize, tileSize, 0, 0, score, lives);
 
     for (int i = 0; i < tiles.length; i++) {
         for (int j = 0; j < tiles[i].length; j++) {
@@ -42,7 +42,21 @@ void draw() {
     }
 
     // Display Player
-    p1.display();
+    fill(#FF0000);
+    p1.display(camX, camY);
+
+    // Move player with WASD keys
+    if (keyPressed) {
+        if (key == 'a' || key == 'A') {
+            p1.x -= 5;
+        } else if (key == 'd' || key == 'D') {
+            p1.x += 5;
+        } else if (key == 'w' || key == 'W') {
+            p1.y -= 5;
+        } else if (key == 's' || key == 'S') {
+            p1.y += 5;
+        }
+    }
 
     // Move Camera with arrow keys
     if (keyPressed) {
