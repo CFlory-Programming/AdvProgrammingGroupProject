@@ -45,6 +45,22 @@ void draw() {
     fill(#FF0000);
     p1.display(camX, camY);
 
+    if (keyPressed) {
+        if ((key == 'a' || key == 'A')) {
+            p1.speedX = -5;
+        } else if ((key == 'd' || key == 'D')) {
+            p1.speedX = 5;
+        } else {
+            p1.speedX = 0;
+        }
+        if ((key == 'w' || key == 'W')) {
+            if (!p1.inAir) {
+                p1.speedY = -10;
+                p1.inAir = true;
+            }
+        }
+    }
+
     // Move player with WASD keys
     // if (keyPressed) {
     //     if (key == 'a' || key == 'A') {
@@ -58,22 +74,7 @@ void draw() {
     //     }
     // }
 
-    // Change player speed with arrow keys or WASD
-    if (keyPressed) {
-        if (key == 'a' || key == 'A') {
-            p1.speedX = -5;
-        } else if (key == 'd' || key == 'D') {
-            p1.speedX = 5;
-        } else {
-            p1.speedX = 0;
-        }
-        if (key == 'w' || key == 'W') {
-            if (!p1.inAir) {
-                p1.speedY = -10;
-                p1.inAir = true;
-            }
-        }
-    }
+    
 
     // Move Camera with arrow keys
     // if (keyPressed) {

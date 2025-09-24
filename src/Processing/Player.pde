@@ -60,19 +60,24 @@ public class Player
 
         // Collision detection for x direction
         x += speedX;
-        if (checkCollision(x, y + height, 50) || checkCollision(x + width, y + height, 50) || checkCollision(x, y, 50) || checkCollision(x + width, y, 50)) {
-            while (checkCollision(x, y + height, 50) || checkCollision(x + width, y + height, 50) || checkCollision(x, y, 50) || checkCollision(x + width, y, 50)) {
-                x -= speedX/abs(speedX);
+        boolean collideX = checkCollision(x, y + height/2, 50) || checkCollision(x, y, 50) || (checkCollision(x, y + height, 50) && y%50!=0) || checkCollision(x + width, y + height/2, 50) || checkCollision(x + width, y, 50) || (checkCollision(x + width, y + height, 50) && y%50!=0);
+        if (collideX) {
+            if(speedX>0) {
+              x = 50*(x/50);
+            } else if(speedX<0) {
+              x = 50*(x/50)+50;
             }
             speedX = 0;
-            
         }
 
         // Collision detection for y direction
         y += speedY;
-        if (checkCollision(x, y + height, 50) || checkCollision(x + width, y + height, 50) || checkCollision(x, y, 50) || checkCollision(x + width, y, 50)) {
-            while (checkCollision(x, y + height, 50) || checkCollision(x + width, y + height, 50) || checkCollision(x, y, 50) || checkCollision(x + width, y, 50)) {
-                y -= speedY/abs(speedY);
+        boolean collideY = checkCollision(x, y + height, 50) || (checkCollision(x + width, y + height, 50) && x%50!=0) || checkCollision(x, y, 50) || (checkCollision(x + width, y, 50) && x%50!=0);
+        if (collideY) {
+            if(speedY>0){
+              y = 50*(y/50);
+            } else if(speedY<0){
+              y = 50*(y/50)+50;
             }
             speedY = 0;
             inAir = false;
