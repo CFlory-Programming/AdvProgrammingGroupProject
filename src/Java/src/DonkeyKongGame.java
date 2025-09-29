@@ -3,24 +3,20 @@ import processing.core.PApplet;
 
 public class DonkeyKongGame extends PApplet
 {
+    // static reference to the running Processing sketch so plain model classes can draw
+    public static PApplet sketch;
+
+    // shared coins list so main() can populate it before the sketch starts
+    public static java.util.ArrayList<Coin> coins = new java.util.ArrayList<>();
     public static void main(String[] args)
     {
+        // create a couple of test coins before starting the Processing sketch
+        coins.add(new Coin(100, 100));
+        coins.add(new Coin(200, 150));
+        coins.add(new Coin(300, 80));
 
+        // start the Processing sketch
         PApplet.main("DonkeyKongGame");
-    
-
-        Player p1 = new Player();
-        ArrayList<Enemy> enemies = new ArrayList<>();
-        ArrayList<Coin> coins = new ArrayList<>();
-        ArrayList<LevelObject> objects = new ArrayList<>();
-
-        int score = 0;
-        int level = 0;
-
-        //System.out.println("Donkey Kong Game");
-        //System.out.println("Coded by Cole Flory, Emil Gruenwald, and Jonathan Wu\n");
-        
-        //System.out.println("This is a timing-oriented retro style 2D platformer game, with entertaining mechanics such as launch barrels and special collectibles. Each handcrafted level is fun and engaging; they are guaranteed to challenge most players. This game is referenced from Donkey Kong Country and Super Mario Brothers Wii. This game's features will be picked and chosen from each game, including the most fun aspects from each. Our platformer is created with a tile based level design, each level being created by hand for the most fun challanges.");
     }
 
     public void display()
@@ -37,13 +33,20 @@ public class DonkeyKongGame extends PApplet
     @Override
     public void setup() {
         // Set initial background color
+        // store reference so model classes can draw
+        sketch = this;
         background(255);
     }
 
     @Override
     public void draw() {
         // Draw a moving circle
-        fill(255, 0, 0);
-        text("Hello, World!", 100, 100);
+        background(255);
+
+        // draw coins added from main/setup
+        for (Coin c : coins) {
+            // call the coin's display method which will use the static sketch reference
+            c.display();
+        }
     }
 }
