@@ -1,9 +1,13 @@
 import java.util.ArrayList;
+import processing.core.PApplet;
 
-public class DonkeyKongGame
+public class DonkeyKongGame extends PApplet
 {
     public static void main(String[] args)
     {
+
+        PApplet.main("DonkeyKongGame");
+    
 
         Player p1 = new Player();
         ArrayList<Enemy> enemies = new ArrayList<>();
@@ -22,5 +26,24 @@ public class DonkeyKongGame
     public void display()
     {
         
+    }
+
+    @Override
+    public void settings() {
+        // Set up the window size
+        size(500, 500);
+    }
+
+    @Override
+    public void setup() {
+        // Set initial background color
+        background(255);
+    }
+
+    @Override
+    public void draw() {
+        // Draw a moving circle
+        fill(255, 0, 0);
+        text("Hello, World!", 100, 100);
     }
 }
