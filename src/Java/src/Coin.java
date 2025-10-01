@@ -27,6 +27,8 @@ public class Coin
         return true;
     }
 
+
+    // called in DonkeyKongGame to get the value of the coin
     public int getValue()
     {
         return value;
