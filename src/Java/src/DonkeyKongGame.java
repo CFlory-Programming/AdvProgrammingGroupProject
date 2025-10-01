@@ -10,6 +10,7 @@ public class DonkeyKongGame extends PApplet
     public static java.util.ArrayList<Coin> coins = new java.util.ArrayList<>();
 
     public static Player p1;
+    public static Enemy e1;
 
     public static int score = 0, lives = 3, level = 1, camX = 0, camY = 0, tileSize = 50;
     public static int[][] tiles = new int[100][100];
@@ -29,9 +30,11 @@ public class DonkeyKongGame extends PApplet
                 }
             }
         }
+        tiles[0][0] = 0;
+        tiles[0][1] = 0;
 
         p1 = new Player(2*tileSize, tileSize, 0, 0, score, lives);
-
+        e1 = new Enemy();
         // create a couple of test coins before starting the Processing sketch
         coins.add(new Coin(100, 100, 1));
         coins.add(new Coin(200, 150, 1));
@@ -93,8 +96,10 @@ public class DonkeyKongGame extends PApplet
         }
 
         p1.update(tiles);
+        e1.update(tiles, p1);
 
         p1.display(camX, camY);
+        e1.display(camX, camY);
 
         // Camera slowly follows player
         if (p1.x < width / 2) {
