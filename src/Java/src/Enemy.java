@@ -66,9 +66,17 @@ public class Enemy
         speedY += 1; // Gravity
 
         if (p1.x > x) {
-            move(4, 'r', true);
+            if (p1.x-x > 3){
+                move(4, 'r', false);
+            } else {
+                move(p1.x-x, 'r', false);
+            }
         } else if (p1.x < x) {
-            move(4, 'l', true);
+            if (x-p1.x > 3){
+                move(4, 'l', false);
+            } else {
+                move(x-p1.x, 'l', false);
+            }
         }
         if (p1.y < y & !inAir) {
             jump(24, 'u');
