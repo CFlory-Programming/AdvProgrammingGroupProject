@@ -55,11 +55,9 @@ public class Player
     
     public void display(int camX, int camY)
     {
-        if (DonkeyKongGame.sketch != null) {
-            DonkeyKongGame.sketch.noStroke();
-            DonkeyKongGame.sketch.fill(255,0,0);
-            DonkeyKongGame.sketch.rect(x - camX, y - camY, width, height);
-        }
+        DonkeyKongGame.sketch.noStroke();
+        DonkeyKongGame.sketch.fill(255,0,0);
+        DonkeyKongGame.sketch.rect(x - camX, y - camY, width, height);
     }
 
     public void update(int[][] tiles)
