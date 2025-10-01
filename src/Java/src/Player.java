@@ -86,13 +86,13 @@ public class Player
         y += speedY;
         boolean collideY = checkCollision(x, y + height, 50, tiles) || (checkCollision(x + width, y + height, 50, tiles) && x%50!=0) || checkCollision(x, y, 50, tiles) || (checkCollision(x + width, y, 50, tiles) && x%50!=0);
         if (collideY) {
-            if(speedY>0){
+            if(speedY>=0){
               y = 50*(y/50);
+                inAir = false;
             } else if(speedY<0){
               y = 50*(y/50)+50;
             }
             speedY = 0;
-            inAir = false;
         } else {
             inAir = true;
         }

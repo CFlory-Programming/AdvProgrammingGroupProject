@@ -13,6 +13,8 @@ public class DonkeyKongGame extends PApplet
 
     public static int score = 0, lives = 3, level = 1, camX = 0, camY = 0, tileSize = 50;
     public static int[][] tiles = new int[100][100];
+
+    public static boolean[] keys = new boolean[3];
     public static void main(String[] args)
     {
         Random random = new Random();
@@ -75,14 +77,14 @@ public class DonkeyKongGame extends PApplet
 
         //Update Player
         if (keyPressed) {
-            if ((key == 'a' || key == 'A')) {
+            if (keys[0]) {
                 p1.walk('l');
-            } else if ((key == 'd' || key == 'D')) {
+            } else if (keys[1]) {
                 p1.walk('r');
             } else {
                 p1.speedX = 0;
             }
-            if ((key == 'w' || key == 'W')) {
+            if (keys[2]) {
                 if (!p1.inAir) {
                     p1.jump();
                     p1.inAir = true;
@@ -123,5 +125,31 @@ public class DonkeyKongGame extends PApplet
         textAlign(RIGHT, TOP);
         textSize(16);
         text("Total value: " + totalCoins, width - 10, 10); //x is 10px from the right edge, y is 10px from the top
+    }
+
+    @Override
+    public void keyPressed() {
+        if ((key == 'a' || key == 'A')) {
+            keys[0] = true;
+        }
+        if ((key == 'd' || key == 'D')) {
+            keys[1] = true;
+        }
+        if ((key == 'w' || key == 'W')) {
+            keys[2] = true;
+        }
+    }
+
+    @Override
+    public void keyReleased() {
+        if ((key == 'a' || key == 'A')) {
+            keys[0] = false;
+        }
+        if ((key == 'd' || key == 'D')) {
+            keys[1] = false;
+        }
+        if ((key == 'w' || key == 'W')) {
+            keys[2] = false;
+        }
     }
 }
