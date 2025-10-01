@@ -116,7 +116,7 @@ public class DonkeyKongGame extends PApplet
         int totalCoins = 0;
         for (Coin c : coins) { // for each loop
             // call the coin's display method which will use the static sketch reference
-            c.display();
+            c.display(camX, camY);
             totalCoins += c.getValue();
         }
 

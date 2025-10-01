@@ -32,11 +32,11 @@ public class Coin
         return value;
     }
     
-    public void display()
+    public void display(int camX, int camY)
     {
         // Use the Processing sketch stored in DonkeyKongGame.sketch to draw the coin.
         DonkeyKongGame.sketch.noStroke(); // formatting
         DonkeyKongGame.sketch.fill(255, 204, 0); // yellow
-        DonkeyKongGame.sketch.ellipse(x, y, 12, 12); // draw a circle centered at (x, y)
+        DonkeyKongGame.sketch.ellipse(x - camX, y - camY, 12, 12); // draw a circle centered at (x, y)
     }
 }
