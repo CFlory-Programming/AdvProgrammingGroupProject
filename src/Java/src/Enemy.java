@@ -19,7 +19,7 @@ public class Enemy
         health = 100;
         speedX = 0;
         speedY = 0;
-        inAir = false;
+        inAir = true;
     }
     
     public void jump(int height, char dir)
