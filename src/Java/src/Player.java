@@ -27,24 +27,24 @@ public class Player
     
     public void jump()
     {
-        speedY -= 20;
+        speedY = -10;
     }
     
     public void walk(char direction)
     {
         if (direction == 'r') {
-            speedX += 5;
+            speedX = 5;
         } else if (direction == 'l') {
-            speedX -= 5;
+            speedX = -5;
         }
     }
     
     public void run(char direction)
     {
         if (direction == 'r') {
-            speedX += 8;
+            speedX = 7;
         } else if (direction == 'l') {
-            speedX -= 8;
+            speedX = -7;
         }
     }
     
@@ -64,6 +64,11 @@ public class Player
     {
         // Update player position based on speed
         speedY += 0.5; // Gravity
+
+        speedX *= 0.8; //Friction
+        if ((int) speedX == 0) {
+            speedX = 0;
+        }
 
         // Collision detection for x direction
         x += speedX;

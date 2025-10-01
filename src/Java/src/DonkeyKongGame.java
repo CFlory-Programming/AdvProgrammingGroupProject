@@ -1,3 +1,4 @@
+import java.util.Random;
 import processing.core.PApplet;
 
 public class DonkeyKongGame extends PApplet
@@ -7,8 +8,28 @@ public class DonkeyKongGame extends PApplet
 
     // shared coins list so main() can populate it before the sketch starts
     public static java.util.ArrayList<Coin> coins = new java.util.ArrayList<>();
+
+    public static Player p1;
+
+    public static int score = 0, lives = 3, level = 1, camX = 0, camY = 0, tileSize = 50;
+    public static int[][] tiles = new int[100][100];
     public static void main(String[] args)
     {
+        Random random = new Random();
+
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                //randomly assign 1 or 0 to each tile
+                if (random.nextDouble() < 0.1) {
+                    tiles[i][j] = 1;
+                } else {
+                    tiles[i][j] = 0;
+                }
+            }
+        }
+
+        p1 = new Player(2*tileSize, tileSize, 0, 0, score, lives);
+
         // create a couple of test coins before starting the Processing sketch
         coins.add(new Coin(100, 100, 1));
         coins.add(new Coin(200, 150, 1));
@@ -26,7 +47,7 @@ public class DonkeyKongGame extends PApplet
     @Override
     public void settings() {
         // Set up the window size
-        size(500, 500);
+        fullScreen();
     }
 
     @Override
@@ -41,6 +62,53 @@ public class DonkeyKongGame extends PApplet
     public void draw() {
         // clear
         background(255);
+
+        // Draw tiles
+        fill(0);
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j] == 1) {
+                    rect(i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
+                }
+            }
+        }
+
+        //Update Player
+        if (keyPressed) {
+            if ((key == 'a' || key == 'A')) {
+                p1.walk('l');
+            } else if ((key == 'd' || key == 'D')) {
+                p1.walk('r');
+            } else {
+                p1.speedX = 0;
+            }
+            if ((key == 'w' || key == 'W')) {
+                if (!p1.inAir) {
+                    p1.jump();
+                    p1.inAir = true;
+                }
+            }
+        }
+
+        p1.update(tiles);
+
+        p1.display(camX, camY);
+
+        // Camera slowly follows player
+        if (p1.x < width / 2) {
+            camX += -camX * 0.05;
+        } else if (p1.x > tiles.length * tileSize - width / 2) {
+            camX += (tiles.length * tileSize - camX - width) * 0.05;
+        } else {
+            camX += (p1.x - camX - width / 2) * 0.05;
+        }
+        if (p1.y < height / 2) {
+            camY += -camY * 0.05;
+        } else if (p1.y > tiles[0].length * tileSize - height / 2) {
+            camY += (tiles[0].length * tileSize - camY - height) * 0.05;
+        } else {
+            camY += (p1.y - camY - height / 2) * 0.05;
+        }
 
         // draw coins added from main/setup and compute total value
         int totalCoins = 0;
