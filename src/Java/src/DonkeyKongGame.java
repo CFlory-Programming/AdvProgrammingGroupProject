@@ -79,9 +79,14 @@ public class DonkeyKongGame extends PApplet
         fill(0);
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
-                if (tiles[i][j] == 1) {
+                if (tiles[i][j] != 0) {
+                    //Only draw tiles that are on screen (with a little buffer)
+                    if (i * tileSize - camX < -tileSize || i * tileSize - camX > width + tileSize || j * tileSize - camY < -tileSize || j * tileSize - camY > height + tileSize) {
+                        continue;
+                    }
+
                     //rect(i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
-                    image(tilesImg[1], i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
+                    image(tilesImg[tiles[i][j]], i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
                 }
             }
         }
