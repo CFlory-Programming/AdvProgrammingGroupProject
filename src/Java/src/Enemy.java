@@ -66,7 +66,7 @@ public class Enemy
                 x=p1.x;
             }
         }
-        if (p1.y < y && !inAir) {
+        if (p1.y < y && !inAir && (x%50<=4 || x%50>=46)) {
             jump(10, 'u');
         }
         // Update enemy position based on speed
