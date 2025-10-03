@@ -4,8 +4,8 @@ public class Enemy
     int height;
     int width;
     int x;
-    int speedX;
-    int speedY;
+    float speedX;
+    float speedY;
     int y;
     int health;
     boolean inAir;
@@ -14,7 +14,7 @@ public class Enemy
     {
         height = 100;
         width = 50;
-        x = 0;
+        x = 50;
         y = 50;
         health = 100;
         speedX = 0;
@@ -24,18 +24,7 @@ public class Enemy
     
     public void jump(int height, char dir)
     {
-        if (dir == 'u')
-        {
-            speedY = -height/2;
-        } else if (dir == 'r')
-        {
-            speedX = -height/2;
-            speedY = -height/2;
-        } else if (dir == 'l')
-        {
-            speedX = -height/2;
-            speedY = -height/2;
-        }
+        speedY=-height;
     }
     
     public void move(int distance, char dir, boolean isRunning)
@@ -62,25 +51,26 @@ public class Enemy
 
     public void update(int[][] tiles, Player p1)
     {
-        // Update enemy position based on speed
-        speedY += 1; // Gravity
+        
 
         if (p1.x > x) {
             if (p1.x-x > 3){
                 move(4, 'r', false);
             } else {
-                move(p1.x-x, 'r', false);
+                x=p1.x;
             }
         } else if (p1.x < x) {
             if (x-p1.x > 3){
                 move(4, 'l', false);
             } else {
-                move(x-p1.x, 'l', false);
+                x=p1.x;
             }
         }
-        if (p1.y < y & !inAir) {
-            jump(24, 'u');
+        if (p1.y < y && !inAir) {
+            jump(10, 'u');
         }
+        // Update enemy position based on speed
+        speedY += 0.5; // Gravity
 
         speedX *= 0.8; //Friction
         if ((int) speedX == 0) {

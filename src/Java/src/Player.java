@@ -22,7 +22,7 @@ public class Player
         this.lives = lives;
         speedX = 0;
         speedY = 0;
-        inAir = false;
+        inAir = true;
     }
     
     public void jump()

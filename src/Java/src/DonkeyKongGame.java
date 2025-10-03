@@ -13,8 +13,8 @@ public class DonkeyKongGame extends PApplet
     public static Player p1;
     public static Enemy e1;
 
-    public static int score = 0, lives = 3, level = 1, camX = 0, camY = 0, tileSize = 50;
-    public static int[][] tiles = new int[100][100];
+    public static int score = 0, lives = 3, level = 1, camX = 50, camY = 50, tileSize = 50;
+    public static int[][] tiles = new int[102][102];
 
     public static boolean[] keys = new boolean[3];
 
@@ -26,17 +26,17 @@ public class DonkeyKongGame extends PApplet
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
                 //randomly assign 1 or 0 to each tile
-                if (random.nextDouble() < 0.1) {
+                if (random.nextDouble() < 0.1 || j == tiles[i].length - 1 || i == 0 || i == tiles.length - 1 || j == 0) {
                     tiles[i][j] = 1;
                 } else {
                     tiles[i][j] = 0;
                 }
             }
         }
-        tiles[0][0] = 0;
-        tiles[0][1] = 0;
+        tiles[1][1] = 0;
+        tiles[1][2] = 0;
 
-        p1 = new Player(2*tileSize, tileSize, 0, 0, score, lives);
+        p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
         e1 = new Enemy();
         
         // create a couple of test coins before starting the Processing sketch
@@ -110,19 +110,19 @@ public class DonkeyKongGame extends PApplet
         e1.display(camX, camY);
 
         // Camera slowly follows player
-        if (p1.x < width / 2) {
-            camX += -camX * 0.05;
-        } else if (p1.x > tiles.length * tileSize - width / 2) {
-            camX += (tiles.length * tileSize - camX - width) * 0.05;
+        if (p1.x-50 < width / 2) {
+            camX += -(camX-50) * 0.05;
+        } else if (p1.x-50 > tiles.length * tileSize - width / 2) {
+            camX += (tiles.length * tileSize - (camX-50) - width) * 0.05;
         } else {
-            camX += (p1.x - camX - width / 2) * 0.05;
+            camX += (p1.x - (camX) - width / 2) * 0.05;
         }
-        if (p1.y < height / 2) {
-            camY += -camY * 0.05;
-        } else if (p1.y > tiles[0].length * tileSize - height / 2) {
-            camY += (tiles[0].length * tileSize - camY - height) * 0.05;
+        if (p1.y-50 < height / 2) {
+            camY += -(camY-50) * 0.05;
+        } else if (p1.y+50 > tiles[0].length * tileSize - height / 2) {
+            camY += (tiles[0].length * tileSize - (camY+50) - height) * 0.05;
         } else {
-            camY += (p1.y - camY - height / 2) * 0.05;
+            camY += (p1.y - (camY) - height / 2) * 0.05;
         }
 
         // draw coins added from main/setup and compute total value
