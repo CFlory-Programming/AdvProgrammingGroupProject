@@ -1,5 +1,6 @@
 import java.util.Random;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class DonkeyKongGame extends PApplet
 {
@@ -16,6 +17,8 @@ public class DonkeyKongGame extends PApplet
     public static int[][] tiles = new int[100][100];
 
     public static boolean[] keys = new boolean[3];
+
+    public static PImage[] tilesImg = new PImage[2];
     public static void main(String[] args)
     {
         Random random = new Random();
@@ -35,6 +38,7 @@ public class DonkeyKongGame extends PApplet
 
         p1 = new Player(2*tileSize, tileSize, 0, 0, score, lives);
         e1 = new Enemy();
+        
         // create a couple of test coins before starting the Processing sketch
         coins.add(new Coin(100, 100, 1));
         coins.add(new Coin(200, 150, 1));
@@ -61,6 +65,9 @@ public class DonkeyKongGame extends PApplet
         // Set initial background color
         sketch = this;
         background(255);
+
+        // Load tile images
+        tilesImg[1] = loadImage("Tile1.png");
     }
 
     @Override
@@ -73,7 +80,8 @@ public class DonkeyKongGame extends PApplet
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
                 if (tiles[i][j] == 1) {
-                    rect(i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
+                    //rect(i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
+                    image(tilesImg[1], i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
                 }
             }
         }
