@@ -100,6 +100,7 @@ public class Player
 
     private boolean checkCollision(int tileX, int tileY, int tileSize, int[][] tiles)
     {
-        return tiles[tileX / tileSize][tileY / tileSize] == 1;
+        int tileindex = tiles[tileX / tileSize][tileY / tileSize];
+        return tileindex == 1 || tileindex == 2;
     }
 }
