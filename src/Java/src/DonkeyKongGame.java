@@ -74,7 +74,8 @@ public class DonkeyKongGame extends PApplet
 
         // Load tile images
         for (int i = 0; i < tilesImg.length; i++) {
-            tilesImg[i] = loadImage("tile" + i + ".png");
+            if (i != 0)
+            tilesImg[i] = loadImage("Tile" + i + ".png");
         }
     }
 
