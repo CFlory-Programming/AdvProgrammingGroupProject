@@ -49,26 +49,39 @@ public class Enemy
         return true;
     }
 
-    public void update(int[][] tiles, Player p1, int[] collisionTiles)
+    public void ai(int[][] tiles, Player p1, int[] collisionTiles)
     {
-        
-
         if (p1.x > x) {
             if (p1.x-x > 3){
                 move(4, 'r', false);
             } else {
-                x=p1.x;
+                move(x-p1.x-1, 'l', false);
             }
         } else if (p1.x < x) {
             if (x-p1.x > 3){
                 move(4, 'l', false);
             } else {
-                x=p1.x;
+                move(x-p1.x+1, 'l', false);
             }
         }
-        if (p1.y < y && !inAir && (x%50<=4 || x%50>=46)) {
+        if (p1.y < y && !inAir && ((x%50<=4 && speedX<0 && collideX(tiles, collisionTiles)) || (speedX>0 && x%50>=46 && collideX(tiles, collisionTiles)))) {
             jump(10, 'u');
         }
+    }
+
+    public boolean collideX(int[][] tiles, int[] collisionTiles)
+    {
+        return checkCollision(x, y + height/2, 50, tiles, collisionTiles) || checkCollision(x, y, 50, tiles, collisionTiles) || (checkCollision(x, y + height, 50, tiles, collisionTiles) && y%50!=0) || checkCollision(x + width, y + height/2, 50, tiles, collisionTiles) || checkCollision(x + width, y, 50, tiles, collisionTiles) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && y%50!=0);
+    }
+
+    public boolean collideY(int[][] tiles, int[] collisionTiles)
+    {
+        return checkCollision(x, y + height, 50, tiles, collisionTiles) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && x%50!=0) || checkCollision(x, y, 50, tiles, collisionTiles) || (checkCollision(x + width, y, 50, tiles, collisionTiles) && x%50!=0);
+    }
+
+    public void update(int[][] tiles, Player p1, int[] collisionTiles)
+    {
+        ai(tiles, p1, collisionTiles);
         // Update enemy position based on speed
         speedY += 0.5; // Gravity
 
@@ -79,8 +92,7 @@ public class Enemy
 
         // Collision detection for x direction
         x += speedX;
-        boolean collideX = checkCollision(x, y + height/2, 50, tiles, collisionTiles) || checkCollision(x, y, 50, tiles, collisionTiles) || (checkCollision(x, y + height, 50, tiles, collisionTiles) && y%50!=0) || checkCollision(x + width, y + height/2, 50, tiles, collisionTiles) || checkCollision(x + width, y, 50, tiles, collisionTiles) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && y%50!=0);
-        if (collideX) {
+        if (collideX(tiles, collisionTiles)) {
             if(speedX>0) {
               x = 50*(x/50);
             } else if(speedX<0) {
@@ -91,8 +103,7 @@ public class Enemy
 
         // Collision detection for y direction
         y += speedY;
-        boolean collideY = checkCollision(x, y + height, 50, tiles, collisionTiles) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && x%50!=0) || checkCollision(x, y, 50, tiles, collisionTiles) || (checkCollision(x + width, y, 50, tiles, collisionTiles) && x%50!=0);
-        if (collideY) {
+        if (collideY(tiles, collisionTiles)) {
             if(speedY>=0){
                 y = 50*(y/50);
                 inAir = false;
