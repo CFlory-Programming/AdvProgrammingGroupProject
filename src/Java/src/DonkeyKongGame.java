@@ -117,7 +117,7 @@ public class DonkeyKongGame extends PApplet
         // Camera slowly follows player
         if (p1.x-50 < width / 2) {
             camX += -(camX-50) * 0.05;
-        } else if (p1.x-50 > tiles.length * tileSize - width / 2) {
+        } else if (p1.x+50 > tiles.length * tileSize - width / 2) {
             camX += (tiles.length * tileSize - (camX-50) - width) * 0.05;
         } else {
             camX += (p1.x - (camX) - width / 2) * 0.05;
