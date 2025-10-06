@@ -19,6 +19,7 @@ public class DonkeyKongGame extends PApplet
     public static boolean[] keys = new boolean[3];
 
     public static PImage[] tilesImg = new PImage[3];
+    public static int[] collisionTiles = {1, 2};
     public static void main(String[] args)
     {
         Random random = new Random();
@@ -72,8 +73,9 @@ public class DonkeyKongGame extends PApplet
         background(255);
 
         // Load tile images
-        tilesImg[1] = loadImage("Tile1.png");
-        tilesImg[2] = loadImage("Tile2.png");
+        for (int i = 0; i < tilesImg.length; i++) {
+            tilesImg[i] = loadImage("tile" + i + ".png");
+        }
     }
 
     @Override
@@ -114,7 +116,7 @@ public class DonkeyKongGame extends PApplet
             }
         }
 
-        p1.update(tiles);
+        p1.update(tiles, collisionTiles);
         e1.update(tiles, p1);
 
         p1.display(camX, camY);
