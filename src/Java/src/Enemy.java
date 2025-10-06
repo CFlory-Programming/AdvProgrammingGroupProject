@@ -49,7 +49,7 @@ public class Enemy
         return true;
     }
 
-    public void update(int[][] tiles, Player p1)
+    public void update(int[][] tiles, Player p1, int[] collisionTiles)
     {
         
 
@@ -79,7 +79,7 @@ public class Enemy
 
         // Collision detection for x direction
         x += speedX;
-        boolean collideX = checkCollision(x, y + height/2, 50, tiles) || checkCollision(x, y, 50, tiles) || (checkCollision(x, y + height, 50, tiles) && y%50!=0) || checkCollision(x + width, y + height/2, 50, tiles) || checkCollision(x + width, y, 50, tiles) || (checkCollision(x + width, y + height, 50, tiles) && y%50!=0);
+        boolean collideX = checkCollision(x, y + height/2, 50, tiles, collisionTiles) || checkCollision(x, y, 50, tiles, collisionTiles) || (checkCollision(x, y + height, 50, tiles, collisionTiles) && y%50!=0) || checkCollision(x + width, y + height/2, 50, tiles, collisionTiles) || checkCollision(x + width, y, 50, tiles, collisionTiles) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && y%50!=0);
         if (collideX) {
             if(speedX>0) {
               x = 50*(x/50);
@@ -91,7 +91,7 @@ public class Enemy
 
         // Collision detection for y direction
         y += speedY;
-        boolean collideY = checkCollision(x, y + height, 50, tiles) || (checkCollision(x + width, y + height, 50, tiles) && x%50!=0) || checkCollision(x, y, 50, tiles) || (checkCollision(x + width, y, 50, tiles) && x%50!=0);
+        boolean collideY = checkCollision(x, y + height, 50, tiles, collisionTiles) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && x%50!=0) || checkCollision(x, y, 50, tiles, collisionTiles) || (checkCollision(x + width, y, 50, tiles, collisionTiles) && x%50!=0);
         if (collideY) {
             if(speedY>=0){
                 y = 50*(y/50);
@@ -112,8 +112,13 @@ public class Enemy
         DonkeyKongGame.sketch.rect(x - camX, y - camY, width, height);
     }
 
-    private boolean checkCollision(int tileX, int tileY, int tileSize, int[][] tiles)
-    {
-        return tiles[tileX / tileSize][tileY / tileSize] == 1;
+    private boolean checkCollision(int tileX, int tileY, int tileSize, int[][] tiles, int[] collisionTiles) {
+        int tileindex = tiles[tileX / tileSize][tileY / tileSize];
+        for (int ct : collisionTiles) {
+            if (tileindex == ct) {
+                return true;
+            }
+        }
+        return false;
     }
 }

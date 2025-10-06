@@ -117,7 +117,7 @@ public class DonkeyKongGame extends PApplet
         }
 
         p1.update(tiles, collisionTiles);
-        e1.update(tiles, p1);
+        e1.update(tiles, p1, collisionTiles);
 
         p1.display(camX, camY);
         e1.display(camX, camY);
