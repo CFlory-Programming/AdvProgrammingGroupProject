@@ -18,7 +18,7 @@ public class DonkeyKongGame extends PApplet
 
     public static boolean[] keys = new boolean[3];
 
-    public static PImage[] tilesImg = new PImage[3];
+    public static PImage[] tilesImg = new PImage[4];
     public static int[] collisionTiles = {1, 2};
     public static void main(String[] args)
     {
@@ -32,6 +32,9 @@ public class DonkeyKongGame extends PApplet
                         tiles[i][j] = 2;
                     } else {
                         tiles[i][j] = 1;
+                    }
+                    if (random.nextDouble() < 0.1 && j != 0) {
+                        tiles[i][j-1] = 3;
                     }
                 }
                 else {
