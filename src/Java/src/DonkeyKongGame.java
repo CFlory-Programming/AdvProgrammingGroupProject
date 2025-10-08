@@ -70,7 +70,7 @@ public class DonkeyKongGame extends PApplet
         // store reference to sketch so other classes can draw
         // Set initial background color
         sketch = this;
-        background(255);
+        background(0,118,248);
 
         // Load tile images
         for (int i = 0; i < tilesImg.length; i++) {
@@ -82,7 +82,7 @@ public class DonkeyKongGame extends PApplet
     @Override
     public void draw() {
         // clear
-        background(255);
+        background(0,118,248);
 
         // Draw tiles
         fill(0);
