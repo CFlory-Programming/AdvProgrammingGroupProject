@@ -33,7 +33,7 @@ public class DonkeyKongGame extends PApplet
                     } else {
                         tiles[i][j] = 1;
                     }
-                    if (random.nextDouble() < 0.1 && j != 0) {
+                    if (random.nextDouble() < 0.15 && j != 0) {
                         tiles[i][j-1] = 3;
                     }
                 }
@@ -86,6 +86,7 @@ public class DonkeyKongGame extends PApplet
     public void draw() {
         // clear
         background(0,118,248);
+        //background((int)random(255), (int)random(255), (int)random(255));
 
         // Draw tiles
         fill(0);
