@@ -18,7 +18,7 @@ public class DonkeyKongGame extends PApplet
 
     public static boolean[] keys = new boolean[3];
 
-    public static PImage[] tilesImg = new PImage[3];
+    public static PImage[] tilesImg = new PImage[4];
     public static int[] collisionTiles = {1, 2};
     public static void main(String[] args)
     {
@@ -32,6 +32,9 @@ public class DonkeyKongGame extends PApplet
                         tiles[i][j] = 2;
                     } else {
                         tiles[i][j] = 1;
+                    }
+                    if (random.nextDouble() < 0.15 && j != 0) {
+                        tiles[i][j-1] = 3;
                     }
                 }
                 else {
@@ -70,7 +73,7 @@ public class DonkeyKongGame extends PApplet
         // store reference to sketch so other classes can draw
         // Set initial background color
         sketch = this;
-        background(255);
+        background(0,118,248);
 
         // Load tile images
         for (int i = 0; i < tilesImg.length; i++) {
@@ -82,7 +85,8 @@ public class DonkeyKongGame extends PApplet
     @Override
     public void draw() {
         // clear
-        background(255);
+        background(0,118,248);
+        //background((int)random(255), (int)random(255), (int)random(255));
 
         // Draw tiles
         fill(0);
