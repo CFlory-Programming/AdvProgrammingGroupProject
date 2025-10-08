@@ -52,19 +52,19 @@ public class Enemy
     public void ai(int[][] tiles, Player p1, int[] collisionTiles)
     {
         if (p1.x > x) {
-            if (p1.x-x > 3){
+            if (p1.x-x >= 3){
                 move(4, 'r', false);
             } else {
-                move(x-p1.x-1, 'l', false);
+                x = p1.x;
             }
         } else if (p1.x < x) {
-            if (x-p1.x > 3){
+            if (x-p1.x >= 3){
                 move(4, 'l', false);
             } else {
-                move(x-p1.x+1, 'l', false);
+                x = p1.x;
             }
         }
-        if (p1.y < y && !inAir && ((x%50<=4 && speedX<0 && collideX(tiles, collisionTiles)) || (speedX>0 && x%50>=46 && collideX(tiles, collisionTiles)))) {
+        if (p1.y < y && !inAir && ((x%50<=4 && p1.x<x && !checkCollision(x + width, y + height, 50, tiles, collisionTiles)) || (p1.x>x && x%50>=46 && !checkCollision(x, y + height, 50, tiles, collisionTiles)) || collideX(tiles, collisionTiles))) {
             jump(10, 'u');
         }
     }
