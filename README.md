@@ -22,7 +22,7 @@ Game Refrences: Donkey Kong Country, Super Mario Brothers Wii
 1. Click the green ```Code``` button at the top
 2. Click ```Download ZIP```
 3. Unzip the file
-4. Navigate to project src directory in a new terminal
+4. Navigate to project Java directory in a new terminal
 5. Type ```javac -cp lib/core.jar src/*.java```
 6. Type ```java -cp "lib/core.jar;src" DonkeyKongGame```
 
