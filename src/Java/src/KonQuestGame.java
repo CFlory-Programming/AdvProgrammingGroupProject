@@ -2,7 +2,7 @@ import java.util.Random;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class DonkeyKongGame extends PApplet
+public class KonQuestGame extends PApplet
 {
     // static reference to the running Processing sketch so other classes can draw
     public static PApplet sketch;
