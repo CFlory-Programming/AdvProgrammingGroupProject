@@ -118,9 +118,9 @@ public class Enemy
 
     public void display(int camX, int camY)
     {
-        DonkeyKongGame.sketch.noStroke();
-        DonkeyKongGame.sketch.fill(0, 255, 0);
-        DonkeyKongGame.sketch.rect(x - camX, y - camY, width, height);
+        KonQuestGame.sketch.noStroke();
+        KonQuestGame.sketch.fill(0, 255, 0);
+        KonQuestGame.sketch.rect(x - camX, y - camY, width, height);
     }
 
     private boolean checkCollision(int tileX, int tileY, int tileSize, int[][] tiles, int[] collisionTiles) {

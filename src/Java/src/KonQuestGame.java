@@ -54,7 +54,7 @@ public class KonQuestGame extends PApplet
         coins.add(new Coin(300, 80, 1));
 
         // start the Processing sketch
-        PApplet.main("DonkeyKongGame");
+        PApplet.main("KonQuestGame");
     }
 
     public void display()

@@ -55,9 +55,9 @@ public class Player
     
     public void display(int camX, int camY)
     {
-        DonkeyKongGame.sketch.noStroke();
-        DonkeyKongGame.sketch.fill(255,0,0);
-        DonkeyKongGame.sketch.rect(x - camX, y - camY, width, height);
+        KonQuestGame.sketch.noStroke();
+        KonQuestGame.sketch.fill(255,0,0);
+        KonQuestGame.sketch.rect(x - camX, y - camY, width, height);
     }
 
     public void update(int[][] tiles, int[] collisionTiles)

@@ -28,7 +28,7 @@ public class Coin
     }
 
 
-    // called in DonkeyKongGame to get the value of the coin
+    // called in KonQuestGame to get the value of the coin
     public int getValue()
     {
         return value;
@@ -36,9 +36,9 @@ public class Coin
     
     public void display(int camX, int camY)
     {
-        // Use the Processing sketch stored in DonkeyKongGame.sketch to draw the coin.
-        DonkeyKongGame.sketch.noStroke(); // formatting
-        DonkeyKongGame.sketch.fill(255, 204, 0); // yellow
-        DonkeyKongGame.sketch.ellipse(x - camX, y - camY, 12, 12); // draw a circle centered at (x, y)
+        // Use the Processing sketch stored in KonQuestGame.sketch to draw the coin.
+        KonQuestGame.sketch.noStroke(); // formatting
+        KonQuestGame.sketch.fill(255, 204, 0); // yellow
+        KonQuestGame.sketch.ellipse(x - camX, y - camY, 12, 12); // draw a circle centered at (x, y)
     }
 }
