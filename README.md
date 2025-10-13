@@ -24,8 +24,8 @@ Game Refrences: Donkey Kong Country, Super Mario Brothers Wii
 3. Unzip the file
 4. Navigate to project Java directory in a new terminal
 5. Type ```javac -cp lib/core.jar src/*.java``` to compile
-  5a. For Windows, type ```java -cp "lib/core.jar;src" DonkeyKongGame``` to run
-  5b. For Mac and Linux, type ```java -cp "lib/core.jar:src" DonkeyKongGame``` to run
+6. For Windows, type ```java -cp "lib/core.jar;src" DonkeyKongGame``` to run
+7. For Mac and Linux, type ```java -cp "lib/core.jar:src" DonkeyKongGame``` to run
 
 ### UML
 ![UML](https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/UML.png?raw=true)
