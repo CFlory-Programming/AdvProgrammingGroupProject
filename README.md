@@ -1,4 +1,6 @@
-![Logo](https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/Logo.png?raw=true)
+<p align="center">
+  <img src="https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/Logo.png?raw=true" alt="Logo" width="500"/>
+</p>
 
 # Advanced Programming Group Project
 ## Members
