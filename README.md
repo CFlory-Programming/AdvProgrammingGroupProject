@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/Logo.png?raw=true" alt="Logo" width="300"/>
+</p>
+
 # Advanced Programming Group Project
 ## Members
 * Cole Flory: Menu and HUD logic
@@ -32,3 +36,7 @@ Game Refrences: Donkey Kong Country, Super Mario Brothers Wii
 
 ### Gantt Chart
 [![Gantt Chart](https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/GanttChart.png?raw=true)](https://docs.google.com/spreadsheets/d/1xASoYfVAewEmirk02xkfCbQ8PxtWTUCKN-IrQL0k6SI/edit?usp=sharing)
+
+
+### Complete Date
+```Spring 2026```
