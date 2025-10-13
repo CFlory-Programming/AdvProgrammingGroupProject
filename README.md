@@ -31,4 +31,4 @@ Game Refrences: Donkey Kong Country, Super Mario Brothers Wii
 ![UML](https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/UML.png?raw=true)
 
 ### Gantt Chart
-[![Gantt Chart](https://img.url/github-logo.png)]((https://docs.google.com/spreadsheets/d/1xASoYfVAewEmirk02xkfCbQ8PxtWTUCKN-IrQL0k6SI/edit?usp=sharing))
+![Gantt Chart](https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/GanttChart.png?raw=true)
