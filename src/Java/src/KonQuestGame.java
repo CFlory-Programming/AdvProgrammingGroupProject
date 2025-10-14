@@ -33,7 +33,7 @@ public class KonQuestGame extends PApplet
                     } else {
                         tiles[i][j] = 1;
                     }
-                    if (random.nextDouble() < 0.15 && j != 0) {
+                    if (random.nextDouble() < 0.15 && j != 0 && j != 3) {
                         tiles[i][j-1] = 3;
                     }
                 }

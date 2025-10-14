@@ -64,14 +64,14 @@ public class Enemy
                 x = p1.x;
             }
         }
-        if (p1.y <= y && !inAir && ((x%50<=5 && x%50!=0 && p1.x>x && !checkCollision(x + width, y + height, 50, tiles, collisionTiles)) || (p1.x<x && x%50>=45 && !checkCollision(x, y + height, 50, tiles, collisionTiles)) || collideX(tiles, collisionTiles))) {
+        if (!inAir && ((p1.y <= y && x%50>=45 && x%50!=0 && p1.x>x && !checkCollision(x + width, y + height, 50, tiles, collisionTiles)) || (p1.y <= y && p1.x<x && x%50<=5 && !checkCollision(x, y + height, 50, tiles, collisionTiles)) || (x%50==0 && (checkCollision(x - width, y, 50, tiles, collisionTiles) || checkCollision(x - width, y + height/2, 50, tiles, collisionTiles) || checkCollision(x + width, y, 50, tiles, collisionTiles) || checkCollision(x + width, y + height/2, 50, tiles, collisionTiles))))) {
             jump(10, 'u');
         }
     }
 
     public boolean collideX(int[][] tiles, int[] collisionTiles)
     {
-        return checkCollision(x, y + height/2, 50, tiles, collisionTiles) || checkCollision(x, y, 50, tiles, collisionTiles) || (checkCollision(x, y + height, 50, tiles, collisionTiles) && y%50!=0) || checkCollision(x + width, y + height/2, 50, tiles, collisionTiles) || checkCollision(x + width, y, 50, tiles, collisionTiles) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && y%50!=0) || (checkCollision(x - width, y + height/2, 50, tiles, collisionTiles) && x%50==0) || (checkCollision(x - width, y, 50, tiles, collisionTiles) && x%50==0);
+        return checkCollision(x, y + height/2, 50, tiles, collisionTiles) || checkCollision(x, y, 50, tiles, collisionTiles) || (checkCollision(x, y + height, 50, tiles, collisionTiles) && y%50!=0) || checkCollision(x + width, y + height/2, 50, tiles, collisionTiles) || checkCollision(x + width, y, 50, tiles, collisionTiles) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && y%50!=0);
     }
 
     public boolean collideY(int[][] tiles, int[] collisionTiles)
