@@ -49,15 +49,6 @@ public class KonQuestGame extends PApplet
         levelCreator.readFromFile("data/1.txt");
         tiles = levelCreator.getTiles();
 
-        // print out the tiles array to the console for verification
-        for (int j = 0; j < tiles[0].length; j++) {
-            String row = "";
-            for (int i = 0; i < tiles.length; i++) {
-                row += tiles[i][j];
-            }
-            System.out.println(row);
-        }
-
         p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
         e1 = new Enemy();
         
