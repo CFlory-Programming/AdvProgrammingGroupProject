@@ -98,9 +98,6 @@ public class Enemy
         ai(tiles, p1, collisionTiles);
         // Update enemy position based on speed
         speedY += 0.5; // Gravity
-        if (speedY > 15) {
-            speedY = 15; // Terminal velocity
-        }
 
         speedX *= 0.8; //Friction
         if ((int) speedX == 0) {

@@ -84,7 +84,7 @@ This game is referenced from: **Donkey Kong Country** 🐒 and **Super Mario Bro
 
 ---
 
-## 📦 Prerequisites
+## 📦 Prerequisites and Installation
 This project requires **JDK 17 or higher** installed on your system.
 
 ## ⚙️ How to Run the Project
