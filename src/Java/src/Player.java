@@ -42,9 +42,9 @@ public class Player
     public void run(char direction)
     {
         if (direction == 'r') {
-            speedX = 7;
+            speedX = 8;
         } else if (direction == 'l') {
-            speedX = -7;
+            speedX = -8;
         }
     }
     
@@ -65,7 +65,8 @@ public class Player
         // Update player position based on speed
         speedY += 0.5; // Gravity
 
-        speedX *= 0.8; //Friction
+        if (!inAir) speedX *= 0.85; //Friction
+        else speedX *= 0.9; //Air resistance
         if ((int) speedX == 0) {
             speedX = 0;
         }

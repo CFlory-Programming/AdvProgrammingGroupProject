@@ -16,7 +16,7 @@ public class KonQuestGame extends PApplet
     public static int score = 0, lives = 3, level = 1, camX = 50, camY = 50, tileSize = 50;
     public static int[][] tiles = new int[102][102];
 
-    public static boolean[] keys = new boolean[3];
+    public static boolean[] keys = new boolean[4];
 
     public static PImage[] tilesImg = new PImage[4];
     public static int[] collisionTiles = {1, 2};
@@ -107,9 +107,19 @@ public class KonQuestGame extends PApplet
         //Update Player
         if (keyPressed) {
             if (keys[0]) {
-                p1.walk('l');
+                if (keys[3]) {
+                    p1.run('l');
+                } else 
+                {
+                    p1.walk('l');
+                }
             } else if (keys[1]) {
-                p1.walk('r');
+                if (keys[3]) {
+                    p1.run('r');
+                } else 
+                {
+                    p1.walk('r');
+                }
             } else {
                 p1.speedX = 0;
             }
@@ -169,6 +179,11 @@ public class KonQuestGame extends PApplet
         if ((key == 'w' || key == 'W')) {
             keys[2] = true;
         }
+        if (key == CODED) {
+            if (keyCode == SHIFT) {
+                keys[3] = true;
+            }
+        }
     }
 
     @Override
@@ -181,6 +196,11 @@ public class KonQuestGame extends PApplet
         }
         if ((key == 'w' || key == 'W')) {
             keys[2] = false;
+        }
+        if (key == CODED) {
+            if (keyCode == SHIFT) {
+                keys[3] = false;
+            }
         }
     }
 }
