@@ -27,10 +27,6 @@ This game is referenced from: **Donkey Kong Country** 🐒 and **Super Mario Bro
 
 ☐ Integrate menu sound effects
 
-☐ Test main menu transitions
-
-☐ Debug menu code structure
-
 #### 🧍 Player Logic
 ☐ Add player rendering
 
@@ -70,18 +66,24 @@ This game is referenced from: **Donkey Kong Country** 🐒 and **Super Mario Bro
 
 ☐ Level Generation
 
-☐ Level Testing and Changing
+☐ Develop level select menu
 
-☐ Final Level Testing
+☐ Handle level select scrolling
 
-☐ **Select System:** Develop level select menu, Handle level select scrolling, Implement level unlock logic, Optimize level select performance
+☐ Implement level unlock logic
 
 #### 🎁 Object & Power-Up Logic
-☐ **Placeable Objects:** Create Placeable Object, Create Object Types, Render Object Types, Place objects in Level, Add object interaction, Add unique interactions for each object type
+☐ Create Object Types
 
-☐ **Loot & Power-Ups:** Add basic loot, Add power up loot, Add power ups, Create power up types, Add unique interactions for each power up
+☐ Add object interaction
 
-☐ **Mounts:** Add mount spawn, Add mount, Add mount collisions, Add mounting functionality
+☐ Add unique interactions for each object type
+
+☐ Create power up types
+
+☐ Add unique interactions for each power up
+
+☐ Add mounting functionality
 
 #### ⚙️ Menus & HUD
 ☐ **⏸️ Pause Menu Functionality**
@@ -90,8 +92,6 @@ This game is referenced from: **Donkey Kong Country** 🐒 and **Super Mario Bro
     ☐ Code pause menu resume function
     
     ☐ Integrate pause menu options / Document Controls on Pause Screen
-    
-    ☐ Debug pause menu interactions
     
 ☐ **📊 HUD Design and Logic**
     ☐ Design HUD elements layout
@@ -109,14 +109,6 @@ This game is referenced from: **Donkey Kong Country** 🐒 and **Super Mario Bro
     ☐ Create HUD animation for updates
     
     ☐ Add HUD sound triggers
-    
-    ☐ Refine HUD visibility logic
-    
-    ☐ Code HUD dynamic resizing
-    
-    ☐ Debug HUD update loops
-    
-    ☐ Review and refactor HUD logic
 
 ---
 
