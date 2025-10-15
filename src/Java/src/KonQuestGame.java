@@ -1,4 +1,4 @@
-import java.util.Random;
+import java.util.*;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -8,11 +8,11 @@ public class KonQuestGame extends PApplet
     public static PApplet sketch;
 
     // shared coins list so main() can populate it before the sketch starts
-    public static java.util.ArrayList<Coin> coins = new java.util.ArrayList<>();
+    public static ArrayList<Coin> coins = new ArrayList<>();
 
     public static Player p1;
-    public static Enemy e1;
-    public static Lizard l1;
+    public static ArrayList<Enemy> enemies = new ArrayList<>();
+    public static ArrayList<Lizard> lizards = new ArrayList<>();
 
     public static int score = 0, lives = 3, level = 1, camX = 50, camY = 50, tileSize = 50;
     public static int[][] tiles = new int[102][102];
@@ -60,9 +60,9 @@ public class KonQuestGame extends PApplet
         }
 
         p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
-        e1 = new Enemy();
-        l1 = new Lizard();
-        
+        enemies.add(new Enemy());
+        lizards.add(new Lizard());
+
         // create a couple of test coins before starting the Processing sketch
         coins.add(new Coin(100, 100, 1));
         coins.add(new Coin(200, 150, 1));
@@ -147,12 +147,20 @@ public class KonQuestGame extends PApplet
         }
 
         p1.update(tiles, collisionTiles);
-        e1.update(tiles, p1, collisionTiles);
-        l1.update(tiles, p1, collisionTiles);
+        for (Enemy e : enemies) {
+            e.update(tiles, p1, collisionTiles);
+        }
+        for (Lizard l : lizards) {
+            l.update(tiles, p1, collisionTiles);
+        }
 
         p1.display(camX, camY);
-        e1.display(camX, camY);
-        l1.display(camX, camY);
+        for (Enemy e : enemies) {
+            e.display(camX, camY);
+        }
+        for (Lizard l : lizards) {
+            l.display(camX, camY);
+        }
 
         // Camera slowly follows player
         if (p1.x-50 < width / 2) {
