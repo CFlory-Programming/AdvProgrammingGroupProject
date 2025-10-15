@@ -28,8 +28,8 @@ Game Refrences: Donkey Kong Country, Super Mario Brothers Wii
 3. Unzip the file
 4. Navigate to project Java directory in a new terminal
 5. Type ```javac -cp lib/core.jar src/*.java``` to compile
-6. For Windows, type ```java -cp "lib/core.jar;src" DonkeyKongGame``` to run
-7. For Mac and Linux, type ```java -cp "lib/core.jar:src" DonkeyKongGame``` to run
+6. For Windows, type ```java -cp "lib/core.jar;src" KongQuestGame``` to run
+7. For Mac and Linux, type ```java -cp "lib/core.jar:src" KongQuestGame``` to run
 
 ### UML
 ![UML](https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/UML.png?raw=true)
@@ -38,5 +38,5 @@ Game Refrences: Donkey Kong Country, Super Mario Brothers Wii
 [![Gantt Chart](https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/GanttChart.png?raw=true)](https://docs.google.com/spreadsheets/d/1xASoYfVAewEmirk02xkfCbQ8PxtWTUCKN-IrQL0k6SI/edit?usp=sharing)
 
 
-### Complete Date
+### Completion Date
 ```Spring 2026```
