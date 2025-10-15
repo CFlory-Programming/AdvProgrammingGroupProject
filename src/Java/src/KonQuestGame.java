@@ -45,6 +45,15 @@ public class KonQuestGame extends PApplet
         tiles[1][1] = 0;
         tiles[1][2] = 0;
 
+        // print out the tiles array to the console for verification
+        for (int j = 0; j < tiles[0].length; j++) {
+            String row = "";
+            for (int i = 0; i < tiles.length; i++) {
+                row += tiles[i][j];
+            }
+            System.out.println(row);
+        }
+
         p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
         e1 = new Enemy();
         
