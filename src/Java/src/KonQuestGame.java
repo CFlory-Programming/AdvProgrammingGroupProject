@@ -21,30 +21,43 @@ public class KonQuestGame extends PApplet
 
     public static PImage[] tilesImg = new PImage[4];
     public static int[] collisionTiles = {1, 2};
+
+    public static Level levelCreator = new Level(tiles, tileSize);
     public static void main(String[] args)
     {
-        Random random = new Random();
+        //Random random = new Random();
 
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
-                //randomly assign 1 or 0 to each tile
-                if (random.nextDouble() < 0.1 || j == tiles[i].length - 1 || i == 0 || i == tiles.length - 1 || j == 0) {
-                    if (random.nextDouble() < 0.5) {
-                        tiles[i][j] = 2;
-                    } else {
-                        tiles[i][j] = 1;
-                    }
-                    if (random.nextDouble() < 0.15 && j != 0 && (j != 1 && tiles[i][j-2] != 3)) {
-                        tiles[i][j-1] = 3;
-                    }
-                }
-                else {
-                    tiles[i][j] = 0;
-                }
+        // for (int i = 0; i < tiles.length; i++) {
+        //     for (int j = 0; j < tiles[i].length; j++) {
+        //         //randomly assign 1 or 0 to each tile
+        //         if (random.nextDouble() < 0.1 || j == tiles[i].length - 1 || i == 0 || i == tiles.length - 1 || j == 0) {
+        //             if (random.nextDouble() < 0.5) {
+        //                 tiles[i][j] = 2;
+        //             } else {
+        //                 tiles[i][j] = 1;
+        //             }
+        //             if (random.nextDouble() < 0.15 && j != 0 && (j != 1 && tiles[i][j-2] != 3)) {
+        //                 tiles[i][j-1] = 3;
+        //             }
+        //         }
+        //         else {
+        //             tiles[i][j] = 0;
+        //         }
+        //     }
+        // }
+        // tiles[1][1] = 0;
+        // tiles[1][2] = 0;
+        levelCreator.readFromFile("data/1.txt");
+        tiles = levelCreator.getTiles();
+
+        // print out the tiles array to the console for verification
+        for (int j = 0; j < tiles[0].length; j++) {
+            String row = "";
+            for (int i = 0; i < tiles.length; i++) {
+                row += tiles[i][j];
             }
+            System.out.println(row);
         }
-        tiles[1][1] = 0;
-        tiles[1][2] = 0;
 
         p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
         e1 = new Enemy();
