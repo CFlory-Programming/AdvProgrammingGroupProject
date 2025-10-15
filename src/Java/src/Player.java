@@ -1,3 +1,5 @@
+import processing.core.PImage;
+
 public class Player
 {
 
@@ -10,6 +12,9 @@ public class Player
     float speedX;
     float speedY;
     boolean inAir;
+    int frame;
+    int animSpeed;
+    String state;
 
 
     public Player(int height, int width, int x, int y, int score, int lives)
@@ -23,6 +28,9 @@ public class Player
         speedX = 0;
         speedY = 0;
         inAir = true;
+        frame = 0;
+        animSpeed = 10;
+        state = "Idle";
     }
     
     public void jump()
@@ -42,9 +50,9 @@ public class Player
     public void run(char direction)
     {
         if (direction == 'r') {
-            speedX = 7;
+            speedX = 8;
         } else if (direction == 'l') {
-            speedX = -7;
+            speedX = -8;
         }
     }
     
@@ -58,6 +66,9 @@ public class Player
         KonQuestGame.sketch.noStroke();
         KonQuestGame.sketch.fill(255,0,0);
         KonQuestGame.sketch.rect(x - camX, y - camY, width, height);
+        // PImage sprite = KonQuestGame.sketch.loadImage(state + frame + ".png");
+        // sprite.resize(width, height);
+        // KonQuestGame.sketch.image(sprite, x - camX, y - camY);
     }
 
     public void update(int[][] tiles, int[] collisionTiles)
@@ -65,7 +76,8 @@ public class Player
         // Update player position based on speed
         speedY += 0.5; // Gravity
 
-        speedX *= 0.8; //Friction
+        if (!inAir) speedX *= 0.85; //Friction
+        else speedX *= 0.9; //Air resistance
         if ((int) speedX == 0) {
             speedX = 0;
         }
