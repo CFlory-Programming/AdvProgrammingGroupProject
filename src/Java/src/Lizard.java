@@ -10,6 +10,11 @@ public class Lizard extends Enemy{
     {
         boolean distance = Math.abs(p1.x - x) < 300 && Math.abs(p1.y - y) < 300;
         if (distance) {
+            if (p1.x > x) {
+                direction = true;
+            } else if (p1.x < x) {
+                direction = false;
+            }
             super.ai(tiles, p1, collisionTiles);
         } else {
             if (direction && !collideX(x, y, tiles, collisionTiles)) {
