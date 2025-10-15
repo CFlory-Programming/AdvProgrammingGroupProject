@@ -29,28 +29,32 @@ public class KonQuestGame extends PApplet
 
     public static void main(String[] args)
     {
-        Random random = new Random();
+        // Random random = new Random();
 
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
-                //randomly assign 1 or 0 to each tile
-                if (random.nextDouble() < 0.1 || j == tiles[i].length - 1 || i == 0 || i == tiles.length - 1 || j == 0) {
-                    if (random.nextDouble() < 0.5) {
-                        tiles[i][j] = 2;
-                    } else {
-                        tiles[i][j] = 1;
-                    }
-                    if (random.nextDouble() < 0.15 && j != 0 && (j != 1 && tiles[i][j-2] != 3)) {
-                        tiles[i][j-1] = 3;
-                    }
-                }
-                else {
-                    tiles[i][j] = 0;
-                }
-            }
-        }
-        tiles[1][1] = 0;
-        tiles[1][2] = 0;
+        // for (int i = 0; i < tiles.length; i++) {
+        //     for (int j = 0; j < tiles[i].length; j++) {
+        //         //randomly assign 1 or 0 to each tile
+        //         if (random.nextDouble() < 0.1 || j == tiles[i].length - 1 || i == 0 || i == tiles.length - 1 || j == 0) {
+        //             if (random.nextDouble() < 0.5) {
+        //                 tiles[i][j] = 2;
+        //             } else {
+        //                 tiles[i][j] = 1;
+        //             }
+        //             if (random.nextDouble() < 0.15 && j != 0 && (j != 1 && tiles[i][j-2] != 3)) {
+        //                 tiles[i][j-1] = 3;
+        //             }
+        //         }
+        //         else {
+        //             tiles[i][j] = 0;
+        //         }
+        //     }
+        // }
+        // tiles[1][1] = 0;
+        // tiles[1][2] = 0;
+
+        Level level1 = new Level(tiles, tileSize);
+        level1.readFromFile("data/1.txt");
+        tiles = level1.getTiles();
 
         // print out the tiles array to the console for verification
         for (int j = 0; j < tiles[0].length; j++) {
