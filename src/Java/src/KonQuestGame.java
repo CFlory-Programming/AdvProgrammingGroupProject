@@ -12,6 +12,7 @@ public class KonQuestGame extends PApplet
 
     public static Player p1;
     public static Enemy e1;
+    public static Lizard l1;
 
     public static int score = 0, lives = 3, level = 1, camX = 50, camY = 50, tileSize = 50;
     public static int[][] tiles = new int[102][102];
@@ -47,6 +48,7 @@ public class KonQuestGame extends PApplet
 
         p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
         e1 = new Enemy();
+        l1 = new Lizard();
         
         // create a couple of test coins before starting the Processing sketch
         coins.add(new Coin(100, 100, 1));
@@ -133,9 +135,11 @@ public class KonQuestGame extends PApplet
 
         p1.update(tiles, collisionTiles);
         e1.update(tiles, p1, collisionTiles);
+        l1.update(tiles, p1, collisionTiles);
 
         p1.display(camX, camY);
         e1.display(camX, camY);
+        l1.display(camX, camY);
 
         // Camera slowly follows player
         if (p1.x-50 < width / 2) {
