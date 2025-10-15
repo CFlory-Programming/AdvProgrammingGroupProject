@@ -7,6 +7,12 @@ public class KonQuestGame extends PApplet
     // static reference to the running Processing sketch so other classes can draw
     public static PApplet sketch;
 
+    public static boolean mainMenu = true;
+
+    public static PImage mainMenuImg;
+
+    public static boolean pauseMenu = false;
+
     // shared coins list so main() can populate it before the sketch starts
     public static java.util.ArrayList<Coin> coins = new java.util.ArrayList<>();
 
@@ -20,6 +26,7 @@ public class KonQuestGame extends PApplet
 
     public static PImage[] tilesImg = new PImage[4];
     public static int[] collisionTiles = {1, 2};
+
     public static void main(String[] args)
     {
         Random random = new Random();
@@ -80,92 +87,105 @@ public class KonQuestGame extends PApplet
             if (i != 0)
             tilesImg[i] = loadImage("Tile" + i + ".png");
         }
+
+        mainMenuImg = loadImage("MainMenu.png");
+        mainMenuImg.resize(width, height);
     }
 
     @Override
     public void draw() {
-        // clear
-        background(0,118,248);
-        //background((int)random(255), (int)random(255), (int)random(255));
+        if (mainMenu) {
+            background(0, 0, 0);
+            image(mainMenuImg, 0, 0);
+            if (keyPressed && (key == ENTER || key == RETURN)) {
+                mainMenu = false;
+            }
+        }
+        else
+        {
+            // clear
+            background(0,118,248);
+            //background((int)random(255), (int)random(255), (int)random(255));
 
-        // Draw tiles
-        fill(0);
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
-                if (tiles[i][j] != 0) {
-                    //Only draw tiles that are on screen (with a little buffer)
-                    if (i * tileSize - camX < -tileSize || i * tileSize - camX > width + tileSize || j * tileSize - camY < -tileSize || j * tileSize - camY > height + tileSize) {
-                        continue;
+            // Draw tiles
+            fill(0);
+            for (int i = 0; i < tiles.length; i++) {
+                for (int j = 0; j < tiles[i].length; j++) {
+                    if (tiles[i][j] != 0) {
+                        //Only draw tiles that are on screen (with a little buffer)
+                        if (i * tileSize - camX < -tileSize || i * tileSize - camX > width + tileSize || j * tileSize - camY < -tileSize || j * tileSize - camY > height + tileSize) {
+                            continue;
+                        }
+
+                        //rect(i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
+                        image(tilesImg[tiles[i][j]], i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
                     }
-
-                    //rect(i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
-                    image(tilesImg[tiles[i][j]], i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
                 }
             }
-        }
 
-        //Update Player
-        if (keyPressed) {
-            if (keys[0]) {
-                if (keys[3]) {
-                    p1.run('l');
-                } else 
-                {
-                    p1.walk('l');
+            //Update Player
+            if (keyPressed) {
+                if (keys[0]) {
+                    if (keys[3]) {
+                        p1.run('l');
+                    } else 
+                    {
+                        p1.walk('l');
+                    }
+                } else if (keys[1]) {
+                    if (keys[3]) {
+                        p1.run('r');
+                    } else 
+                    {
+                        p1.walk('r');
+                    }
+                } else {
+                    p1.speedX = 0;
                 }
-            } else if (keys[1]) {
-                if (keys[3]) {
-                    p1.run('r');
-                } else 
-                {
-                    p1.walk('r');
+                if (keys[2]) {
+                    if (!p1.inAir) {
+                        p1.jump();
+                        p1.inAir = true;
+                    }
                 }
+            }
+
+            p1.update(tiles, collisionTiles);
+            e1.update(tiles, p1, collisionTiles);
+
+            p1.display(camX, camY);
+            e1.display(camX, camY);
+
+            // Camera slowly follows player
+            if (p1.x-50 < width / 2) {
+                camX += -(camX-50) * 0.05;
+            } else if (p1.x+50 > tiles.length * tileSize - width / 2) {
+                camX += (tiles.length * tileSize - (camX+50) - width) * 0.05;
             } else {
-                p1.speedX = 0;
+                camX += (p1.x - (camX) - width / 2) * 0.05;
             }
-            if (keys[2]) {
-                if (!p1.inAir) {
-                    p1.jump();
-                    p1.inAir = true;
-                }
+            if (p1.y-50 < height / 2) {
+                camY += -(camY-50) * 0.05;
+            } else if (p1.y+50 > tiles[0].length * tileSize - height / 2) {
+                camY += (tiles[0].length * tileSize - (camY+50) - height) * 0.05;
+            } else {
+                camY += (p1.y - (camY) - height / 2) * 0.05;
             }
+
+            // draw coins added from main/setup and compute total value
+            int totalCoins = 0;
+            for (Coin c : coins) { // for each loop
+                // call the coin's display method which will use the static sketch reference
+                c.display(camX, camY);
+                totalCoins += c.getValue();
+            }
+
+            // draw total value in red at the top-right corner
+            fill(255, 0, 0);
+            textAlign(RIGHT, TOP);
+            textSize(16);
+            text("Total value: " + totalCoins, width - 10, 10); //x is 10px from the right edge, y is 10px from the top
         }
-
-        p1.update(tiles, collisionTiles);
-        e1.update(tiles, p1, collisionTiles);
-
-        p1.display(camX, camY);
-        e1.display(camX, camY);
-
-        // Camera slowly follows player
-        if (p1.x-50 < width / 2) {
-            camX += -(camX-50) * 0.05;
-        } else if (p1.x+50 > tiles.length * tileSize - width / 2) {
-            camX += (tiles.length * tileSize - (camX+50) - width) * 0.05;
-        } else {
-            camX += (p1.x - (camX) - width / 2) * 0.05;
-        }
-        if (p1.y-50 < height / 2) {
-            camY += -(camY-50) * 0.05;
-        } else if (p1.y+50 > tiles[0].length * tileSize - height / 2) {
-            camY += (tiles[0].length * tileSize - (camY+50) - height) * 0.05;
-        } else {
-            camY += (p1.y - (camY) - height / 2) * 0.05;
-        }
-
-        // draw coins added from main/setup and compute total value
-        int totalCoins = 0;
-        for (Coin c : coins) { // for each loop
-            // call the coin's display method which will use the static sketch reference
-            c.display(camX, camY);
-            totalCoins += c.getValue();
-        }
-
-        // draw total value in red at the top-right corner
-        fill(255, 0, 0);
-        textAlign(RIGHT, TOP);
-        textSize(16);
-        text("Total value: " + totalCoins, width - 10, 10); //x is 10px from the right edge, y is 10px from the top
     }
 
     @Override
