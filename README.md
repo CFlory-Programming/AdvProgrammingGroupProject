@@ -19,22 +19,14 @@ This game is referenced from: **Donkey Kong Country** 🐒 and **Super Mario Bro
 ### 📋 Development Roadmap / To-Do List
 
 #### ▶️ Main Menu Design and Logic
-☐ Design main menu layout
 
 ☐ Implement main menu buttons
-
-☐ Add main menu navigation logic
 
 ☐ Integrate menu sound effects
 
 #### 🧍 Player Logic
-☐ Add player rendering
 
 ☐ Add camera following player
-
-☐ Add player movement
-
-☐ Add player-level collision
 
 ☐ Add gravity and jumping
 
@@ -42,29 +34,19 @@ This game is referenced from: **Donkey Kong Country** 🐒 and **Super Mario Bro
 
 ☐ Add attacking
 
-☐ Add hitbox for attacking
-
-☐ Add player hurtbox for enemies
-
-☐ Add player and enemy collision
-
 ☐ Add power up compatibility
 
 ☐ Add mounting compatibility
 
 #### 👾 Enemy Logic
-☐ Add enemies
-
-☑️ Add enemy and level collision
 
 ☑️ Add enemy AI
 
 ☐ Add enemy and player collision
 
 #### 🗺️ Level Logic
-☐ Level Design
 
-☐ Level Generation
+☐ Level generation system
 
 ☐ Develop level select menu
 
@@ -73,42 +55,32 @@ This game is referenced from: **Donkey Kong Country** 🐒 and **Super Mario Bro
 ☐ Implement level unlock logic
 
 #### 🎁 Object & Power-Up Logic
-☐ Create Object Types
-
-☐ Add object interaction
 
 ☐ Add unique interactions for each object type
-
-☐ Create power up types
 
 ☐ Add unique interactions for each power up
 
 ☐ Add mounting functionality
 
-#### ⚙️ Menus & HUD
-☐ **⏸️ Pause Menu Functionality**
-    ☐ Create pause menu structure
+#### ⏸️ Pause Menu Functionality
     
-    ☐ Code pause menu resume function
+☐ Code pause menu resume function
     
-    ☐ Integrate pause menu options / Document Controls on Pause Screen
+☐ Integrate pause menu options / Document Controls on Pause Screen
+
+#### 📊 HUD Design and Logic
     
-☐ **📊 HUD Design and Logic**
-    ☐ Design HUD elements layout
+☐ Code score display in HUD
     
-    ☐ Code score display in HUD
+☐ Update lives counter in HUD
     
-    ☐ Update lives counter in HUD
+☐ Add timer functionality to HUD
     
-    ☐ Add timer functionality to HUD
+☐ Implement coin counter in HUD
     
-    ☐ Implement coin counter in HUD
+☐ Handle power-up icons in HUD
     
-    ☐ Handle power-up icons in HUD
-    
-    ☐ Create HUD animation for updates
-    
-    ☐ Add HUD sound triggers
+☐ Add HUD sound triggers
 
 ---
 
