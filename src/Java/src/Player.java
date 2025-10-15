@@ -76,6 +76,10 @@ public class Player
         // Update player position based on speed
         speedY += 0.5; // Gravity
 
+        if (speedY > 15) {
+            speedY = 15; // Terminal velocity
+        }
+
         if (!inAir) speedX *= 0.85; //Friction
         else speedX *= 0.9; //Air resistance
         if ((int) speedX == 0) {
