@@ -54,37 +54,43 @@ public class Enemy
         if (p1.x > x) {
             if (p1.x-x >= 4){
                 move(4, 'r', false);
-            } else if (!collideX(tiles, collisionTiles)) {
+            } else if (!collideX(x, y, tiles, collisionTiles)) {
                 x = p1.x;
             }
         } else if (p1.x < x) {
             if (x-p1.x >= 4){
                 move(4, 'l', false);
-            } else if (!collideX(tiles, collisionTiles)) {
+            } else if (!collideX(x, y, tiles, collisionTiles)) {
                 x = p1.x;
             }
         }
-        if (!inAir && ((p1.y <= y && x%50>=45 && x%50!=0 && p1.x>x && !checkCollision(x + width, y + height, 50, tiles, collisionTiles)) || (p1.y <= y && p1.x<x && x%50<=5 && !checkCollision(x, y + height, 50, tiles, collisionTiles)) || (x%50==0 && (checkCollision(x - width, y, 50, tiles, collisionTiles) || checkCollision(x - width, y + height/2, 50, tiles, collisionTiles) || checkCollision(x + width, y, 50, tiles, collisionTiles) || checkCollision(x + width, y + height/2, 50, tiles, collisionTiles))))) {
+        if (!inAir && ((p1.y <= y && x%50>=45 && x%50!=0 && p1.x>x && !checkCollision(x + width, y + height, 50, tiles, collisionTiles)) || (p1.y <= y && p1.x<x && x%50<=5 && !checkCollision(x, y + height, 50, tiles, collisionTiles)) || (x%50==0 && (collideX(x+1, y, tiles, collisionTiles) || collideX(x-1, y, tiles, collisionTiles))))) {
             jump(10, 'u');
         }
     }
 
-    public boolean collideX(int[][] tiles, int[] collisionTiles)
+    public boolean collideX(int fx, int fy, int[][] tiles, int[] collisionTiles)
     {
-        for(int i = 0; i < width/50; i++) {
-            for(int j = 0; j < height/50; j++) {
-                if ((i == 0 || i == width/50 - 1) && (x%50 + width > 50*i) && (y%50 + height > 50*j) && checkCollision(x + i*50, y + j*50, 50, tiles, collisionTiles)) {
+        for(int i = 0; i <= (width)/50; i++) {
+            for(int j = 0; j <= (height)/50; j++) {
+                if ((i == 0 || i == (width)/50) && (fx%50 + width > 50*i) && (fy%50 + height > 50*j) && checkCollision(fx + i*50, fy + j*50, 50, tiles, collisionTiles)) {
                     return true;
                 }
             }
         }
         return false;
-        //return checkCollision(x, y + height/2, 50, tiles, collisionTiles) || checkCollision(x, y, 50, tiles, collisionTiles) || (checkCollision(x, y + height, 50, tiles, collisionTiles) && y%50!=0) || (checkCollision(x + width, y + height/2, 50, tiles, collisionTiles) && x%50!=0) || (checkCollision(x + width, y, 50, tiles, collisionTiles) && x%50!=0) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && y%50!=0 && x%50!=0);
     }
 
-    public boolean collideY(int[][] tiles, int[] collisionTiles)
+    public boolean collideY(int fx, int fy, int[][] tiles, int[] collisionTiles)
     {
-        return checkCollision(x, y + height, 50, tiles, collisionTiles) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && x%50!=0) || (checkCollision(x, y, 50, tiles, collisionTiles) && y%50!=0) || (checkCollision(x + width, y, 50, tiles, collisionTiles) && x%50!=0 && y%50!=0);
+        for(int i = 0; i <= (width)/50; i++) {
+            for(int j = 0; j <= (height)/50; j++) {
+                if ((j == 0 || j == (height)/50) && (fx%50 + width > 50*i) && (fy%50 + height > 50*j) && checkCollision(fx + i*50, fy + j*50, 50, tiles, collisionTiles)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void update(int[][] tiles, Player p1, int[] collisionTiles)
@@ -100,7 +106,7 @@ public class Enemy
 
         // Collision detection for x direction
         x += speedX;
-        if (collideX(tiles, collisionTiles)) {
+        if (collideX(x, y, tiles, collisionTiles)) {
             if(speedX>0) {
               x = 50*(x/50);
             } else if(speedX<0) {
@@ -111,7 +117,7 @@ public class Enemy
 
         // Collision detection for y direction
         y += speedY;
-        if (collideY(tiles, collisionTiles)) {
+        if (collideY(x, y, tiles, collisionTiles)) {
             if(speedY>=0){
                 y = 50*(y/50);
                 inAir = false;
