@@ -71,7 +71,15 @@ public class Enemy
 
     public boolean collideX(int[][] tiles, int[] collisionTiles)
     {
-        return checkCollision(x, y + height/2, 50, tiles, collisionTiles) || checkCollision(x, y, 50, tiles, collisionTiles) || (checkCollision(x, y + height, 50, tiles, collisionTiles) && y%50!=0) || (checkCollision(x + width, y + height/2, 50, tiles, collisionTiles) && x%50!=0) || (checkCollision(x + width, y, 50, tiles, collisionTiles) && x%50!=0) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && y%50!=0 && x%50!=0);
+        for(int i = 0; i < width/50; i++) {
+            for(int j = 0; j < height/50; j++) {
+                if ((i == 0 || i == width/50 - 1) && (x%50 + width > 50*i) && (y%50 + height > 50*j) && checkCollision(x + i*50, y + j*50, 50, tiles, collisionTiles)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+        //return checkCollision(x, y + height/2, 50, tiles, collisionTiles) || checkCollision(x, y, 50, tiles, collisionTiles) || (checkCollision(x, y + height, 50, tiles, collisionTiles) && y%50!=0) || (checkCollision(x + width, y + height/2, 50, tiles, collisionTiles) && x%50!=0) || (checkCollision(x + width, y, 50, tiles, collisionTiles) && x%50!=0) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && y%50!=0 && x%50!=0);
     }
 
     public boolean collideY(int[][] tiles, int[] collisionTiles)
