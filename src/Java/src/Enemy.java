@@ -10,12 +10,12 @@ public class Enemy
     int health;
     boolean inAir;
     
-    public Enemy()
+    public Enemy(int x, int y)
     {
         height = 100;
         width = 50;
-        x = 50;
-        y = 50;
+        this.x = x;
+        this.y = y;
         health = 100;
         speedX = 0;
         speedY = 0;

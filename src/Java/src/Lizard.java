@@ -1,7 +1,7 @@
 public class Lizard extends Enemy{
     boolean direction; //true is right, false is left
-    public Lizard() {
-        super();
+    public Lizard(int x, int y) {
+        super(x, y);
         height = 50;
         width = 100;
     }
