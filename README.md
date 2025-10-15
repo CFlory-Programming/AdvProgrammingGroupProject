@@ -40,7 +40,7 @@ This game is referenced from: **Donkey Kong Country** 🐒 and **Super Mario Bro
 
 #### 👾 Enemy Logic
 
-☑️ Add enemy AI
+☐ Add enemy AI
 
 ☐ Add enemy and player collision
 
