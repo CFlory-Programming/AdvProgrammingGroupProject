@@ -9,8 +9,8 @@ public class Player
     int y;
     int score;
     int lives;
-    float speedX;
-    float speedY;
+    double speedX;
+    double speedY;
     boolean inAir;
     int frame;
     int animSpeed;
@@ -40,19 +40,71 @@ public class Player
     
     public void walk(char direction)
     {
-        if (direction == 'r') {
-            speedX = 5;
-        } else if (direction == 'l') {
-            speedX = -5;
+        if (!inAir) {
+            if (speedX == 0 && direction == 'r') {
+                speedX = 1;
+            } else if (speedX == 0 && direction == 'l') {
+                speedX = -1;
+            }
+            if (direction == 'r' && speedX<=4.5) {
+                speedX += 0.5;
+            } else if (direction == 'l' && speedX>=-4.5) {
+                speedX -= 0.5;
+            } else if (direction == 'r') {
+                speedX = 5;
+            } else if (direction == 'l') {
+                speedX = -5;
+            }
+        } else {
+            if (speedX == 0 && direction == 'r') {
+                speedX = 1;
+            } else if (speedX == 0 && direction == 'l') {
+                speedX = -1;
+            }
+            if (direction == 'r' && speedX<=5.875) {
+                speedX += 0.25;
+            } else if (direction == 'l' && speedX>=-5.875) {
+                speedX -= 0.25;
+            } else if (direction == 'r') {
+                speedX = 5;
+            } else if (direction == 'l') {
+                speedX = -5;
+            }
         }
     }
     
     public void run(char direction)
     {
-        if (direction == 'r') {
-            speedX = 8;
-        } else if (direction == 'l') {
-            speedX = -8;
+        if (!inAir) {
+            if (speedX == 0 && direction == 'r') {
+                speedX = 1;
+            } else if (speedX == 0 && direction == 'l') {
+                speedX = -1;
+            }
+            if (direction == 'r' && speedX<=7.5) {
+                speedX += 0.5;
+            } else if (direction == 'l' && speedX>=-7.5) {
+                speedX -= 0.5;
+            } else if (direction == 'r') {
+                speedX = 8;
+            } else if (direction == 'l') {
+                speedX = -8;
+            }
+        } else {
+            if (speedX == 0 && direction == 'r') {
+                speedX = 1;
+            } else if (speedX == 0 && direction == 'l') {
+                speedX = -1;
+            }
+            if (direction == 'r' && speedX<=7.875) {
+                speedX += 0.25;
+            } else if (direction == 'l' && speedX>=-7.875) {
+                speedX -= 0.25;
+            } else if (direction == 'r') {
+                speedX = 8;
+            } else if (direction == 'l') {
+                speedX = -8;
+            }
         }
     }
     
@@ -71,7 +123,7 @@ public class Player
         // KonQuestGame.sketch.image(sprite, x - camX, y - camY);
     }
 
-    public void update(int[][] tiles, int[] collisionTiles)
+    public void update(int[][] tiles, int[] collisionTiles, boolean pressed)
     {
         // Update player position based on speed
         speedY += 0.5; // Gravity
@@ -80,10 +132,12 @@ public class Player
             speedY = 15; // Terminal velocity
         }
 
-        if (!inAir) speedX *= 0.85; //Friction
-        else speedX *= 0.9; //Air resistance
-        if ((int) speedX == 0) {
-            speedX = 0;
+        if (!pressed) {
+            if (!inAir) speedX *= 0.85; //Friction
+            else speedX *= 0.9; //Air resistance
+            if ((int) speedX == 0){
+                speedX = 0;
+            }
         }
 
         // Collision detection for x direction

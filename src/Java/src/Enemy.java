@@ -27,7 +27,7 @@ public class Enemy
         speedY=-height;
     }
     
-    public void move(int distance, char dir, boolean isRunning)
+    public void move(float distance, char dir, boolean isRunning)
     {
         if (isRunning) {
             if (dir == 'r') {

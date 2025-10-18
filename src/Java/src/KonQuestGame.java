@@ -69,9 +69,9 @@ public class KonQuestGame extends PApplet
         Lizard l;
         Enemy e;
         p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 20; i++) {
             l = new Lizard(100*i + 100, 100);
-            e = new Enemy(500*i + 100, 100);
+            e = new Enemy(100*i + 100, 100);
             enemies.add(e);
             lizards.add(l);
         }
@@ -160,8 +160,6 @@ public class KonQuestGame extends PApplet
                     {
                         p1.walk('r');
                     }
-                } else {
-                    p1.speedX = 0;
                 }
                 if (keys[2]) {
                     if (!p1.inAir) {
@@ -171,7 +169,7 @@ public class KonQuestGame extends PApplet
                 }
             }
 
-            p1.update(tiles, collisionTiles);
+            p1.update(tiles, collisionTiles, keyPressed);
             for(Enemy e : enemies) {
                 e.ai(tiles, p1, collisionTiles);
                 e.update(tiles, p1, collisionTiles);
