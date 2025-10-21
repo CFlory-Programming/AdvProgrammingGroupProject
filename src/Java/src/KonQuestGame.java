@@ -169,7 +169,7 @@ public class KonQuestGame extends PApplet
                 }
             }
 
-            p1.update(tiles, collisionTiles, keyPressed);
+            p1.update(tiles, collisionTiles, keys[0] || keys[1]);
             for(Enemy e : enemies) {
                 e.ai(tiles, p1, collisionTiles);
                 e.update(tiles, p1, collisionTiles);

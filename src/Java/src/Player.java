@@ -81,10 +81,10 @@ public class Player
             } else if (speedX == 0 && direction == 'l') {
                 speedX = -1;
             }
-            if (direction == 'r' && speedX<=7.5) {
-                speedX += 0.5;
-            } else if (direction == 'l' && speedX>=-7.5) {
-                speedX -= 0.5;
+            if (direction == 'r' && speedX<=7.2) {
+                speedX += 0.8;
+            } else if (direction == 'l' && speedX>=-7.2) {
+                speedX -= 0.8;
             } else if (direction == 'r') {
                 speedX = 8;
             } else if (direction == 'l') {
@@ -96,10 +96,10 @@ public class Player
             } else if (speedX == 0 && direction == 'l') {
                 speedX = -1;
             }
-            if (direction == 'r' && speedX<=7.875) {
-                speedX += 0.25;
-            } else if (direction == 'l' && speedX>=-7.875) {
-                speedX -= 0.25;
+            if (direction == 'r' && speedX<=7.6) {
+                speedX += 0.4;
+            } else if (direction == 'l' && speedX>=-7.6) {
+                speedX -= 0.4;
             } else if (direction == 'r') {
                 speedX = 8;
             } else if (direction == 'l') {
