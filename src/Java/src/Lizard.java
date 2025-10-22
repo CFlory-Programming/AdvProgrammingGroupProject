@@ -4,6 +4,8 @@ public class Lizard extends Enemy{
         super(x, y);
         height = 50;
         width = 100;
+        this.x = x;
+        this.y = y;
     }
 
     public void ai(int[][] tiles, Player p1, int[] collisionTiles)
