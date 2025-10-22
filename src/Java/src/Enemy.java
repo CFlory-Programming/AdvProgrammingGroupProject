@@ -54,17 +54,17 @@ public class Enemy
         if (p1.x > x) {
             if (p1.x-x >= 4){
                 move(4, 'r', false);
-            } else if (!collideX(x, y, tiles, collisionTiles)) {
+            } else if (!collideX(p1.x, y, tiles, collisionTiles)) {
                 x = p1.x;
             }
         } else if (p1.x < x) {
             if (x-p1.x >= 4){
                 move(4, 'l', false);
-            } else if (!collideX(x, y, tiles, collisionTiles)) {
+            } else if (!collideX(p1.x, y, tiles, collisionTiles)) {
                 x = p1.x;
             }
         }
-        if (!inAir && ((p1.y <= y && x%50>=45 && x%50!=0 && p1.x>x && !checkCollision(x + width, y + height, 50, tiles, collisionTiles)) || (p1.y <= y && p1.x<x && x%50<=5 && !checkCollision(x, y + height, 50, tiles, collisionTiles)) || (x%50==0 && (collideX(x+1, y, tiles, collisionTiles) || collideX(x-1, y, tiles, collisionTiles))))) {
+        if (!inAir && ((p1.y <= y && x%50>=44 && x%50!=0 && p1.x>x && !checkCollision(x + width, y + height, 50, tiles, collisionTiles)) || (p1.y <= y && p1.x<x && x%50<=6 && !checkCollision(x, y + height, 50, tiles, collisionTiles)) || (x%50==0 && (collideX(x+1, y, tiles, collisionTiles) || collideX(x-1, y, tiles, collisionTiles))))) {
             jump(10, 'u');
         }
     }
