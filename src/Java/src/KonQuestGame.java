@@ -85,6 +85,26 @@ public class KonQuestGame extends PApplet
         PApplet.main("KonQuestGame");
     }
 
+    public static void setPosition(int x, int y, int width, int height)
+    {
+        p1.x = x;
+        p1.y = y;
+        if (p1.x-50 < width / 2) {
+            camX = 50;
+        } else if (p1.x+50 > tiles.length * tileSize - width / 2) {
+            camX = tiles.length * tileSize - width;
+        } else {
+            camX = p1.x - width / 2;
+        }
+        if (p1.y-50 < height / 2) {
+            camY = 50;
+        } else if (p1.y+50 > tiles[0].length * tileSize - height / 2) {
+            camY = tiles[0].length * tileSize - height;
+        } else {
+            camY = p1.y - height / 2;
+        }
+    }
+
     public void display()
     {
         
@@ -102,6 +122,7 @@ public class KonQuestGame extends PApplet
         // Set initial background color
         sketch = this;
         background(0,118,248);
+        setPosition(50, 4950, width, height);
 
         // Load tile images
         for (int i = 0; i < tilesImg.length; i++) {
@@ -127,7 +148,7 @@ public class KonQuestGame extends PApplet
             // clear
             background(0,118,248);
             //background((int)random(255), (int)random(255), (int)random(255));
-
+            
             // Draw tiles
             fill(0);
             for (int i = 0; i < tiles.length; i++) {
