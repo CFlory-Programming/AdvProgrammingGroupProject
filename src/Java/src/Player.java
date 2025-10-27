@@ -15,7 +15,7 @@ public class Player
     int frame;
     int animSpeed;
     String state;
-
+    boolean outOfBounds;
 
     public Player(int height, int width, int x, int y, int score, int lives)
     {
@@ -169,12 +169,18 @@ public class Player
     }
 
     private boolean checkCollision(int tileX, int tileY, int tileSize, int[][] tiles, int[] collisionTiles) {
-        int tileindex = tiles[tileX / tileSize][tileY / tileSize];
-        for (int ct : collisionTiles) {
-            if (tileindex == ct) {
-                return true;
+        try {
+            int tileindex = tiles[tileX / tileSize][tileY / tileSize];
+            outOfBounds = false;
+            for (int ct : collisionTiles) {
+                if (tileindex == ct) {
+                    return true;
+                }
             }
+            return false;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            outOfBounds = true;
+            return false;
         }
-        return false;
     }
 }

@@ -105,6 +105,15 @@ public class KonQuestGame extends PApplet
         }
     }
 
+    public static void nextLevel()
+    {
+        level++;
+        Level level = new Level(tiles, tileSize);
+        level.readFromFile("data/" + level + ".txt");
+        tiles = level.getTiles();
+        setPosition(50, 4950, sketch.width, sketch.height);
+    }
+
     public void display()
     {
         
@@ -175,6 +184,7 @@ public class KonQuestGame extends PApplet
                         p1.walk('l');
                     }
                 } else if (keys[1]) {
+                } if (keys[1]) {
                     if (keys[3]) {
                         p1.run('r');
                     } else 
@@ -206,6 +216,10 @@ public class KonQuestGame extends PApplet
             }
             for(Lizard l : lizards) {
                 l.display(camX, camY);
+            }
+
+            if (p1.outOfBounds && p1.x >= tiles.length * tileSize) {
+                nextLevel();
             }
 
             // Camera slowly follows player
