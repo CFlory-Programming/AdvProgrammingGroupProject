@@ -13,6 +13,13 @@ public class KonQuestGame extends PApplet
 
     public static boolean pauseMenu = false;
 
+    // Menu buttons
+    private Button playButton;
+    private Button optionsButton;
+    private Button exitButton;
+    private static final int MAIN_MENU_BUTTON_WIDTH = 200;
+    private static final int MAIN_MENU_BUTTON_HEIGHT = 60;
+
     // shared coins list so main() can populate it before the sketch starts
     public static ArrayList<Coin> coins = new ArrayList<>();
 
@@ -130,8 +137,18 @@ public class KonQuestGame extends PApplet
         // store reference to sketch so other classes can draw
         // Set initial background color
         sketch = this;
+        sketch.windowResizable(true);
+
         background(0,118,248);
         setPosition(50, 4950, width, height);
+
+        // Initialize menu buttons
+        int buttonY = height - 200;
+        playButton = new Button(width/2 - MAIN_MENU_BUTTON_WIDTH - 120, buttonY, MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "PLAY", color(0, 150, 0), color(100, 200, 100));
+        
+        optionsButton = new Button(width/2 - MAIN_MENU_BUTTON_WIDTH/2, buttonY, MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "OPTIONS", color(0, 0, 150), color(100, 100, 200));
+        
+        exitButton = new Button(width/2 + 120, buttonY, MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "EXIT", color(150, 0, 0), color(200, 100, 100));
 
         // Load tile images
         for (int i = 0; i < tilesImg.length; i++) {
@@ -148,9 +165,24 @@ public class KonQuestGame extends PApplet
         if (mainMenu) {
             background(0, 0, 0);
             image(mainMenuImg, 0, 0);
-            if (keyPressed && (key == ENTER || key == RETURN)) {
+            
+            // Update and display buttons
+            playButton.update(mouseX, mouseY, mousePressed);
+            optionsButton.update(mouseX, mouseY, mousePressed);
+            exitButton.update(mouseX, mouseY, mousePressed);
+            
+            playButton.display();
+            optionsButton.display();
+            exitButton.display();
+            
+            // Handle button clicks
+            if (playButton.isClicked()) {
                 mainMenu = false;
             }
+            if (exitButton.isClicked()) {
+                exit();
+            }
+            // Options button has no functionality yet
         }
         else
         {
