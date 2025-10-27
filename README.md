@@ -94,8 +94,8 @@ This project requires **JDK 17 or higher** installed on your system.
 3. 🔓 Unzip the file
 4. 📂 Navigate to the project Java directory in a new terminal
 5. 🔨 Type ```javac -cp lib/core.jar src/*.java``` to **compile**
-6. ▶️ For **Windows**, type ```java -cp "lib/core.jar;src" KongQuestGame``` to **run**
-7. 🍎 For **Mac and Linux**, type ```java -cp "lib/core.jar:." src.KongQuestGame``` to **run**
+6. ▶️ For **Windows**, type ```java -cp "lib/core.jar;src" KonQuestGame``` to **run**
+7. 🍎 For **Mac and Linux**, type ```java -cp "lib/core.jar:src" KonQuestGame``` to **run**
 
 ---
 
