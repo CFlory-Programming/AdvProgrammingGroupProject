@@ -99,7 +99,7 @@ public class KonQuestGame extends PApplet
         if (p1.y-50 < height / 2) {
             camY = 50;
         } else if (p1.y+50 > tiles[0].length * tileSize - height / 2) {
-            camY = tiles[0].length * tileSize - height;
+            camY = tiles[0].length * tileSize - height - 50;
         } else {
             camY = p1.y - height / 2;
         }
