@@ -93,7 +93,9 @@ public class KonQuestGame extends PApplet
     public static void setPosition(int x, int y, int width, int height)
     {
         p1.x = x;
+        p1.speedX = 0;
         p1.y = y;
+        p1.speedY = 0;
         if (p1.x-50 < width / 2) {
             camX = 50;
         } else if (p1.x+50 > tiles.length * tileSize - width / 2) {
@@ -263,6 +265,12 @@ public class KonQuestGame extends PApplet
 
             if (p1.outOfBounds && p1.x >= tiles.length * tileSize) {
                 nextLevel();
+            }
+
+            if (p1.outOfBounds && p1.y > (tiles[0].length + 1) * tileSize) {
+                p1.lives--;
+                p1.outOfBounds = false;
+                setPosition(50, 4950, width, height);
             }
 
             // Camera slowly follows player
