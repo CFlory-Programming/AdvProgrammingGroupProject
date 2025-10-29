@@ -7,6 +7,7 @@ public class Button
     private int normalColor, hoverColor;
     private boolean isHovered;
     private boolean isClicked;
+    private boolean lastMousePressed = false; // for edge detection
     
     public Button(int x, int y, int width, int height, String label, int normalColor, int hoverColor)
     {
@@ -27,12 +28,14 @@ public class Button
         isHovered = mouseX >= x && mouseX <= x + width && 
                    mouseY >= y && mouseY <= y + height;
         
-        // Update click state
-        if (isHovered && mousePressed) {
+        // Update click state on rising edge (single click)
+        if (isHovered && mousePressed && !lastMousePressed) {
             isClicked = true;
         } else {
             isClicked = false;
         }
+
+        lastMousePressed = mousePressed;
     }
     
     public void display()
@@ -55,5 +58,18 @@ public class Button
     public boolean isClicked()
     {
         return isClicked;
+    }
+
+    /**
+     * Consume the click state and return true only once per click (edge).
+     */
+    public boolean consumeClick() {
+        boolean c = isClicked;
+        isClicked = false;
+        return c;
+    }
+
+    public void setLabel(String newLabel) {
+        this.label = newLabel;
     }
 }

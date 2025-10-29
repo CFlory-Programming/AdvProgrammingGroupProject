@@ -17,6 +17,9 @@ public class KonQuestGame extends PApplet
     private Button playButton;
     private Button optionsButton;
     private Button exitButton;
+    private Button backButton;
+    // Options menu state
+    private boolean optionsMenu = false;
 
     // shared coins list so main() can populate it before the sketch starts
     public static ArrayList<Coin> coins = new ArrayList<>();
@@ -178,23 +181,72 @@ public class KonQuestGame extends PApplet
             background(0, 0, 0);
             image(mainMenuImg, 0, 0);
             
-            // Update and display buttons
-            playButton.update(mouseX, mouseY, mousePressed);
-            optionsButton.update(mouseX, mouseY, mousePressed);
-            exitButton.update(mouseX, mouseY, mousePressed);
-            
-            playButton.display();
-            optionsButton.display();
-            exitButton.display();
-            
-            // Handle button clicks
-            if (playButton.isClicked()) {
-                mainMenu = false;
-            }
-            if (exitButton.isClicked()) {
-                exit();
-            }
-            // Options button has no functionality yet
+                // If options menu is not open, show main buttons
+                if (!optionsMenu) {
+                    // Update and display buttons
+                    playButton.update(mouseX, mouseY, mousePressed);
+                    optionsButton.update(mouseX, mouseY, mousePressed);
+                    exitButton.update(mouseX, mouseY, mousePressed);
+
+                    playButton.display();
+                    optionsButton.display();
+                    exitButton.display();
+
+                    // Handle button clicks (use consumeClick to act on single click)
+                    if (playButton.consumeClick()) {
+                        mainMenu = false;
+                    }
+
+                    if (optionsButton.consumeClick()) {
+                        // Open options overlay
+                        optionsMenu = true;
+                    }
+
+                    if (exitButton.consumeClick()) {
+                        exit();
+                    }
+                }
+                else {
+                    // Options menu open: hide main buttons and draw full-screen options UI
+                    pushStyle();
+                    fill(20, 20, 30);
+                    rect(0, 0, width, height);
+
+                    // Options content
+                    fill(255);
+                    textAlign(CENTER, TOP);
+                    textSize(36);
+                    text("OPTIONS", width/2, 40);
+                    
+                    // Keybinds section
+                    textAlign(LEFT, TOP);
+                    textSize(24);
+                    text("CONTROLS", 80, 120);
+                    textSize(18);
+                    text("Move Left: " + (keys[0] ? "A" : "a"), 100, 160);
+                    text("Move Right: " + (keys[1] ? "D" : "d"), 100, 190);
+                    text("Jump: " + (keys[2] ? "W" : "w"), 100, 220);
+                    text("Sprint: SHIFT", 100, 250);
+                    text("Pause/Menu: ESC", 100, 280);
+
+                    // Game settings section
+                    textSize(24);
+                    text("SETTINGS", 80, 350);
+                    textSize(18);
+                    text("Sound: ON (placeholder)", 100, 390);
+                    text("Graphics: Normal (placeholder)", 100, 420);
+                    text("Fullscreen: (placeholder)", 100, 450);
+
+                    // Update and display BACK button at bottom left
+                    if (backButton == null) {
+                        backButton = new Button(80, height - 100, 200, 60, "BACK", color(100,100,100), color(150,150,150));
+                    }
+                    backButton.update(mouseX, mouseY, mousePressed);
+                    backButton.display();
+                    if (backButton.consumeClick()) {
+                        optionsMenu = false;
+                    }
+                }
 
             text(mouseX + ", " + mouseY, 50, 10);
         }
