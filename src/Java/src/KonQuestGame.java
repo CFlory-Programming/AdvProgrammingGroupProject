@@ -197,7 +197,6 @@ public class KonQuestGame extends PApplet
             // Options button has no functionality yet
 
             text(mouseX + ", " + mouseY, 50, 10);
-            text(enemies.size(), 50, 10);
         }
         else
         {
