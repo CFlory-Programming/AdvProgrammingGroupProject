@@ -17,8 +17,6 @@ public class KonQuestGame extends PApplet
     private Button playButton;
     private Button optionsButton;
     private Button exitButton;
-    private static final int MAIN_MENU_BUTTON_WIDTH = 200;
-    private static final int MAIN_MENU_BUTTON_HEIGHT = 60;
 
     // shared coins list so main() can populate it before the sketch starts
     public static ArrayList<Coin> coins = new ArrayList<>();
@@ -142,13 +140,25 @@ public class KonQuestGame extends PApplet
         background(0,118,248);
         setPosition(50, 4950, width, height);
 
-        // Initialize menu buttons
-        int buttonY = height - 200;
-        playButton = new Button(width/2 - MAIN_MENU_BUTTON_WIDTH - 120, buttonY, MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "PLAY", color(0, 150, 0), color(100, 200, 100));
+                // Initialize menu buttons - stacked vertically in top left
+        int buttonX = 400;  // Distance from left edge
+        int startY = 450;   // Distance from top edge
+        int buttonSpacing = 150;  // Space between buttons
+
+         int MAIN_MENU_BUTTON_WIDTH = 200;
+        int MAIN_MENU_BUTTON_HEIGHT = 60;
         
-        optionsButton = new Button(width/2 - MAIN_MENU_BUTTON_WIDTH/2, buttonY, MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "OPTIONS", color(0, 0, 150), color(100, 100, 200));
+        playButton = new Button(buttonX-50, startY-10, 
+                              MAIN_MENU_BUTTON_WIDTH+100, MAIN_MENU_BUTTON_HEIGHT+20, "PLAY", 
+                              color(0, 150, 0), color(100, 200, 100));
         
-        exitButton = new Button(width/2 + 120, buttonY, MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "EXIT", color(150, 0, 0), color(200, 100, 100));
+        optionsButton = new Button(buttonX, startY + MAIN_MENU_BUTTON_HEIGHT + buttonSpacing,
+                                 MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "OPTIONS",
+                                 color(0, 0, 150), color(100, 100, 200));
+        
+        exitButton = new Button(buttonX, startY + (MAIN_MENU_BUTTON_HEIGHT + buttonSpacing) * 2,
+                              MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "EXIT",
+                              color(150, 0, 0), color(200, 100, 100));
 
         // Load tile images
         for (int i = 0; i < tilesImg.length; i++) {
