@@ -288,6 +288,12 @@ public class KonQuestGame extends PApplet
 
     @Override
     public void keyPressed() {
+        if (key == ESC) {
+            key = 0; // This prevents Processing from closing on ESC key
+            // Add your custom ESC key behavior here
+            // For example: pauseMenu = !pauseMenu;
+            mainMenu = !mainMenu;
+        }
         if ((key == 'a' || key == 'A')) {
             keys[0] = true;
         }
