@@ -183,6 +183,8 @@ public class KonQuestGame extends PApplet
                 exit();
             }
             // Options button has no functionality yet
+
+            text(mouseX + ", " + mouseY, 50, 10);
         }
         else
         {
