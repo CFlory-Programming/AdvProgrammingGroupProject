@@ -32,6 +32,12 @@ public class KonQuestGame extends PApplet
     public static int[][] tiles = new int[102][102];
 
     public static boolean[] keys = new boolean[4];
+    private char[] keyBindings = {'a', 'd', 'w', 's'};  // Default bindings for left, right, jump, sprint
+    private final char[] DEFAULT_BINDINGS = {'a', 'd', 'w', 's'};  // Store defaults for reset
+    private int selectedBinding = -1;  // -1 means no key is being rebound
+    private boolean waitingForKey = false;
+    private String bindingError = "";  // Show error message when key is already in use
+    private int errorTimer = 0;        // How long to show the error
 
     public static PImage[] tilesImg = new PImage[4];
     public static int[] collisionTiles = {1, 2};
@@ -207,35 +213,110 @@ public class KonQuestGame extends PApplet
                     }
                 }
                 else {
-                    // Options menu open: hide main buttons and draw full-screen options UI
+                    // Options menu open: semi-transparent overlay
                     pushStyle();
-                    fill(20, 20, 30);
+                    fill(20, 20, 30, 200); // Added alpha for transparency
                     rect(0, 0, width, height);
 
                     // Options content
-                    fill(255);
-                    textAlign(CENTER, TOP);
-                    textSize(36);
-                    text("OPTIONS", width/2, 40);
+                        // Options content - Main title
+                        fill(255);
+                        textAlign(CENTER, TOP);
+                        textSize(48);
+                        text("OPTIONS", width/2, height/8);
                     
-                    // Keybinds section
-                    textAlign(LEFT, TOP);
-                    textSize(24);
-                    text("CONTROLS", 80, 120);
-                    textSize(18);
-                    text("Move Left: " + (keys[0] ? "A" : "a"), 100, 160);
-                    text("Move Right: " + (keys[1] ? "D" : "d"), 100, 190);
-                    text("Jump: " + (keys[2] ? "W" : "w"), 100, 220);
-                    text("Sprint: SHIFT", 100, 250);
-                    text("Pause/Menu: ESC", 100, 280);
+                        // Center the controls section in the middle of the screen
+                        int centerX = width/2;
+                        int startY = height/4;  // Start a quarter down the screen
+                    
+                        // Keybinds section title
+                        textAlign(CENTER, TOP);
+                        textSize(32);
+                        text("CONTROLS", centerX, startY);
+                    
+                        // Calculate positions for the control section
+                        int sectionStartX = centerX - 200;  // Left align section content
+                        int bindingY = startY + 100;  // Start below the CONTROLS title
+                        int bindingSpacing = 45;  // Increased spacing between bindings
+                        String[] bindingLabels = {"Move Left", "Move Right", "Jump", "Sprint"};
+                    
+                        // Draw reset button centered above the bindings
+                        pushStyle();
+                        int resetBtnWidth = 160;
+                        int resetBtnHeight = 35;
+                        int resetBtnX = centerX - resetBtnWidth/2;
+                        int resetBtnY = bindingY - resetBtnHeight - 50;
+                    
+                        if (mousePressed && mouseX >= resetBtnX && mouseX <= resetBtnX + resetBtnWidth &&
+                            mouseY >= resetBtnY && mouseY <= resetBtnY + resetBtnHeight) {
+                            fill(150, 0, 0);  // Darker red when clicked
+                            // Reset bindings
+                            for (int i = 0; i < keyBindings.length; i++) {
+                                keyBindings[i] = DEFAULT_BINDINGS[i];
+                            }
+                        } else {
+                            fill(200, 0, 0);  // Normal red
+                        }
+                        rect(resetBtnX, resetBtnY, resetBtnWidth, resetBtnHeight);
+                        fill(255);
+                        textAlign(CENTER, CENTER);
+                        textSize(20);
+                        text("Reset to Default", centerX, resetBtnY + resetBtnHeight/2);
+                    
+                    for (int i = 0; i < keyBindings.length; i++) {
+                            // Draw each control row
+                            textAlign(RIGHT, CENTER);
+                            textSize(20);
+                            text(bindingLabels[i] + ": ", sectionStartX + 150, bindingY + i * bindingSpacing);
 
-                    // Game settings section
-                    textSize(24);
-                    text("SETTINGS", 80, 350);
-                    textSize(18);
-                    text("Sound: ON (placeholder)", 100, 390);
-                    text("Graphics: Normal (placeholder)", 100, 420);
-                    text("Fullscreen: (placeholder)", 100, 450);
+                            // Key button background
+                            int keyBtnX = sectionStartX + 170;
+                            int keyBtnY = bindingY + i * bindingSpacing - 15;
+                            if (selectedBinding == i) {
+                                fill(200, 200, 0);  // Yellow when selected
+                            } else {
+                                fill(60, 60, 60);  // Dark gray normally
+                            }
+                            rect(keyBtnX, keyBtnY, 80, 30);
+
+                            // Key text
+                            fill(255);
+                            textAlign(CENTER, CENTER);
+                            if (selectedBinding == i && waitingForKey) {
+                                text("Press Key", keyBtnX + 40, keyBtnY + 15);
+                            } else {
+                                text(String.valueOf(keyBindings[i]).toUpperCase(), keyBtnX + 40, keyBtnY + 15);
+                            }
+                        
+                        // Check for clicks on key buttons
+                            if (mousePressed && mouseX >= keyBtnX && mouseX <= keyBtnX + 80 &&
+                                mouseY >= keyBtnY && mouseY <= keyBtnY + 30) {
+                            selectedBinding = i;
+                            waitingForKey = true;
+                        }
+                    }
+                    
+                    // Show binding error if any
+                    if (!bindingError.isEmpty() && errorTimer > 0) {
+                        pushStyle();
+                        fill(200, 0, 0);
+                            textAlign(CENTER, CENTER);
+                            text(bindingError, centerX, bindingY + 6 * bindingSpacing);
+                        errorTimer--;
+                        if (errorTimer == 0) {
+                            bindingError = "";
+                        }
+                    }
+                    
+                    if (waitingForKey) {
+                        pushStyle();
+                        fill(0, 0, 0, 200);
+                        rect(width/2 - 200, height/2 - 50, 400, 100);
+                        fill(255);
+                        textAlign(CENTER, CENTER);
+                        textSize(24);
+                        text("Press any key to rebind\nESC to cancel", width/2, height/2);
+                    }
 
                     // Update and display BACK button at bottom left
                     if (backButton == null) {
@@ -373,43 +454,71 @@ public class KonQuestGame extends PApplet
 
     @Override
     public void keyPressed() {
+        if (waitingForKey && optionsMenu) {
+            if (key == ESC) {
+                // Cancel rebinding
+                waitingForKey = false;
+                selectedBinding = -1;
+            } else if (key != CODED) {
+                // Check for duplicate keys
+                char newKey = Character.toLowerCase(key);
+                boolean isDuplicate = false;
+                for (int i = 0; i < keyBindings.length; i++) {
+                    if (i != selectedBinding && keyBindings[i] == newKey) {
+                        isDuplicate = true;
+                        bindingError = "Key '" + newKey + "' is already in use!";
+                        errorTimer = 120; // Show error for 2 seconds (60 frames/second)
+                        break;
+                    }
+                }
+                
+                if (!isDuplicate) {
+                    // Assign new key binding
+                    keyBindings[selectedBinding] = newKey;
+                    waitingForKey = false;
+                    selectedBinding = -1;
+                }
+            }
+            key = 0;  // Prevent ESC from triggering menu
+            return;
+        }
+
         if (key == ESC) {
             key = 0; // This prevents Processing from closing on ESC key
-            // Add your custom ESC key behavior here
-            // For example: pauseMenu = !pauseMenu;
             mainMenu = !mainMenu;
         }
-        if ((key == 'a' || key == 'A')) {
+        
+        // Check custom keybindings
+        char pressedKey = Character.toLowerCase(key);
+        if (pressedKey == keyBindings[0]) {
             keys[0] = true;
         }
-        if ((key == 'd' || key == 'D')) {
+        if (pressedKey == keyBindings[1]) {
             keys[1] = true;
         }
-        if ((key == 'w' || key == 'W')) {
+        if (pressedKey == keyBindings[2]) {
             keys[2] = true;
         }
-        if (key == CODED) {
-            if (keyCode == SHIFT) {
-                keys[3] = true;
-            }
+        if (pressedKey == keyBindings[3]) {
+            keys[3] = true;
         }
     }
 
     @Override
     public void keyReleased() {
-        if ((key == 'a' || key == 'A')) {
+        // Check custom keybindings
+        char releasedKey = Character.toLowerCase(key);
+        if (releasedKey == keyBindings[0]) {
             keys[0] = false;
         }
-        if ((key == 'd' || key == 'D')) {
+        if (releasedKey == keyBindings[1]) {
             keys[1] = false;
         }
-        if ((key == 'w' || key == 'W')) {
+        if (releasedKey == keyBindings[2]) {
             keys[2] = false;
         }
-        if (key == CODED) {
-            if (keyCode == SHIFT) {
-                keys[3] = false;
-            }
+        if (releasedKey == keyBindings[3]) {
+            keys[3] = false;
         }
     }
 }
