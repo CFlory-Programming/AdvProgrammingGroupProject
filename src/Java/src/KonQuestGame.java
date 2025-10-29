@@ -326,7 +326,14 @@ public class KonQuestGame extends PApplet
             }
 
             for (int i = 0; i < enemies.size(); i++) {
+                // Check if enemy is out of bounds
                 if (enemies.get(i).outOfBounds && enemies.get(i).y > (tiles[0].length + 1) * tileSize) {
+                    enemies.remove(i);
+                    i--;
+                }
+
+                // Check if enemy is dead
+                else if (enemies.get(i).health <= 0) {
                     enemies.remove(i);
                     i--;
                 }
