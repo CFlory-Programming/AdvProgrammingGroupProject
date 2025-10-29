@@ -197,6 +197,7 @@ public class KonQuestGame extends PApplet
             // Options button has no functionality yet
 
             text(mouseX + ", " + mouseY, 50, 10);
+            text(enemies.size(), 50, 10);
         }
         else
         {
@@ -271,6 +272,13 @@ public class KonQuestGame extends PApplet
                 p1.lives--;
                 p1.outOfBounds = false;
                 setPosition(50, 4950, width, height);
+            }
+
+            for (int i = 0; i < enemies.size(); i++) {
+                if (enemies.get(i).outOfBounds && enemies.get(i).y > (tiles[0].length + 1) * tileSize) {
+                    enemies.remove(i);
+                    i--;
+                }
             }
 
             // Camera slowly follows player
