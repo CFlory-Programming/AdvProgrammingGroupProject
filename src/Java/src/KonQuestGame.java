@@ -26,7 +26,6 @@ public class KonQuestGame extends PApplet
 
     public static Player p1;
     public static ArrayList<Enemy> enemies = new ArrayList<>();
-    public static ArrayList<Lizard> lizards = new ArrayList<>();
 
     public static int score = 0, lives = 3, level = 1, camX = 50, camY = 50, tileSize = 50;
     public static int[][] tiles = new int[102][102];
@@ -87,7 +86,7 @@ public class KonQuestGame extends PApplet
             l = new Lizard(100*i + 100, 100);
             e = new Enemy(100*i + 100, 100);
             enemies.add(e);
-            lizards.add(l);
+            enemies.add(l);
         }
         
         // create a couple of test coins before starting the Processing sketch
@@ -383,17 +382,10 @@ public class KonQuestGame extends PApplet
                 e.ai(tiles, p1, collisionTiles);
                 e.update(tiles, p1, collisionTiles);
             }
-            for(Lizard l : lizards) {
-                l.ai(tiles, p1, collisionTiles);
-                l.update(tiles, p1,  collisionTiles);
-            }
 
             p1.display(camX, camY);
             for(Enemy e : enemies) {
                 e.display(camX, camY);
-            }
-            for(Lizard l : lizards) {
-                l.display(camX, camY);
             }
 
             if (p1.outOfBounds && p1.x >= tiles.length * tileSize) {
