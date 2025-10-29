@@ -19,14 +19,14 @@ public class Lizard extends Enemy{
             }
             super.ai(tiles, p1, collisionTiles);
         } else {
-            if (direction && !collideX(x, y, tiles, collisionTiles)) {
+            if (direction && (!collideX(x, y, tiles, collisionTiles))) {
                 move(2, 'r', false);
-                if (collideX(x + 1, y, tiles, collisionTiles)) {
+                if (collideX(x + 1, y, tiles, collisionTiles) || x + 150 >= 50 * tiles.length) {
                     direction = false;
                 }
-            } else if (!direction && !collideX(x, y, tiles, collisionTiles)) {
+            } else if (!direction && (!collideX(x, y, tiles, collisionTiles))) {
                 move(2, 'l', false);
-                if (collideX(x - 1, y, tiles, collisionTiles)) {
+                if (collideX(x - 1, y, tiles, collisionTiles) || x <= 0) {
                     direction = true;
                 }
             }
