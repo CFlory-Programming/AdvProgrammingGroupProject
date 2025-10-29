@@ -105,8 +105,8 @@ public class KonQuestGame extends PApplet
         }
         if (p1.y-50 < height / 2) {
             camY = 50;
-        } else if (p1.y+50 > tiles[0].length * tileSize - height / 2) {
-            camY = tiles[0].length * tileSize - height - 50;
+        } else if (p1.y+50 > (tiles[0].length + 1) * tileSize - height / 2) {
+            camY = (tiles[0].length + 1) * tileSize - height - 50;
         } else {
             camY = p1.y - height / 2;
         }
@@ -216,7 +216,6 @@ public class KonQuestGame extends PApplet
                         p1.walk('l');
                     }
                 } else if (keys[1]) {
-                } if (keys[1]) {
                     if (keys[3]) {
                         p1.run('r');
                     } else 
@@ -264,8 +263,8 @@ public class KonQuestGame extends PApplet
             }
             if (p1.y-50 < height / 2) {
                 camY += -(camY-50) * 0.05;
-            } else if (p1.y+50 > tiles[0].length * tileSize - height / 2) {
-                camY += (tiles[0].length * tileSize - (camY+50) - height) * 0.05;
+            } else if (p1.y+50 > (tiles[0].length + 1) * tileSize - height / 2) {
+                camY += ((tiles[0].length + 1) * tileSize - (camY+50) - height) * 0.05;
             } else {
                 camY += (p1.y - (camY) - height / 2) * 0.05;
             }

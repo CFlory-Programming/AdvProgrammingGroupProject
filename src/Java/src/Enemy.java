@@ -9,6 +9,7 @@ public class Enemy
     int y;
     int health;
     boolean inAir;
+    boolean outOfBounds;
     
     public Enemy(int x, int y)
     {
@@ -141,12 +142,18 @@ public class Enemy
     }
 
     private boolean checkCollision(int tileX, int tileY, int tileSize, int[][] tiles, int[] collisionTiles) {
-        int tileindex = tiles[tileX / tileSize][tileY / tileSize];
-        for (int ct : collisionTiles) {
-            if (tileindex == ct) {
-                return true;
+        try {
+            int tileindex = tiles[tileX / tileSize][tileY / tileSize];
+            outOfBounds = false;
+            for (int ct : collisionTiles) {
+                if (tileindex == ct) {
+                    return true;
+                }
             }
+            return false;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            outOfBounds = true;
+            return false;
         }
-        return false;
     }
 }
