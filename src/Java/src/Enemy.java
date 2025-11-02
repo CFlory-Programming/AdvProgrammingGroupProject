@@ -136,7 +136,7 @@ public class Enemy
         }
 
         // Check if player is touching the enemy's head
-        if (p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y + p1.height < y + headHeight) {
+        if (p1.speedY > 0 && p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y + p1.height < y + headHeight) {
             // Player is touching the enemy's head
             health -= 100; // Reduce enemy health
             p1.jump(); // Make the player bounce up  
