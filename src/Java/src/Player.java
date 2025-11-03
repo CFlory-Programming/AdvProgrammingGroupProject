@@ -15,6 +15,7 @@ public class Player
     int frame;
     int animSpeed;
     String state;
+    boolean dead;
     boolean outOfBounds;
 
     public Player(int height, int width, int x, int y, int score, int lives)
@@ -115,11 +116,8 @@ public class Player
 
     public void die()
     {
-        lives -= 1;
-        // x = 100;
-        // y = 100;
-        speedX = 0;
-        speedY = 0;
+        dead = true;
+        lives--;
     }
     
     public void display(int camX, int camY)

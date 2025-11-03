@@ -15,8 +15,6 @@ public class KonQuestGame extends PApplet
 
     public static boolean animationPlaying = false;
 
-    public static boolean died = false;
-
     public static int animationFrame = 0;
 
     // Menu buttons
@@ -342,7 +340,7 @@ public class KonQuestGame extends PApplet
             text(mouseX + ", " + mouseY, 50, 10);
         }
         else if(animationPlaying) {
-            if (died) {
+            if (p1.dead) {
                 if (animationFrame < 30) {
                     background(0,118,248);
                     fill(0);
@@ -398,7 +396,7 @@ public class KonQuestGame extends PApplet
                 } else {
                     animationPlaying = false;
                     animationFrame = 0;
-                    died = false;
+                    p1.dead = false;
                 }
             }
             animationFrame++;
@@ -467,10 +465,8 @@ public class KonQuestGame extends PApplet
             }
 
             if (p1.outOfBounds && p1.y > (tiles[0].length + 1) * tileSize) {
-                p1.lives--;
-                died = true;
+                p1.die();
                 animationPlaying = true;
-                animationFrame = 0;
             }
 
             for (int i = 0; i < enemies.size(); i++) {
