@@ -112,6 +112,15 @@ public class Player
     {
         
     }
+
+    public void die()
+    {
+        lives -= 1;
+        // x = 100;
+        // y = 100;
+        speedX = 0;
+        speedY = 0;
+    }
     
     public void display(int camX, int camY)
     {
