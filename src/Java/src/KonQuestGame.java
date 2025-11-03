@@ -226,7 +226,7 @@ public class KonQuestGame extends PApplet
             tilesImg[i] = loadImage("Tile" + i + ".png");
         }
 
-        barrel = new LevelObject(loadImage("Barrel.png"), 500, 4900, 50, 50);
+        barrel = new LevelObject(loadImage("Barrel.png"), 500, 5000, 50, 50);
 
         mainMenuImg = loadImage("MainMenu.png");
         mainMenuImg.resize(width, height);
@@ -499,11 +499,12 @@ public class KonQuestGame extends PApplet
                 e.update(tiles, p1, collisionTiles);
             }
 
+            barrel.display(camX, camY);
+
             p1.display(camX, camY);
             for(Enemy e : enemies) {
                 e.display(camX, camY);
             }
-            barrel.display(camX, camY);
 
             if (p1.outOfBounds && p1.x >= tiles.length * tileSize) {
                 nextLevel();
