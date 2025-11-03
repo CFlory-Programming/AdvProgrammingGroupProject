@@ -13,6 +13,12 @@ public class KonQuestGame extends PApplet
 
     public static boolean pauseMenu = false;
 
+    public static boolean animationPlaying = false;
+
+    public static boolean died = false;
+
+    public static int animationFrame = 0;
+
     // Menu buttons
     private Button playButton;
     private Button optionsButton;
@@ -335,6 +341,66 @@ public class KonQuestGame extends PApplet
 
             text(mouseX + ", " + mouseY, 50, 10);
         }
+        else if(animationPlaying) {
+            if (died) {
+                if (animationFrame < 30) {
+                    background(0,118,248);
+                    fill(0);
+                    for (int i = 0; i < tiles.length; i++) {
+                        for (int j = 0; j < tiles[i].length; j++) {
+                            if (tiles[i][j] != 0) {
+                                //Only draw tiles that are on screen (with a little buffer)
+                                if (i * tileSize - camX < -tileSize || i * tileSize - camX > width + tileSize || j * tileSize - camY < -tileSize || j * tileSize - camY > height + tileSize) {
+                                continue;
+                                }
+
+                                //rect(i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
+                                image(tilesImg[tiles[i][j]], i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
+                            }
+                        }
+                    }
+                    p1.display(camX, camY);
+                    for(Enemy e : enemies) {
+                        e.display(camX, camY);
+                    }
+                    // Play death animation (simple fade out for example)
+                    fill(0, 0, 0, map(animationFrame, 0, 30, 0, 255));
+                    rect(0, 0, width, height);
+                } else if (animationFrame == 30) {
+                    p1.outOfBounds = false;
+                    setPosition(50, 4950, width, height);
+                } else if (animationFrame < 45) {
+                    // Hold black screen for a moment
+                } else if (animationFrame < 75) {
+                    background(0,118,248);
+                    fill(0);
+                    for (int i = 0; i < tiles.length; i++) {
+                        for (int j = 0; j < tiles[i].length; j++) {
+                            if (tiles[i][j] != 0) {
+                                //Only draw tiles that are on screen (with a little buffer)
+                                if (i * tileSize - camX < -tileSize || i * tileSize - camX > width + tileSize || j * tileSize - camY < -tileSize || j * tileSize - camY > height + tileSize) {
+                                continue;
+                                }
+
+                                //rect(i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
+                                image(tilesImg[tiles[i][j]], i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
+                            }
+                        }
+                    }
+                    p1.display(camX, camY);
+                    for(Enemy e : enemies) {
+                        e.display(camX, camY);
+                    }
+                    fill(0, 0, 0, map(75 - animationFrame, 0, 30, 0, 255));
+                    rect(0, 0, width, height);
+                } else {
+                    animationPlaying = false;
+                    animationFrame = 0;
+                    died = false;
+                }
+            }
+            animationFrame++;
+        }
         else
         {
             // clear
@@ -400,8 +466,9 @@ public class KonQuestGame extends PApplet
 
             if (p1.outOfBounds && p1.y > (tiles[0].length + 1) * tileSize) {
                 p1.lives--;
-                p1.outOfBounds = false;
-                setPosition(50, 4950, width, height);
+                died = true;
+                animationPlaying = true;
+                animationFrame = 0;
             }
 
             for (int i = 0; i < enemies.size(); i++) {
