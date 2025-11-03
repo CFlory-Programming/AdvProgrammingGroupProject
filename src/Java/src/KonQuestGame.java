@@ -464,7 +464,7 @@ public class KonQuestGame extends PApplet
                 nextLevel();
             }
 
-            if (p1.outOfBounds && p1.y > (tiles[0].length + 1) * tileSize) {
+            if ((p1.outOfBounds && p1.y > (tiles[0].length + 1) * tileSize) || p1.dead) {
                 p1.die();
                 animationPlaying = true;
             }
