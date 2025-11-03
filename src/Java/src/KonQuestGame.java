@@ -37,12 +37,55 @@ public class KonQuestGame extends PApplet
     public static int[][] tiles = new int[102][102];
 
     public static boolean[] keys = new boolean[4];
-    private char[] keyBindings = {'a', 'd', 'w', 's'};  // Default bindings for left, right, jump, sprint
-    private final char[] DEFAULT_BINDINGS = {'a', 'd', 'w', 's'};  // Store defaults for reset
+    // Store bindings as strings so we can save either a char (e.g. "a") or a keyCode integer (e.g. "16")
+    private String[] keyBindings = {"a", "d", "w", String.valueOf(SHIFT)};  // Default bindings for left, right, jump, sprint
+    private String[] defaultBindings = {"a", "d", "w", String.valueOf(SHIFT)};  // Store defaults for reset
     private int selectedBinding = -1;  // -1 means no key is being rebound
     private boolean waitingForKey = false;
     private String bindingError = "";  // Show error message when key is already in use
     private int errorTimer = 0;        // How long to show the error
+
+    // Return a readable name for a stored binding string. If the string is numeric
+    // we treat it as a keyCode integer and map to friendly names where possible.
+    private String bindingName(String s) {
+        if (s == null)
+            return "";
+        // Check if string is numeric (keyCode stored as string)
+        boolean isNumber = true;
+        for (int i = 0; i < s.length(); i++) {
+            if (!Character.isDigit(s.charAt(i)))
+                {
+                    isNumber = false;
+                    break;
+                }
+        }
+        if (isNumber) {
+            int v = Integer.parseInt(s);
+            if (v == CONTROL)
+                return "CONTROL";
+            if (v == SHIFT)
+                return "SHIFT";
+            if (v == ALT)
+                return "ALT";
+            if (v == LEFT)
+                return "LEFT";
+            if (v == RIGHT)
+                return "RIGHT";
+            if (v == UP)
+                return "UP";
+            if (v == DOWN)
+                return "DOWN";
+            if (v == TAB)
+                return "TAB";
+            if (v == ENTER)
+                return "ENTER";
+            if (v == BACKSPACE)
+                return "BACKSPACE";
+            if (v == DELETE) return "DELETE";
+            return "KEY_" + v;
+        }
+        return s.toUpperCase();
+    }
 
     public static PImage[] tilesImg = new PImage[4];
     public static int[] collisionTiles = {1, 2};
@@ -158,9 +201,9 @@ public class KonQuestGame extends PApplet
         setPosition(50, 4950, width, height);
 
                 // Initialize menu buttons - stacked vertically in top left
-        int buttonX = 400;  // Distance from left edge
-        int startY = 450;   // Distance from top edge
-        int buttonSpacing = 150;  // Space between buttons
+        int buttonX = (width / 2) - 500;  // Distance from left edge
+        int startY = (height / 2) - 50;   // Distance from top edge
+        int buttonSpacing = height / 7;  // Space between buttons
 
          int MAIN_MENU_BUTTON_WIDTH = 200;
         int MAIN_MENU_BUTTON_HEIGHT = 60;
@@ -222,7 +265,6 @@ public class KonQuestGame extends PApplet
                 }
                 else {
                     // Options menu open: semi-transparent overlay
-                    pushStyle();
                     fill(20, 20, 30, 200); // Added alpha for transparency
                     rect(0, 0, width, height);
 
@@ -231,11 +273,11 @@ public class KonQuestGame extends PApplet
                         fill(255);
                         textAlign(CENTER, TOP);
                         textSize(48);
-                        text("OPTIONS", width/2, height/8);
+                        text("OPTIONS", width / 2, height / 8);
                     
                         // Center the controls section in the middle of the screen
-                        int centerX = width/2;
-                        int startY = height/4;  // Start a quarter down the screen
+                        int centerX = width / 2;
+                        int startY = height / 4;  // Start a quarter down the screen
                     
                         // Keybinds section title
                         textAlign(CENTER, TOP);
@@ -244,7 +286,7 @@ public class KonQuestGame extends PApplet
                     
                         // Calculate positions for the control section
                         int sectionStartX = centerX - 200;  // Left align section content
-                        int bindingY = startY + 100;  // Start below the CONTROLS title
+                        int bindingY = startY + 200;  // Start below the CONTROLS title
                         int bindingSpacing = 45;  // Increased spacing between bindings
                         String[] bindingLabels = {"Move Left", "Move Right", "Jump", "Sprint"};
                     
@@ -252,15 +294,15 @@ public class KonQuestGame extends PApplet
                         pushStyle();
                         int resetBtnWidth = 160;
                         int resetBtnHeight = 35;
-                        int resetBtnX = centerX - resetBtnWidth/2;
-                        int resetBtnY = bindingY - resetBtnHeight - 50;
+                        int resetBtnX = centerX - resetBtnWidth / 2;
+                        int resetBtnY = bindingY - resetBtnHeight - 80;
                     
                         if (mousePressed && mouseX >= resetBtnX && mouseX <= resetBtnX + resetBtnWidth &&
                             mouseY >= resetBtnY && mouseY <= resetBtnY + resetBtnHeight) {
                             fill(150, 0, 0);  // Darker red when clicked
                             // Reset bindings
                             for (int i = 0; i < keyBindings.length; i++) {
-                                keyBindings[i] = DEFAULT_BINDINGS[i];
+                                keyBindings[i] = defaultBindings[i];
                             }
                         } else {
                             fill(200, 0, 0);  // Normal red
@@ -293,7 +335,7 @@ public class KonQuestGame extends PApplet
                             if (selectedBinding == i && waitingForKey) {
                                 text("Press Key", keyBtnX + 40, keyBtnY + 15);
                             } else {
-                                text(String.valueOf(keyBindings[i]).toUpperCase(), keyBtnX + 40, keyBtnY + 15);
+                                text(bindingName(keyBindings[i]), keyBtnX + 40, keyBtnY + 15);
                             }
                         
                         // Check for clicks on key buttons
@@ -306,7 +348,6 @@ public class KonQuestGame extends PApplet
                     
                     // Show binding error if any
                     if (!bindingError.isEmpty() && errorTimer > 0) {
-                        pushStyle();
                         fill(200, 0, 0);
                             textAlign(CENTER, CENTER);
                             text(bindingError, centerX, bindingY + 6 * bindingSpacing);
@@ -317,7 +358,6 @@ public class KonQuestGame extends PApplet
                     }
                     
                     if (waitingForKey) {
-                        pushStyle();
                         fill(0, 0, 0, 200);
                         rect(width/2 - 200, height/2 - 50, 400, 100);
                         fill(255);
@@ -535,22 +575,31 @@ public class KonQuestGame extends PApplet
                 // Cancel rebinding
                 waitingForKey = false;
                 selectedBinding = -1;
-            } else if (key != CODED) {
+            } else {
+                // Build a string for the new binding: numeric keyCode for CODED events,
+                // or lowercase character for normal keys.
+                String newKeyStr;
+
+                if (key == CODED) {
+                    newKeyStr = String.valueOf(keyCode);
+                } else {
+                    newKeyStr = String.valueOf(Character.toLowerCase(key));
+                }
+
                 // Check for duplicate keys
-                char newKey = Character.toLowerCase(key);
                 boolean isDuplicate = false;
                 for (int i = 0; i < keyBindings.length; i++) {
-                    if (i != selectedBinding && keyBindings[i] == newKey) {
+                    if (i != selectedBinding && keyBindings[i].equalsIgnoreCase(newKeyStr)) {
                         isDuplicate = true;
-                        bindingError = "Key '" + newKey + "' is already in use!";
+                        bindingError = "Key '" + bindingName(newKeyStr) + "' is already in use!";
                         errorTimer = 120; // Show error for 2 seconds (60 frames/second)
                         break;
                     }
                 }
-                
+
                 if (!isDuplicate) {
-                    // Assign new key binding
-                    keyBindings[selectedBinding] = newKey;
+                    // Assign new key binding (store numeric codes as strings, and chars lowercased)
+                    keyBindings[selectedBinding] = newKeyStr.toLowerCase();
                     waitingForKey = false;
                     selectedBinding = -1;
                 }
@@ -564,37 +613,33 @@ public class KonQuestGame extends PApplet
             mainMenu = !mainMenu;
         }
         
-        // Check custom keybindings
-        char pressedKey = Character.toLowerCase(key);
-        if (pressedKey == keyBindings[0]) {
-            keys[0] = true;
+        // Check custom keybindings. If the event is CODED compare against stored keyCode string
+        String pressedName;
+        if (key == CODED) {
+            pressedName = String.valueOf(keyCode);
+        } else {
+            pressedName = String.valueOf(Character.toLowerCase(key));
         }
-        if (pressedKey == keyBindings[1]) {
-            keys[1] = true;
-        }
-        if (pressedKey == keyBindings[2]) {
-            keys[2] = true;
-        }
-        if (pressedKey == keyBindings[3]) {
-            keys[3] = true;
+        for (int i = 0; i < keyBindings.length; i++) {
+            if (pressedName.equalsIgnoreCase(keyBindings[i])) {
+                keys[i] = true;
+            }
         }
     }
 
     @Override
     public void keyReleased() {
-        // Check custom keybindings
-        char releasedKey = Character.toLowerCase(key);
-        if (releasedKey == keyBindings[0]) {
-            keys[0] = false;
+        // Check custom keybindings on release (mirrors keyPressed logic)
+        String releasedName;
+        if (key == CODED) {
+            releasedName = String.valueOf(keyCode);
+        } else {
+            releasedName = String.valueOf(Character.toLowerCase(key));
         }
-        if (releasedKey == keyBindings[1]) {
-            keys[1] = false;
-        }
-        if (releasedKey == keyBindings[2]) {
-            keys[2] = false;
-        }
-        if (releasedKey == keyBindings[3]) {
-            keys[3] = false;
+        for (int i = 0; i < keyBindings.length; i++) {
+            if (releasedName.equalsIgnoreCase(keyBindings[i])) {
+                keys[i] = false;
+            }
         }
     }
 }
