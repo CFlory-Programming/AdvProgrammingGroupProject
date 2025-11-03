@@ -38,7 +38,7 @@ public class Player
     
     public void jump()
     {
-        speedY = -10;
+        speedY = -11;
     }
     
     public void walk(char direction)
