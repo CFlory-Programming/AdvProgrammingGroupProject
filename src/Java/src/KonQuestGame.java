@@ -363,6 +363,7 @@ public class KonQuestGame extends PApplet
                     for(Enemy e : enemies) {
                         e.display(camX, camY);
                     }
+                    barrel.display(camX, camY);
                     // Play death animation (simple fade out for example)
                     fill(0, 0, 0, map(animationFrame, 0, 30, 0, 255));
                     rect(0, 0, width, height);
@@ -391,6 +392,7 @@ public class KonQuestGame extends PApplet
                     for(Enemy e : enemies) {
                         e.display(camX, camY);
                     }
+                    barrel.display(camX, camY);
                     fill(0, 0, 0, map(75 - animationFrame, 0, 30, 0, 255));
                     rect(0, 0, width, height);
                 } else {
