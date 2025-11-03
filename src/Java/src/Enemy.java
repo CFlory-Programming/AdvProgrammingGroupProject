@@ -140,6 +140,9 @@ public class Enemy
             // Player is touching the enemy's head
             health -= 100; // Reduce enemy health
             p1.jump(); // Make the player bounce up  
+        } else if (p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y < y + height) {
+            // Player is touching the enemy's body
+            p1.die(); // Player dies
         }
     }
 
