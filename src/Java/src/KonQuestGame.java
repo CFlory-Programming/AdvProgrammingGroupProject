@@ -368,6 +368,11 @@ public class KonQuestGame extends PApplet
                 } else if (animationFrame == 30) {
                     p1.outOfBounds = false;
                     setPosition(50, 4950, width, height);
+                    enemies = new ArrayList<>();
+                    for(int i = 0; i < 20; i++) {
+                        enemies.add(new Lizard(100*i + 100, 100));
+                        enemies.add(new Enemy(100*i + 100, 100));
+                    }
                 } else if (animationFrame < 45) {
                     // Hold black screen for a moment
                 } else if (animationFrame < 75) {
