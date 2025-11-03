@@ -4,9 +4,11 @@ public class Enemy
     int height;
     int width;
     int x;
+    int startX;
     float speedX;
     float speedY;
     int y;
+    int startY;
     int health;
     int headHeight;
     boolean inAir;
@@ -18,6 +20,8 @@ public class Enemy
         width = 50;
         this.x = x;
         this.y = y;
+        startX = x;
+        startY = y;
         health = 100;
         headHeight = 20;
         speedX = 0;
@@ -50,6 +54,12 @@ public class Enemy
     public boolean isHit()
     {
         return true;
+    }
+
+    public void setPosition(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
     }
 
     public void ai(int[][] tiles, Player p1, int[] collisionTiles)
