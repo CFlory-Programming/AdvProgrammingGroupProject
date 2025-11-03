@@ -7,23 +7,14 @@ public class KonQuestGame extends PApplet
     // static reference to the running Processing sketch so other classes can draw
     public static PApplet sketch;
 
-    public static boolean mainMenu = true;
-
-    public static PImage mainMenuImg;
+    // UI is handled by a separate helper to keep this class slimmer
+    private GameUI ui;
 
     public static boolean pauseMenu = false;
 
     public static boolean animationPlaying = false;
 
     public static int animationFrame = 0;
-
-    // Menu buttons
-    private Button playButton;
-    private Button optionsButton;
-    private Button exitButton;
-    private Button backButton;
-    // Options menu state
-    private boolean optionsMenu = false;
 
     // shared coins list so main() can populate it before the sketch starts
     public static ArrayList<Coin> coins = new ArrayList<>();
@@ -37,55 +28,6 @@ public class KonQuestGame extends PApplet
     public static int[][] tiles = new int[102][102];
 
     public static boolean[] keys = new boolean[4];
-    // Store bindings as strings so we can save either a char (e.g. "a") or a keyCode integer (e.g. "16")
-    private String[] keyBindings = {"a", "d", "w", String.valueOf(SHIFT)};  // Default bindings for left, right, jump, sprint
-    private String[] defaultBindings = {"a", "d", "w", String.valueOf(SHIFT)};  // Store defaults for reset
-    private int selectedBinding = -1;  // -1 means no key is being rebound
-    private boolean waitingForKey = false;
-    private String bindingError = "";  // Show error message when key is already in use
-    private int errorTimer = 0;        // How long to show the error
-
-    // Return a readable name for a stored binding string. If the string is numeric
-    // we treat it as a keyCode integer and map to friendly names where possible.
-    private String bindingName(String s) {
-        if (s == null)
-            return "";
-        // Check if string is numeric (keyCode stored as string)
-        boolean isNumber = true;
-        for (int i = 0; i < s.length(); i++) {
-            if (!Character.isDigit(s.charAt(i)))
-                {
-                    isNumber = false;
-                    break;
-                }
-        }
-        if (isNumber) {
-            int v = Integer.parseInt(s);
-            if (v == CONTROL)
-                return "CONTROL";
-            if (v == SHIFT)
-                return "SHIFT";
-            if (v == ALT)
-                return "ALT";
-            if (v == LEFT)
-                return "LEFT";
-            if (v == RIGHT)
-                return "RIGHT";
-            if (v == UP)
-                return "UP";
-            if (v == DOWN)
-                return "DOWN";
-            if (v == TAB)
-                return "TAB";
-            if (v == ENTER)
-                return "ENTER";
-            if (v == BACKSPACE)
-                return "BACKSPACE";
-            if (v == DELETE) return "DELETE";
-            return "KEY_" + v;
-        }
-        return s.toUpperCase();
-    }
 
     public static PImage[] tilesImg = new PImage[4];
     public static int[] collisionTiles = {1, 2};
@@ -200,26 +142,9 @@ public class KonQuestGame extends PApplet
         background(0,118,248);
         setPosition(50, 4950, width, height);
 
-                // Initialize menu buttons - stacked vertically in top left
-        int buttonX = (width / 2) - 500;  // Distance from left edge
-        int startY = (height / 2) - 50;   // Distance from top edge
-        int buttonSpacing = height / 7;  // Space between buttons
-
-         int MAIN_MENU_BUTTON_WIDTH = 200;
-        int MAIN_MENU_BUTTON_HEIGHT = 60;
-        
-        playButton = new Button(buttonX-50, startY-10, 
-                              MAIN_MENU_BUTTON_WIDTH+100, MAIN_MENU_BUTTON_HEIGHT+20, "PLAY", 
-                              color(0, 150, 0), color(100, 200, 100));
-        
-        optionsButton = new Button(buttonX, startY + MAIN_MENU_BUTTON_HEIGHT + buttonSpacing,
-                                 MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "OPTIONS",
-                                 color(0, 0, 150), color(100, 100, 200));
-        
-        exitButton = new Button(buttonX, startY + (MAIN_MENU_BUTTON_HEIGHT + buttonSpacing) * 2,
-                              MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "EXIT",
-                              color(150, 0, 0), color(200, 100, 100));
-
+        // Initialize UI helper (delegates menu and options UI)
+    ui = new GameUI(this);
+    ui.setupUI();
         // Load tile images
         for (int i = 0; i < tilesImg.length; i++) {
             if (i != 0)
@@ -228,156 +153,14 @@ public class KonQuestGame extends PApplet
 
         barrel = new LevelObject(loadImage("Barrel.png"), 500, 5000, 50, 50);
 
-        mainMenuImg = loadImage("MainMenu.png");
-        mainMenuImg.resize(width, height);
+    // main menu image and buttons initialized in GameUI.setupUI()
     }
 
     @Override
     public void draw() {
-        if (mainMenu) {
-            background(0, 0, 0);
-            image(mainMenuImg, 0, 0);
-            
-                // If options menu is not open, show main buttons
-                if (!optionsMenu) {
-                    // Update and display buttons
-                    playButton.update(mouseX, mouseY, mousePressed);
-                    optionsButton.update(mouseX, mouseY, mousePressed);
-                    exitButton.update(mouseX, mouseY, mousePressed);
-
-                    playButton.display();
-                    optionsButton.display();
-                    exitButton.display();
-
-                    // Handle button clicks (use consumeClick to act on single click)
-                    if (playButton.consumeClick()) {
-                        mainMenu = false;
-                    }
-
-                    if (optionsButton.consumeClick()) {
-                        // Open options overlay
-                        optionsMenu = true;
-                    }
-
-                    if (exitButton.consumeClick()) {
-                        exit();
-                    }
-                }
-                else {
-                    // Options menu open: semi-transparent overlay
-                    fill(20, 20, 30, 200); // Added alpha for transparency
-                    rect(0, 0, width, height);
-
-                    // Options content
-                        // Options content - Main title
-                        fill(255);
-                        textAlign(CENTER, TOP);
-                        textSize(48);
-                        text("OPTIONS", width / 2, height / 8);
-                    
-                        // Center the controls section in the middle of the screen
-                        int centerX = width / 2;
-                        int startY = height / 4;  // Start a quarter down the screen
-                    
-                        // Keybinds section title
-                        textAlign(CENTER, TOP);
-                        textSize(32);
-                        text("CONTROLS", centerX, startY);
-                    
-                        // Calculate positions for the control section
-                        int sectionStartX = centerX - 200;  // Left align section content
-                        int bindingY = startY + 200;  // Start below the CONTROLS title
-                        int bindingSpacing = 45;  // Increased spacing between bindings
-                        String[] bindingLabels = {"Move Left", "Move Right", "Jump", "Sprint"};
-                    
-                        // Draw reset button centered above the bindings
-                        pushStyle();
-                        int resetBtnWidth = 160;
-                        int resetBtnHeight = 35;
-                        int resetBtnX = centerX - resetBtnWidth / 2;
-                        int resetBtnY = bindingY - resetBtnHeight - 80;
-                    
-                        if (mousePressed && mouseX >= resetBtnX && mouseX <= resetBtnX + resetBtnWidth &&
-                            mouseY >= resetBtnY && mouseY <= resetBtnY + resetBtnHeight) {
-                            fill(150, 0, 0);  // Darker red when clicked
-                            // Reset bindings
-                            for (int i = 0; i < keyBindings.length; i++) {
-                                keyBindings[i] = defaultBindings[i];
-                            }
-                        } else {
-                            fill(200, 0, 0);  // Normal red
-                        }
-                        rect(resetBtnX, resetBtnY, resetBtnWidth, resetBtnHeight);
-                        fill(255);
-                        textAlign(CENTER, CENTER);
-                        textSize(20);
-                        text("Reset to Default", centerX, resetBtnY + resetBtnHeight/2);
-                    
-                    for (int i = 0; i < keyBindings.length; i++) {
-                            // Draw each control row
-                            textAlign(RIGHT, CENTER);
-                            textSize(20);
-                            text(bindingLabels[i] + ": ", sectionStartX + 150, bindingY + i * bindingSpacing);
-
-                            // Key button background
-                            int keyBtnX = sectionStartX + 170;
-                            int keyBtnY = bindingY + i * bindingSpacing - 15;
-                            if (selectedBinding == i) {
-                                fill(200, 200, 0);  // Yellow when selected
-                            } else {
-                                fill(60, 60, 60);  // Dark gray normally
-                            }
-                            rect(keyBtnX, keyBtnY, 80, 30);
-
-                            // Key text
-                            fill(255);
-                            textAlign(CENTER, CENTER);
-                            if (selectedBinding == i && waitingForKey) {
-                                text("Press Key", keyBtnX + 40, keyBtnY + 15);
-                            } else {
-                                text(bindingName(keyBindings[i]), keyBtnX + 40, keyBtnY + 15);
-                            }
-                        
-                        // Check for clicks on key buttons
-                            if (mousePressed && mouseX >= keyBtnX && mouseX <= keyBtnX + 80 &&
-                                mouseY >= keyBtnY && mouseY <= keyBtnY + 30) {
-                            selectedBinding = i;
-                            waitingForKey = true;
-                        }
-                    }
-                    
-                    // Show binding error if any
-                    if (!bindingError.isEmpty() && errorTimer > 0) {
-                        fill(200, 0, 0);
-                            textAlign(CENTER, CENTER);
-                            text(bindingError, centerX, bindingY + 6 * bindingSpacing);
-                        errorTimer--;
-                        if (errorTimer == 0) {
-                            bindingError = "";
-                        }
-                    }
-                    
-                    if (waitingForKey) {
-                        fill(0, 0, 0, 200);
-                        rect(width/2 - 200, height/2 - 50, 400, 100);
-                        fill(255);
-                        textAlign(CENTER, CENTER);
-                        textSize(24);
-                        text("Press any key to rebind\nESC to cancel", width/2, height/2);
-                    }
-
-                    // Update and display BACK button at bottom left
-                    if (backButton == null) {
-                        backButton = new Button(80, height - 100, 200, 60, "BACK", color(100,100,100), color(150,150,150));
-                    }
-                    backButton.update(mouseX, mouseY, mousePressed);
-                    backButton.display();
-                    if (backButton.consumeClick()) {
-                        optionsMenu = false;
-                    }
-                }
-
-            text(mouseX + ", " + mouseY, 50, 10);
+        if (ui != null && ui.mainMenu) {
+            ui.drawMainMenu();
+            return;
         }
         else if(animationPlaying) {
             if (p1.dead) {
@@ -571,76 +354,14 @@ public class KonQuestGame extends PApplet
 
     @Override
     public void keyPressed() {
-        if (waitingForKey && optionsMenu) {
-            if (key == ESC) {
-                // Cancel rebinding
-                waitingForKey = false;
-                selectedBinding = -1;
-            } else {
-                // Build a string for the new binding: numeric keyCode for CODED events,
-                // or lowercase character for normal keys.
-                String newKeyStr;
-
-                if (key == CODED) {
-                    newKeyStr = String.valueOf(keyCode);
-                } else {
-                    newKeyStr = String.valueOf(Character.toLowerCase(key));
-                }
-
-                // Check for duplicate keys
-                boolean isDuplicate = false;
-                for (int i = 0; i < keyBindings.length; i++) {
-                    if (i != selectedBinding && keyBindings[i].equalsIgnoreCase(newKeyStr)) {
-                        isDuplicate = true;
-                        bindingError = "Key '" + bindingName(newKeyStr) + "' is already in use!";
-                        errorTimer = 120; // Show error for 2 seconds (60 frames/second)
-                        break;
-                    }
-                }
-
-                if (!isDuplicate) {
-                    // Assign new key binding (store numeric codes as strings, and chars lowercased)
-                    keyBindings[selectedBinding] = newKeyStr.toLowerCase();
-                    waitingForKey = false;
-                    selectedBinding = -1;
-                }
-            }
-            key = 0;  // Prevent ESC from triggering menu
+        // Delegate keyboard handling for UI (rebinding, ESC for menu, and custom bindings)
+        if (ui != null && ui.handleKeyPressed()) {
             return;
-        }
-
-        if (key == ESC) {
-            key = 0; // This prevents Processing from closing on ESC key
-            mainMenu = !mainMenu;
-        }
-        
-        // Check custom keybindings. If the event is CODED compare against stored keyCode string
-        String pressedName;
-        if (key == CODED) {
-            pressedName = String.valueOf(keyCode);
-        } else {
-            pressedName = String.valueOf(Character.toLowerCase(key));
-        }
-        for (int i = 0; i < keyBindings.length; i++) {
-            if (pressedName.equalsIgnoreCase(keyBindings[i])) {
-                keys[i] = true;
-            }
         }
     }
 
     @Override
     public void keyReleased() {
-        // Check custom keybindings on release (mirrors keyPressed logic)
-        String releasedName;
-        if (key == CODED) {
-            releasedName = String.valueOf(keyCode);
-        } else {
-            releasedName = String.valueOf(Character.toLowerCase(key));
-        }
-        for (int i = 0; i < keyBindings.length; i++) {
-            if (releasedName.equalsIgnoreCase(keyBindings[i])) {
-                keys[i] = false;
-            }
-        }
+        if (ui != null) ui.handleKeyReleased();
     }
 }
