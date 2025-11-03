@@ -474,6 +474,14 @@ public class KonQuestGame extends PApplet
                 animationPlaying = true;
             }
 
+            if (p1.immune) {
+                // Simple timer for immunity (e.g., 60 frames = 1 second at 60 FPS)
+                final int IMMUNITY_DURATION = 60;
+                if (frameCount % IMMUNITY_DURATION == 0) {
+                    p1.immune = false;
+                }
+            }
+
             for (int i = 0; i < enemies.size(); i++) {
                 // Check if enemy is out of bounds
                 if (enemies.get(i).outOfBounds && enemies.get(i).y > (tiles[0].length + 1) * tileSize) {

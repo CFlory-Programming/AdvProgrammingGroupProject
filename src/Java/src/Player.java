@@ -15,6 +15,7 @@ public class Player
     int frame;
     int animSpeed;
     String state;
+    boolean immune;
     boolean dead;
     boolean outOfBounds;
 
@@ -32,6 +33,7 @@ public class Player
         frame = 0;
         animSpeed = 10;
         state = "Idle";
+        immune = false;
     }
     
     public void jump()
