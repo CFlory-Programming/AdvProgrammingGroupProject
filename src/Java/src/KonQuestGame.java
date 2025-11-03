@@ -476,7 +476,7 @@ public class KonQuestGame extends PApplet
 
             if (p1.immune) {
                 // Simple timer for immunity (e.g., 60 frames = 1 second at 60 FPS)
-                final int IMMUNITY_DURATION = 60;
+                final int IMMUNITY_DURATION = 30;
                 if (frameCount % IMMUNITY_DURATION == 0) {
                     p1.immune = false;
                 }
