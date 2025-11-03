@@ -27,6 +27,8 @@ public class KonQuestGame extends PApplet
     public static Player p1;
     public static ArrayList<Enemy> enemies = new ArrayList<>();
 
+    public static LevelObject barrel;
+
     public static int score = 0, lives = 3, level = 1, camX = 50, camY = 50, tileSize = 50;
     public static int[][] tiles = new int[102][102];
 
@@ -93,6 +95,7 @@ public class KonQuestGame extends PApplet
         coins.add(new Coin(100, 100, 1));
         coins.add(new Coin(200, 150, 1));
         coins.add(new Coin(300, 80, 1));
+
 
         // start the Processing sketch
         PApplet.main("KonQuestGame");
@@ -175,6 +178,8 @@ public class KonQuestGame extends PApplet
             if (i != 0)
             tilesImg[i] = loadImage("Tile" + i + ".png");
         }
+
+        barrel = new LevelObject(loadImage("Barrel.png"), 500, 4900, 50, 50);
 
         mainMenuImg = loadImage("MainMenu.png");
         mainMenuImg.resize(width, height);
@@ -387,6 +392,7 @@ public class KonQuestGame extends PApplet
             for(Enemy e : enemies) {
                 e.display(camX, camY);
             }
+            barrel.display(camX, camY);
 
             if (p1.outOfBounds && p1.x >= tiles.length * tileSize) {
                 nextLevel();
