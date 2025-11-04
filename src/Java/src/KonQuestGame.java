@@ -279,7 +279,7 @@ public class KonQuestGame extends PApplet
             p1.update(tiles, collisionTiles, keys[0] || keys[1]);
             for(Enemy e : enemies) {
                 e.ai(tiles, p1, collisionTiles);
-                e.update(tiles, p1, collisionTiles);
+                e.update(tiles, p1, collisionTiles, enemies);
             }
 
             barrel.display(camX, camY);
@@ -296,14 +296,6 @@ public class KonQuestGame extends PApplet
             if ((p1.outOfBounds && p1.y > (tiles[0].length + 1) * tileSize) || p1.dead) {
                 p1.die();
                 animationPlaying = true;
-            }
-
-            if (p1.immune) {
-                // Simple timer for immunity (e.g., 60 frames = 1 second at 60 FPS)
-                final int IMMUNITY_DURATION = 30;
-                if (frameCount % IMMUNITY_DURATION == 0) {
-                    p1.immune = false;
-                }
             }
 
             for (int i = 0; i < enemies.size(); i++) {

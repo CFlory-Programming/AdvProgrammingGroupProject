@@ -1,4 +1,5 @@
 import processing.core.PImage;
+import java.util.ArrayList;
 
 public class Player
 {
@@ -15,7 +16,7 @@ public class Player
     int frame;
     int animSpeed;
     String state;
-    boolean immune;
+    boolean attacked;
     boolean dead;
     boolean outOfBounds;
 
@@ -33,7 +34,7 @@ public class Player
         frame = 0;
         animSpeed = 10;
         state = "Idle";
-        immune = false;
+        attacked = false;
     }
     
     public void jump()
@@ -174,6 +175,19 @@ public class Player
             speedY = 0;
         } else {
             inAir = true;
+        }
+    }
+
+    public void checkEnemyCollision(ArrayList<Enemy> enemies) {
+        boolean touchingEnemy = false;
+        for (Enemy enemy : enemies) {
+            // Check if player is touching the enemy's body
+            if ((x + width > enemy.x && x < enemy.x + enemy.width && y + height > enemy.y && y < enemy.y + enemy.height)) {
+                touchingEnemy = true;
+            }
+        }
+        if (!touchingEnemy) {
+            attacked = false; // Reset player's attacked status when not colliding with any enemy
         }
     }
 

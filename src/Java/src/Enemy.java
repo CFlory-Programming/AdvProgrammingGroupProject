@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Enemy
 {
 
@@ -23,7 +25,7 @@ public class Enemy
         startX = x;
         startY = y;
         health = 100;
-        headHeight = 20;
+        headHeight = 10;
         speedX = 0;
         speedY = 0;
         inAir = true;
@@ -106,7 +108,7 @@ public class Enemy
         return false;
     }
 
-    public void update(int[][] tiles, Player p1, int[] collisionTiles)
+    public void update(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
     {
         ai(tiles, p1, collisionTiles);
         // Update enemy position based on speed
@@ -146,15 +148,16 @@ public class Enemy
         }
 
         // Check if player is touching the enemy's head
-        if (p1.speedY > -5 && p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y + p1.height < y + headHeight) {
+        if (p1.speedY > 0 && p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y + p1.height < y + headHeight) {
             // Player is touching the enemy's head
             health -= 100; // Reduce enemy health
             p1.jump(); // Make the player bounce up  
-            p1.immune = false; // Make the player immune for a short time
-        } else if (!p1.immune && p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y < y + height) {
+            p1.attacked = true; // Make the player immune for a short time
+        } else if (!p1.attacked && p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y < y + height) {
             // Player is touching the enemy's body
             p1.die(); // Player dies
         }
+        p1.checkEnemyCollision(enemies);
     }
 
     public void display(int camX, int camY)
