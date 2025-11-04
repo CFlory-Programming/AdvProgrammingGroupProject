@@ -23,4 +23,13 @@ public class LevelObject
     {
         KonQuestGame.sketch.image(sprite, x - camX, y - camY);
     }
+
+    public boolean collidesWith(Player player)
+    {
+        if (player.x + player.width > x && player.x < x + width &&
+            player.y + player.height > y && player.y < y + height) {
+            return true;
+        }
+        return false;
+    }
 }

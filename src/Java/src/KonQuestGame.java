@@ -22,7 +22,7 @@ public class KonQuestGame extends PApplet
     public static Player p1;
     public static ArrayList<Enemy> enemies = new ArrayList<>();
 
-    public static LevelObject barrel;
+    public static LaunchBarrel barrel;
 
     public static int score = 0, lives = 3, level = 1, camX = 50, camY = 50, tileSize = 50;
     public static int[][] tiles = new int[102][102];
@@ -151,7 +151,7 @@ public class KonQuestGame extends PApplet
             tilesImg[i] = loadImage("Tile" + i + ".png");
         }
 
-        barrel = new LevelObject(loadImage("Barrel.png"), 500, 5000, 50, 50);
+        barrel = new LaunchBarrel(loadImage("Barrel.png"), 500, 5000, 50, 50, 1);
 
     // main menu image and buttons initialized in GameUI.setupUI()
     }
