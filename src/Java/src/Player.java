@@ -10,6 +10,12 @@ public class Player
     int y;
     int score;
     int lives;
+    int health;
+    int maxHealth;
+    int stamina;
+    int maxStamina;
+    int staminaRechargeCooldown;
+    boolean isMoving;
     double speedX;
     double speedY;
     boolean inAir;
@@ -35,6 +41,12 @@ public class Player
         animSpeed = 10;
         state = "Idle";
         attacked = false;
+        dead = false;
+        health = 100;
+        maxHealth = 100;
+        stamina = 500;
+        maxStamina = 500;
+        staminaRechargeCooldown = 0;
     }
     
     public void jump()
@@ -44,6 +56,7 @@ public class Player
     
     public void walk(char direction)
     {
+        isMoving = true;
         if (!inAir) {
             if (speedX == 0 && direction == 'r') {
                 speedX = 1;
@@ -79,36 +92,43 @@ public class Player
     
     public void run(char direction)
     {
-        if (!inAir) {
-            if (speedX == 0 && direction == 'r') {
-                speedX = 1;
-            } else if (speedX == 0 && direction == 'l') {
-                speedX = -1;
-            }
-            if (direction == 'r' && speedX<=7.2) {
-                speedX += 0.8;
-            } else if (direction == 'l' && speedX>=-7.2) {
-                speedX -= 0.8;
-            } else if (direction == 'r') {
-                speedX = 8;
-            } else if (direction == 'l') {
-                speedX = -8;
+        isMoving = true;
+        if (stamina > 5) {  // Require some minimum stamina to start running
+            staminaRechargeCooldown = 30;  // 1 second at 60 FPS
+            stamina = Math.max(0, stamina - 3);  // Prevent negative stamina
+            if (!inAir) {
+                if (speedX == 0 && direction == 'r') {
+                    speedX = 1;
+                } else if (speedX == 0 && direction == 'l') {
+                    speedX = -1;
+                }
+                if (direction == 'r' && speedX<=7.2) {
+                    speedX += 0.8;
+                } else if (direction == 'l' && speedX>=-7.2) {
+                    speedX -= 0.8;
+                } else if (direction == 'r') {
+                    speedX = 8;
+                } else if (direction == 'l') {
+                    speedX = -8;
+                }
+            } else {
+                if (speedX == 0 && direction == 'r') {
+                    speedX = 1;
+                } else if (speedX == 0 && direction == 'l') {
+                    speedX = -1;
+                }
+                if (direction == 'r' && speedX<=7.6) {
+                    speedX += 0.4;
+                } else if (direction == 'l' && speedX>=-7.6) {
+                    speedX -= 0.4;
+                } else if (direction == 'r') {
+                    speedX = 8;
+                } else if (direction == 'l') {
+                    speedX = -8;
+                }
             }
         } else {
-            if (speedX == 0 && direction == 'r') {
-                speedX = 1;
-            } else if (speedX == 0 && direction == 'l') {
-                speedX = -1;
-            }
-            if (direction == 'r' && speedX<=7.6) {
-                speedX += 0.4;
-            } else if (direction == 'l' && speedX>=-7.6) {
-                speedX -= 0.4;
-            } else if (direction == 'r') {
-                speedX = 8;
-            } else if (direction == 'l') {
-                speedX = -8;
-            }
+            walk(direction);
         }
     }
     
@@ -120,6 +140,8 @@ public class Player
     public void die()
     {
         dead = true;
+        health = maxHealth;
+        stamina = maxStamina;
         lives--;
     }
     
@@ -131,10 +153,39 @@ public class Player
         // PImage sprite = KonQuestGame.sketch.loadImage(state + frame + ".png");
         // sprite.resize(width, height);
         // KonQuestGame.sketch.image(sprite, x - camX, y - camY);
+
+        // Health bar in top right corner of screen
+        KonQuestGame.sketch.fill(0);
+        KonQuestGame.sketch.rect(10, 10, 200, 20);
+        KonQuestGame.sketch.fill(255, 0, 0);
+        int healthWidth = (int) ((health / (double) maxHealth) * 200);
+        KonQuestGame.sketch.rect(10, 10, healthWidth, 20);
+
+        // Stamina bar in top right corner of screen, below health bar
+        KonQuestGame.sketch.fill(0);
+        KonQuestGame.sketch.rect(10, 40, 200, 20);
+        KonQuestGame.sketch.fill(0, 0, 255);
+        int staminaWidth = Math.max(0, (int) ((Math.min(stamina, maxStamina) / (double) maxStamina) * 200));
+        KonQuestGame.sketch.rect(10, 40, staminaWidth, 20);
     }
 
     public void update(int[][] tiles, int[] collisionTiles, boolean pressed)
     {
+        // Stamina regeneration logic
+        if (staminaRechargeCooldown > 0) {
+            staminaRechargeCooldown--;
+        } else if (stamina < maxStamina) {
+            // Regenerate stamina faster when standing still, slower when walking
+            if (!isMoving) {
+                stamina = Math.min(maxStamina, stamina + 2);  // Faster regeneration when still
+            } else {
+                stamina = Math.min(maxStamina, stamina + 1);  // Slower regeneration when moving
+            }
+        }
+        
+        // Reset movement flag each frame
+        isMoving = false;
+
         // Update player position based on speed
         speedY += 0.5; // Gravity
 
@@ -175,6 +226,10 @@ public class Player
             speedY = 0;
         } else {
             inAir = true;
+        }
+
+        if (health <= 0 && !dead) {
+            die();
         }
     }
 

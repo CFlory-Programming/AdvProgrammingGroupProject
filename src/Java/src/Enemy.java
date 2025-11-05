@@ -155,7 +155,22 @@ public class Enemy
             p1.attacked = true; // Make the player immune for a short time
         } else if (!p1.attacked && p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y < y + height) {
             // Player is touching the enemy's body
-            p1.die(); // Player dies
+            //p1.die(); // Player dies
+            p1.health -= 20;
+            p1.attacked = true; // Make the player immune for a short time
+
+            // Knockback effect
+            if (p1.x + p1.width / 2 < x + width / 2) {
+                // Player is to the left of the enemy
+                p1.speedX = -10;
+                p1.speedY = -5;
+                speedX = 5;
+            } else {
+                // Player is to the right of the enemy
+                p1.speedX = 10;
+                p1.speedY = -5;
+                speedX = -5;
+            }
         }
         p1.checkEnemyCollision(enemies);
     }
