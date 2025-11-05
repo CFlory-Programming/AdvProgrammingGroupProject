@@ -240,6 +240,8 @@ public class KonQuestGame extends PApplet
             // clear
             background(0,118,248);
             //background((int)random(255), (int)random(255), (int)random(255));
+
+            HUD.display(p1);
             
             // Draw tiles
             fill(0);

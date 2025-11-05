@@ -168,18 +168,18 @@ public class Player
         // KonQuestGame.sketch.image(sprite, x - camX, y - camY);
 
         // Health bar in top right corner of screen
-        KonQuestGame.sketch.fill(0);
-        KonQuestGame.sketch.rect(10, 10, 200, 20);
-        KonQuestGame.sketch.fill(255, 0, 0);
-        int healthWidth = (int) ((health / (double) maxHealth) * 200);
-        KonQuestGame.sketch.rect(10, 10, healthWidth, 20);
+        // KonQuestGame.sketch.fill(0);
+        // KonQuestGame.sketch.rect(10, 10, 200, 20);
+        // KonQuestGame.sketch.fill(255, 0, 0);
+        // int healthWidth = (int) ((health / (double) maxHealth) * 200);
+        // KonQuestGame.sketch.rect(10, 10, healthWidth, 20);
 
         // Stamina bar in top right corner of screen, below health bar
-        KonQuestGame.sketch.fill(0);
-        KonQuestGame.sketch.rect(10, 40, 200, 20);
-        KonQuestGame.sketch.fill(0, 0, 255);
-        int staminaWidth = Math.max(0, (int) ((Math.min(stamina, maxStamina) / (double) maxStamina) * 200));
-        KonQuestGame.sketch.rect(10, 40, staminaWidth, 20);
+        // KonQuestGame.sketch.fill(0);
+        // KonQuestGame.sketch.rect(10, 40, 200, 20);
+        // KonQuestGame.sketch.fill(0, 0, 255);
+        // int staminaWidth = Math.max(0, (int) ((Math.min(stamina, maxStamina) / (double) maxStamina) * 200));
+        // KonQuestGame.sketch.rect(10, 40, staminaWidth, 20);
     }
 
     public void update(int[][] tiles, int[] collisionTiles, boolean pressed)
