@@ -101,6 +101,7 @@ public class Player
     
     public void run(char direction)
     {
+        launched = false;
         isMoving = true;
         if (stamina > 5) {  // Require some minimum stamina to start running
             staminaRechargeCooldown = 30;  // 1 second at 60 FPS
