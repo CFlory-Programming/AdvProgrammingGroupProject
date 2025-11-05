@@ -16,6 +16,8 @@ public class KonQuestGame extends PApplet
 
     public static int animationFrame = 0;
 
+    public static boolean interact = false;
+
     // shared coins list so main() can populate it before the sketch starts
     public static ArrayList<Coin> coins = new ArrayList<>();
 
@@ -31,7 +33,7 @@ public class KonQuestGame extends PApplet
     public static int cameraBottomMargin = 0;
     public static int[][] tiles = new int[102][102];
 
-    public static boolean[] keys = new boolean[4];
+    public static boolean[] keys = new boolean[5];
 
     public static PImage[] tilesImg = new PImage[4];
     public static int[] collisionTiles = {1, 2};
@@ -278,6 +280,11 @@ public class KonQuestGame extends PApplet
                         p1.inAir = true;
                     }
                 }
+                if (keys[4]) {
+                    interact = true;
+                } else {
+                    interact = false;
+                }
             }
 
             p1.update(tiles, collisionTiles, keys[0] || keys[1]);
@@ -286,7 +293,7 @@ public class KonQuestGame extends PApplet
                 e.update(tiles, p1, collisionTiles, enemies);
             }
 
-            barrel.update(p1);
+            barrel.update(p1, !interact);
             barrel.display(camX, camY);
 
             p1.display(camX, camY);
@@ -345,7 +352,7 @@ public class KonQuestGame extends PApplet
             fill(255, 0, 0);
             textAlign(RIGHT, TOP);
             textSize(16);
-            text("Total value: " + totalCoins, width - 10, 10); //x is 10px from the right edge, y is 10px from the top
+            text("Total value: " + interact, width - 10, 10); //x is 10px from the right edge, y is 10px from the top
         }
     }
 

@@ -11,47 +11,59 @@ public class LaunchBarrel extends LevelObject
         this.direction = direction;
     }
 
-    public void update(Player player)
+    public void update(Player player, boolean wait)
     {
         if (collidesWith(player)) {
-            launch(player);
+            player.launching = true;
+            player.launched = true;
+            player.visible = false;
+            launch(player, wait);
+        } else {
+            player.launching = false;
+            player.visible = true;
         }
     }
     
-    public void launch(Player player)
+    public void launch(Player player, boolean wait)
     {
         // Launch the player in the barrel's direction.
+        if (wait) {
+            player.speedX = 0;
+            player.speedY = 0;
+            player.x = x + (width - player.width) / 2;
+            player.y = y + (height - player.height) / 2;
+        } else {
         switch (direction) {
             case 1: // Up
-                player.speedY = -15;
+                player.speedY = -50;
                 break;
             case 3: // Right
-                player.speedX = 15;
+                player.speedX = 50;
                 break;
             case 5: // Down
-                player.speedY = 15;
+                player.speedY = 50;
                 break;
             case 7: // Left
-                player.speedX = -15;
+                player.speedX = -50;
                 break;
             case 2: // Up-Right
-                player.speedX = 10;
-                player.speedY = -10;
+                player.speedX = 30;
+                player.speedY = -30;
                 break;
             case 4: // Down-Right
-                player.speedX = 10;
-                player.speedY = 10;
+                player.speedX = 30;
+                player.speedY = 30;
                 break;
             case 6: // Down-Left
-                player.speedX = -10;
-                player.speedY = 10;
+                player.speedX = -30;
+                player.speedY = 30;
                 break;
             case 8: // Up-Left
-                player.speedX = -10;
-                player.speedY = -10;
+                player.speedX = -30;
+                player.speedY = -30;
                 break;
         }
-
+        }
     }
 
     public void display(int camX, int camY)

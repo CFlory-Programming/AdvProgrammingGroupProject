@@ -22,6 +22,9 @@ public class Player
     int frame;
     int animSpeed;
     String state;
+    boolean visible;
+    boolean launching;
+    boolean launched;
     boolean attacked;
     boolean dead;
     boolean outOfBounds;
@@ -47,16 +50,22 @@ public class Player
         stamina = 500;
         maxStamina = 500;
         staminaRechargeCooldown = 0;
+        visible = true;
+        dead = false;
+        outOfBounds = false;
+        launching = false;
     }
     
     public void jump()
     {
+        launched = false;
         speedY = -11;
     }
     
     public void walk(char direction)
     {
         isMoving = true;
+        launched = false;
         if (!inAir) {
             if (speedX == 0 && direction == 'r') {
                 speedX = 1;
@@ -147,6 +156,9 @@ public class Player
     
     public void display(int camX, int camY)
     {
+        if (!visible) {
+            return;
+        }
         KonQuestGame.sketch.noStroke();
         KonQuestGame.sketch.fill(255,0,0);
         KonQuestGame.sketch.rect(x - camX, y - camY, width, height);
@@ -195,7 +207,7 @@ public class Player
 
         if (!pressed) {
             if (!inAir) speedX *= 0.85; //Friction
-            else speedX *= 0.9; //Air resistance
+            else if (!launched) speedX *= 0.9; //Air resistance
             if ((int) speedX == 0){
                 speedX = 0;
             }
@@ -205,6 +217,7 @@ public class Player
         x += speedX;
         boolean collideX = checkCollision(x, y + height/2, 50, tiles, collisionTiles) || checkCollision(x, y, 50, tiles, collisionTiles) || (checkCollision(x, y + height, 50, tiles, collisionTiles) && y%50!=0) || checkCollision(x + width, y + height/2, 50, tiles, collisionTiles) || checkCollision(x + width, y, 50, tiles, collisionTiles) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && y%50!=0);
         if (collideX) {
+            launched = false;
             if(speedX>0) {
               x = 50*(x/50);
             } else if(speedX<0) {
@@ -217,6 +230,7 @@ public class Player
         y += speedY;
         boolean collideY = checkCollision(x, y + height, 50, tiles, collisionTiles) || (checkCollision(x + width, y + height, 50, tiles, collisionTiles) && x%50!=0) || checkCollision(x, y, 50, tiles, collisionTiles) || (checkCollision(x + width, y, 50, tiles, collisionTiles) && x%50!=0);
         if (collideY) {
+            launched = false;
             if(speedY>=0){
               y = 50*(y/50);
                 inAir = false;
