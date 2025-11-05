@@ -2,11 +2,11 @@ import processing.core.PImage;
 
 public class LevelObject
 {
-    int x;
-    int y;
-    int height;
-    int width;
-    PImage sprite;
+    public int x;
+    public int y;
+    public int height;
+    public int width;
+    public PImage sprite;
 
     public LevelObject(PImage sprite, int x, int y, int height, int width)
     {
