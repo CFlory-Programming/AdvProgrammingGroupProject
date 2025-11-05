@@ -177,9 +177,9 @@ public class Player
         } else if (stamina < maxStamina) {
             // Regenerate stamina faster when standing still, slower when walking
             if (!isMoving) {
-                stamina = Math.min(maxStamina, stamina + 2);  // Faster regeneration when still
+                stamina = Math.min(maxStamina, stamina + 4);  // Faster regeneration when still
             } else {
-                stamina = Math.min(maxStamina, stamina + 1);  // Slower regeneration when moving
+                stamina = Math.min(maxStamina, stamina + 2);  // Slower regeneration when moving
             }
         }
         
