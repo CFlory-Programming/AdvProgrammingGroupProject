@@ -25,6 +25,10 @@ public class KonQuestGame extends PApplet
     public static LaunchBarrel barrel;
 
     public static int score = 0, lives = 3, level = 1, camX = 50, camY = 50, tileSize = 50;
+    public static int cameraLeftMargin = 50;
+    public static int cameraRightMargin = 50;
+    public static int cameraTopMargin = 50;
+    public static int cameraBottomMargin = 0;
     public static int[][] tiles = new int[102][102];
 
     public static boolean[] keys = new boolean[4];
@@ -96,17 +100,17 @@ public class KonQuestGame extends PApplet
         p1.speedX = 0;
         p1.y = y;
         p1.speedY = 0;
-        if (p1.x-50 < width / 2) {
-            camX = 50;
-        } else if (p1.x+50 > tiles.length * tileSize - width / 2) {
-            camX = tiles.length * tileSize - width;
+        if (p1.x-cameraLeftMargin < width / 2) {
+            camX = cameraLeftMargin;
+        } else if (p1.x+cameraRightMargin > tiles.length * tileSize - width / 2) {
+            camX = tiles.length * tileSize - width - cameraRightMargin;
         } else {
             camX = p1.x - width / 2;
         }
-        if (p1.y-50 < height / 2) {
-            camY = 50;
-        } else if (p1.y+50 > (tiles[0].length + 1) * tileSize - height / 2) {
-            camY = (tiles[0].length + 1) * tileSize - height - 50;
+        if (p1.y-cameraTopMargin < height / 2) {
+            camY = cameraTopMargin;
+        } else if (p1.y+cameraBottomMargin > (tiles[0].length) * tileSize - height / 2) {
+            camY = (tiles[0].length) * tileSize - height - cameraBottomMargin;
         } else {
             camY = p1.y - height / 2;
         }
@@ -313,17 +317,17 @@ public class KonQuestGame extends PApplet
             }
 
             // Camera slowly follows player
-            if (p1.x-50 < width / 2) {
-                camX += -(camX-50) * 0.05;
-            } else if (p1.x+50 > tiles.length * tileSize - width / 2) {
-                camX += (tiles.length * tileSize - (camX+50) - width) * 0.05;
+            if (p1.x-cameraLeftMargin < width / 2) {
+                camX += -(camX-cameraLeftMargin) * 0.05;
+            } else if (p1.x+cameraRightMargin > tiles.length * tileSize - width / 2) {
+                camX += (tiles.length * tileSize - (camX+cameraRightMargin) - width) * 0.05;
             } else {
                 camX += (p1.x - (camX) - width / 2) * 0.05;
             }
-            if (p1.y-50 < height / 2) {
-                camY += -(camY-50) * 0.05;
-            } else if (p1.y+50 > (tiles[0].length + 1) * tileSize - height / 2) {
-                camY += ((tiles[0].length + 1) * tileSize - (camY+50) - height) * 0.05;
+            if (p1.y-cameraTopMargin < height / 2) {
+                camY += -(camY-cameraTopMargin) * 0.05;
+            } else if (p1.y+cameraBottomMargin > (tiles[0].length) * tileSize - height / 2) {
+                camY += ((tiles[0].length) * tileSize - (camY+cameraBottomMargin) - height) * 0.05;
             } else {
                 camY += (p1.y - (camY) - height / 2) * 0.05;
             }
