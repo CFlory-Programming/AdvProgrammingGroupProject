@@ -1,8 +1,8 @@
 public class LevelGeneration {
-    int[][] tiles;
-    int tileSize;
-    int width;
-    int height;
+    public int[][] tiles;
+    public int tileSize;
+    public int width;
+    public int height;
 
     public LevelGeneration(int[][] tiles, int tileSize) {
         this.tiles = tiles;
