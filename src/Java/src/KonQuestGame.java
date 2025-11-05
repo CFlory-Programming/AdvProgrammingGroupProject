@@ -286,6 +286,7 @@ public class KonQuestGame extends PApplet
                 e.update(tiles, p1, collisionTiles, enemies);
             }
 
+            barrel.update(p1);
             barrel.display(camX, camY);
 
             p1.display(camX, camY);
