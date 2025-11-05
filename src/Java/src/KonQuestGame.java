@@ -63,7 +63,7 @@ public class KonQuestGame extends PApplet
         // tiles[1][1] = 0;
         // tiles[1][2] = 0;
 
-        Level level1 = new Level(tiles, tileSize);
+        LevelGeneration level1 = new LevelGeneration(tiles, tileSize);
         level1.readFromFile("data/1.txt");
         tiles = level1.getTiles();
 
@@ -121,7 +121,7 @@ public class KonQuestGame extends PApplet
     public static void nextLevel()
     {
         level++;
-        Level level = new Level(tiles, tileSize);
+        LevelGeneration level = new LevelGeneration(tiles, tileSize);
         level.readFromFile("data/" + level + ".txt");
         tiles = level.getTiles();
         setPosition(50, 4950, sketch.width, sketch.height);

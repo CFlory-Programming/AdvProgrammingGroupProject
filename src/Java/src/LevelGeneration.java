@@ -1,10 +1,10 @@
-public class Level {
+public class LevelGeneration {
     int[][] tiles;
     int tileSize;
     int width;
     int height;
 
-    public Level(int[][] tiles, int tileSize) {
+    public LevelGeneration(int[][] tiles, int tileSize) {
         this.tiles = tiles;
         this.tileSize = tileSize;
         this.width = tiles.length * tileSize;
@@ -32,10 +32,10 @@ public class Level {
                 br = new java.io.BufferedReader(new java.io.FileReader(f));
             } else {
                 // try loading as a classpath resource (e.g., when packed or run from IDE)
-                java.io.InputStream is = Level.class.getResourceAsStream("/" + filename);
+                java.io.InputStream is = LevelGeneration.class.getResourceAsStream("/" + filename);
                 if (is == null) {
                     // try without leading slash
-                    is = Level.class.getResourceAsStream(filename);
+                    is = LevelGeneration.class.getResourceAsStream(filename);
                 }
                 if (is != null) {
                     br = new java.io.BufferedReader(new java.io.InputStreamReader(is));
