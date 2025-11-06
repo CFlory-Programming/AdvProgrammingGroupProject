@@ -61,6 +61,12 @@ public class Player
         launched = false;
         speedY = -11;
     }
+
+    public void jump(int power)
+    {
+        launched = false;
+        speedY = -power;
+    }
     
     public void walk(char direction)
     {

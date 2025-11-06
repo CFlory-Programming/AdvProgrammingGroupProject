@@ -151,7 +151,7 @@ public class Enemy
         if (p1.visible && p1.speedY > 0 && p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y + p1.height < y + headHeight) {
             // Player is touching the enemy's head
             health -= 100; // Reduce enemy health
-            p1.jump(); // Make the player bounce up  
+            p1.jump(15); // Make the player bounce up  
             p1.attacked = true; // Make the player immune for a short time
         } else if (p1.visible && !p1.launched && !p1.attacked && p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y < y + height) {
             // Player is touching the enemy's body

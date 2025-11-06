@@ -12,5 +12,11 @@ public class HUD {
         KonQuestGame.sketch.fill(0, 0, 255);
         int staminaWidth = Math.max(0, (int) ((Math.min(player.stamina, player.maxStamina) / (double) player.maxStamina) * 200));
         KonQuestGame.sketch.rect(10, 40, staminaWidth, 20);
+
+        // Draw the player score and lives
+        KonQuestGame.sketch.fill(0);
+        KonQuestGame.sketch.textSize(16);
+        KonQuestGame.sketch.text("Score: " + player.score, 10, 70);
+        KonQuestGame.sketch.text("Lives: " + player.lives, 10, 90);
     }
 }

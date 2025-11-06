@@ -4,11 +4,13 @@ import processing.core.PConstants;
 public class LaunchBarrel extends LevelObject
 {
     int direction;
+    int power;
 
-    public LaunchBarrel(PImage sprite, int x, int y, int height, int width, int direction)
+    public LaunchBarrel(PImage sprite, int x, int y, int height, int width, int direction, int power)
     {
         super(sprite, x, y, height, width);
         this.direction = direction;
+        this.power = power;
     }
 
     public void update(Player player, boolean wait)
@@ -35,32 +37,32 @@ public class LaunchBarrel extends LevelObject
         } else {
         switch (direction) {
             case 1: // Up
-                player.speedY = -50;
+                player.speedY = -power;
                 break;
             case 3: // Right
-                player.speedX = 50;
+                player.speedX = power;
                 break;
             case 5: // Down
-                player.speedY = 50;
+                player.speedY = power;
                 break;
             case 7: // Left
-                player.speedX = -50;
+                player.speedX = -power;
                 break;
             case 2: // Up-Right
-                player.speedX = 30;
-                player.speedY = -30;
+                player.speedX = power*0.7071;
+                player.speedY = -power*0.7071;
                 break;
             case 4: // Down-Right
-                player.speedX = 30;
-                player.speedY = 30;
+                player.speedX = power*0.7071;
+                player.speedY = power*0.7071;
                 break;
             case 6: // Down-Left
-                player.speedX = -30;
-                player.speedY = 30;
+                player.speedX = -power*0.7071;
+                player.speedY = power*0.7071;
                 break;
             case 8: // Up-Left
-                player.speedX = -30;
-                player.speedY = -30;
+                player.speedX = -power*0.7071;
+                player.speedY = -power*0.7071;
                 break;
         }
         }
