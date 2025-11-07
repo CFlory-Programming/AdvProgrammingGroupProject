@@ -81,12 +81,14 @@ public class KonQuestGame extends PApplet
         Lizard l;
         Enemy e;
         p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
-        for(int i = 0; i < 20; i++) {
+        /*for(int i = 0; i < 20; i++) {
             l = new Lizard(100*i + 100, 100);
             e = new Enemy(100*i + 100, 100);
             enemies.add(e);
             enemies.add(l);
-        }
+        }*/
+        Thrower t = new Thrower(4900, 500);
+        enemies.add(t);
         
         // create a couple of test coins before starting the Processing sketch
         coins.add(new Coin(100, 100, 1));
