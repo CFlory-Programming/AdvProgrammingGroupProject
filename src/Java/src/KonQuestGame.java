@@ -357,7 +357,7 @@ public class KonQuestGame extends PApplet
             fill(255, 0, 0);
             textAlign(RIGHT, TOP);
             textSize(16);
-            text("Total value: " + interact, width - 10, 10); //x is 10px from the right edge, y is 10px from the top
+            text("Total value: " + totalCoins, width - 10, 10); //x is 10px from the right edge, y is 10px from the top
         }
     }
 
