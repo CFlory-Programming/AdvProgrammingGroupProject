@@ -146,9 +146,70 @@ public class Enemy
         } else {
             inAir = true;
         }
-
-        // Check if player is touching the enemy's head
-        if (p1.visible && p1.speedY > 0 && p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y + p1.height < y + headHeight) {
+        if(p1.visible && p1.x + p1.speedX + p1.width >= x + speedX && p1.x + p1.speedX <= x + speedX + width && p1.y + p1.speedY + p1.height >= y + speedY && p1.y + p1.speedY <= y + speedY + height) {
+            if (p1.y + p1.height < y) {
+                // Player is above the enemy
+                health -= 100; // Reduce enemy health
+                p1.jump(15); // Make the player bounce up  
+                p1.attacked = true; // Make the player immune for a short time
+            } else if (p1.y > y + height) {
+                jump(10, 'u');
+                p1.speedY = 5;
+                p1.speedX = 0;
+                if (!p1.launched && !p1.attacked) {
+                    // Player is touching the enemy's body
+                    //p1.die(); // Player dies
+                    p1.health -= 5;
+                    //p1.attacked = true; // Make the player immune for a short time
+                    jump(10, 'u');
+                    p1.speedY = 5;
+                    p1.speedX = 0;
+                }
+            } else if (p1.x + p1.width < x) {
+                p1.speedX = -10;
+                p1.speedY = -5;
+                speedX = 5;
+                if (!p1.launched && !p1.attacked) {
+                    // Player is to the left of the enemy
+                    p1.health -= 5;
+                }
+            } else if (p1.x > x + width) {
+                p1.speedX = 10;
+                p1.speedY = -5;
+                speedX = -5;
+                if (!p1.launched && !p1.attacked) {
+                    // Player is to the right of the enemy
+                    p1.health -= 5;
+                }
+            } else {
+                // Player is touching the enemy's body
+            //p1.die(); // Player dies
+            if(!p1.launched && !p1.attacked) {
+            p1.health -= 1;
+            p1.attacked = true; // Make the player immune for a short time
+            }
+            // Knockback effect
+            if (speedX < 0) {
+                // Player is to the left of the enemy
+                p1.speedX = -10;
+                p1.speedY = -5;
+                speedX = 5;
+            } else if (speedX > 0) {
+                // Player is to the right of the enemy
+                p1.speedX = 10;
+                p1.speedY = -5;
+                speedX = -5;
+            } else {
+                if (speedY > 0) {
+                    jump(10, 'u');
+                    p1.speedY = 5;
+                    p1.speedX = 0;
+                }
+            }
+            }
+        }
+        /*// Check if player is touching the enemy's head
+        if (p1.visible && p1.speedY > speedY && p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y + p1.height < y + headHeight) {
             // Player is touching the enemy's head
             health -= 100; // Reduce enemy health
             p1.jump(15); // Make the player bounce up  
@@ -160,18 +221,24 @@ public class Enemy
             p1.attacked = true; // Make the player immune for a short time
 
             // Knockback effect
-            if (p1.x + p1.width / 2 < x + width / 2) {
+            if (speedX < 0) {
                 // Player is to the left of the enemy
                 p1.speedX = -10;
                 p1.speedY = -5;
                 speedX = 5;
-            } else {
+            } else if (speedX > 0) {
                 // Player is to the right of the enemy
                 p1.speedX = 10;
                 p1.speedY = -5;
                 speedX = -5;
+            } else {
+                if (speedY > 0) {
+                    jump(10, 'u');
+                    p1.speedY = 5;
+                    p1.speedX = 0;
+                }
             }
-        }
+        }*/
         p1.checkEnemyCollision(enemies);
     }
 
