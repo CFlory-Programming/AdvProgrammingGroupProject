@@ -16,6 +16,14 @@ public class GameUI {
 
     // Main menu image
     private PImage mainMenuImg;
+    private PImage playerImg;
+
+    // Scrolling state for main menu background (Globe)
+    // menuOffset is the x position of the left-most copy. We draw two copies
+    // (offset and offset + width) so it wraps seamlessly.
+    private float menuOffset = 0.0f;
+    // Scrolling speed in pixels per frame. Increase for faster scroll.
+    private float menuScrollSpeed = 3.0f;
 
     // Keybinding UI state
     private String[] keyBindings;
@@ -85,13 +93,48 @@ public class GameUI {
                                 MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "EXIT",
                                 game.color(150, 0, 0), game.color(200, 100, 100));
 
-        mainMenuImg = game.loadImage("MainMenu.png");
-        if (mainMenuImg != null) mainMenuImg.resize(game.width, game.height);
+    mainMenuImg = game.loadImage("Jungle.png");
+    if (mainMenuImg != null)
+        mainMenuImg.resize(game.width, game.height);
+    playerImg = game.loadImage("MainMenu.png");
+    if (playerImg != null)
+        playerImg.resize(200, 200);
     }
 
     public void drawMainMenu() {
         game.background(0, 0, 0);
-        if (mainMenuImg != null) game.image(mainMenuImg, 0, 0);
+        if (mainMenuImg != null) {
+            game.tint(255, 50); // Transparency: Lower the y value for more transparency
+            game.imageMode(PConstants.CORNER);
+
+            // First copy at offset, second copy immediately after it
+            game.image(mainMenuImg, menuOffset, 0, game.width, game.height);
+            game.image(mainMenuImg, menuOffset + game.width, 0, game.width, game.height);
+
+            // Advance offset to scroll left. When a full image has moved off
+            // the left edge, wrap by adding width.
+            menuOffset -= menuScrollSpeed;
+            if (menuOffset <= -game.width) {
+                menuOffset += game.width;
+            }
+        }
+
+        if (playerImg != null) {
+            game.image(playerImg, game.width - 400, game.height - 300);
+        }
+
+        // Draw the game title on the main menu at the top-left with a small shadow
+        int titleX = 50;
+        int titleY = 40;
+        game.textAlign(PConstants.LEFT, PConstants.TOP);
+        game.textSize(100);
+        // Shadow
+        game.fill(0, 150);
+        game.text("KonQuest", titleX + 2, titleY + 2);
+        // Main title
+        game.fill(255, 255, 0);
+        game.text("KonQuest", titleX, titleY);
+
 
         // If options menu not open, show main menu buttons
         if (!optionsMenu) {
@@ -147,7 +190,6 @@ public class GameUI {
             game.textAlign(PConstants.CENTER, PConstants.CENTER);
             game.textSize(20);
             game.text("Reset to Default", centerX, resetBtnY + resetBtnHeight/2);
-            game.popStyle();
 
             for (int i = 0; i < keyBindings.length; i++) {
                 game.textAlign(PConstants.RIGHT, PConstants.CENTER);
