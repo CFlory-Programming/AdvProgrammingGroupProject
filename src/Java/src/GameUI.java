@@ -28,8 +28,8 @@ public class GameUI {
     public GameUI(KonQuestGame game) {
         this.game = game;
         // initialize bindings using Processing constants via the game reference
-        this.keyBindings = new String[]{"a", "d", "w", String.valueOf(PConstants.SHIFT), "SPACE"};
-        this.defaultBindings = new String[]{"a", "d", "w", String.valueOf(PConstants.SHIFT), "SPACE"};
+        this.keyBindings = new String[]{"a", "d", "w", String.valueOf(PConstants.SHIFT), " "};
+        this.defaultBindings = new String[]{"a", "d", "w", String.valueOf(PConstants.SHIFT), " "};
     }
 
     // Human-friendly name for a binding string
