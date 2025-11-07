@@ -21,6 +21,8 @@ public class Crate extends LevelObject
     {
         if (collidesWith(player) && !broken && player.speedY > 0) {
             broken = true;
+            sprite = KonQuestGame.sketch.loadImage("CrateBroken.png");
+            sprite.resize(width, height);
             player.jump(15);
             // Determine loot here
             switch (loot) {

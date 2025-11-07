@@ -16,7 +16,7 @@ public class HUD {
         // Draw the player score and lives
         KonQuestGame.sketch.fill(0);
         KonQuestGame.sketch.textSize(16);
-        KonQuestGame.sketch.text("Score: " + player.score, 10, 70);
-        KonQuestGame.sketch.text("Lives: " + player.lives, 10, 90);
+        KonQuestGame.sketch.text("Score: " + player.score, 200, 70);
+        KonQuestGame.sketch.text("Lives: " + player.lives, 200, 90);
     }
 }

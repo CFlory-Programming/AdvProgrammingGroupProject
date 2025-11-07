@@ -25,6 +25,7 @@ public class KonQuestGame extends PApplet
     public static ArrayList<Enemy> enemies = new ArrayList<>();
 
     public static LaunchBarrel barrel;
+    public static Crate crate;
 
     public static int score = 0, lives = 3, level = 1, camX = 50, camY = 50, tileSize = 50;
     public static int cameraLeftMargin = 50;
@@ -158,6 +159,7 @@ public class KonQuestGame extends PApplet
         }
 
         barrel = new LaunchBarrel(loadImage("Barrel.png"), 500, 5000, 50, 50, 2, 30);
+        crate = new Crate(loadImage("Crate.png"), 600, 5000, 50, 50, "Score");
 
     // main menu image and buttons initialized in GameUI.setupUI()
     }
@@ -297,6 +299,9 @@ public class KonQuestGame extends PApplet
 
             barrel.update(p1, !interact);
             barrel.display(camX, camY);
+
+            crate.update(p1);
+            crate.display(camX, camY);
 
             p1.display(camX, camY);
             for(Enemy e : enemies) {
