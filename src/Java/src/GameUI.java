@@ -35,6 +35,9 @@ public class GameUI {
     // Human-friendly name for a binding string
     private String bindingName(String s) {
         if (s == null) return "";
+        // If the binding is the literal space character, display it as SPACE
+        if (s.charAt(0) == ' ')
+            return "SPACE";
         boolean isNumber = true;
         for (int i = 0; i < s.length(); i++) {
             if (!Character.isDigit(s.charAt(i))) {
@@ -44,6 +47,7 @@ public class GameUI {
         }
         if (isNumber) {
             int v = Integer.parseInt(s);
+            if (v == 32) return "SPACE";
             if (v == PConstants.CONTROL) return "CONTROL";
             if (v == PConstants.SHIFT) return "SHIFT";
             if (v == PConstants.ALT) return "ALT";
@@ -209,8 +213,10 @@ public class GameUI {
                 selectedBinding = -1;
             } else {
                 String newKeyStr;
-                if (game.key == PConstants.CODED) newKeyStr = String.valueOf(game.keyCode);
-                else newKeyStr = String.valueOf(Character.toLowerCase(game.key));
+                if (game.key == PConstants.CODED)
+                    newKeyStr = String.valueOf(game.keyCode);
+                else
+                    newKeyStr = String.valueOf(Character.toLowerCase(game.key));
 
                 boolean isDuplicate = false;
                 for (int i = 0; i < keyBindings.length; i++) {
@@ -240,8 +246,10 @@ public class GameUI {
 
         // Custom keybindings -> set game.keys[]
         String pressedName;
-    if (game.key == PConstants.CODED) pressedName = String.valueOf(game.keyCode);
-        else pressedName = String.valueOf(Character.toLowerCase(game.key));
+    if (game.key == PConstants.CODED)
+        pressedName = String.valueOf(game.keyCode);
+        else
+            pressedName = String.valueOf(Character.toLowerCase(game.key));
         for (int i = 0; i < keyBindings.length; i++) {
             if (pressedName.equalsIgnoreCase(keyBindings[i])) {
                 KonQuestGame.keys[i] = true;
@@ -252,8 +260,10 @@ public class GameUI {
 
     public void handleKeyReleased() {
     String releasedName;
-    if (game.key == PConstants.CODED) releasedName = String.valueOf(game.keyCode);
-    else releasedName = String.valueOf(Character.toLowerCase(game.key));
+    if (game.key == PConstants.CODED)
+        releasedName = String.valueOf(game.keyCode);
+    else
+        releasedName = String.valueOf(Character.toLowerCase(game.key));
         for (int i = 0; i < keyBindings.length; i++) {
             if (releasedName.equalsIgnoreCase(keyBindings[i])) {
                 KonQuestGame.keys[i] = false;
