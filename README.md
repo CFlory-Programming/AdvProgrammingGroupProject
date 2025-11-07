@@ -103,7 +103,7 @@ This project requires **JDK 17 or higher** installed on your system.
 ![UML](https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/UML.png?raw=true)
 
 ### 🗓️ Gantt Chart
-[![Gantt Chart](https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/GanttChart.png?raw=true)](https://docs.google.com/spreadsheets/d/1xASoYfVAewEmirk02xkfCbQ8PxtWTUCKN-IrQL0k6SI/edit?usp=sharing)
+[![Gantt Chart](https://github.com/CFlory-Programming/AdvProgrammingGroupProject/blob/main/resources/GanttChart.png?raw=true](https://docs.google.com/spreadsheets/d/1xASoYfVAewEmirk02xkfCbQ8PxtWTUCKN-IrQL0k6SI/edit?usp=sharing)
 
 ### 🏆 Completion Date
 ```Spring 2026```
