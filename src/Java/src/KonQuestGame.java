@@ -157,7 +157,7 @@ public class KonQuestGame extends PApplet
             tilesImg[i] = loadImage("Tile" + i + ".png");
         }
 
-        barrel = new LaunchBarrel(loadImage("Barrel.png"), 500, 5000, 50, 50, 2, 50);
+        barrel = new LaunchBarrel(loadImage("Barrel.png"), 500, 5000, 50, 50, 2, 30);
 
     // main menu image and buttons initialized in GameUI.setupUI()
     }
