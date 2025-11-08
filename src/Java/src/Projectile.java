@@ -26,10 +26,12 @@ public class Projectile {
         y += speedY;
         distance += speed;
 
-        if (exists && p1.x + p1.speedX + p1.width >= x + speedX && p1.x + p1.speedX <= x + speedX + width && p1.y + p1.speedY + p1.height >= y + speedY && p1.y + p1.speedY <= y + speedY + height) {
-            p1.speedX = speedX/speed*5;
-            p1.speedY = speedY/speed*5;
-            p1.health -= 5;
+        if (p1.visible && exists && p1.x + p1.speedX + p1.width >= x + speedX && p1.x + p1.speedX <= x + speedX + width && p1.y + p1.speedY + p1.height >= y + speedY && p1.y + p1.speedY <= y + speedY + height) {
+            p1.speedX += speedX/speed*5;
+            p1.speedY += speedY/speed*5;
+            if (!p1.launched && !p1.attacked) {
+                p1.health -= 5;
+            }
             exists = false;
         }
 

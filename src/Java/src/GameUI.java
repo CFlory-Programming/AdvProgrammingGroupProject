@@ -104,7 +104,7 @@ public class GameUI {
     public void drawMainMenu() {
         game.background(0, 0, 0);
         if (mainMenuImg != null) {
-            game.tint(255, 50); // Transparency: Lower the y value for more transparency
+            //game.tint(255, 50); // Transparency: Lower the y value for more transparency
             game.imageMode(PConstants.CORNER);
 
             // First copy at offset, second copy immediately after it

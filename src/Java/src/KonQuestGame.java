@@ -22,6 +22,7 @@ public class KonQuestGame extends PApplet
     public static ArrayList<Coin> coins = new ArrayList<>();
 
     public static Player p1;
+    public static ArrayList<ArrayList<Enemy>> enemyStorage = new ArrayList<ArrayList<Enemy>>();
     public static ArrayList<Enemy> enemies = new ArrayList<>();
 
     public static LaunchBarrel barrel;
@@ -81,14 +82,15 @@ public class KonQuestGame extends PApplet
         Lizard l;
         Enemy e;
         p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
-        /*for(int i = 0; i < 20; i++) {
+        for(int i = 0; i < 20; i++) {
             l = new Lizard(100*i + 100, 100);
             e = new Enemy(100*i + 100, 100);
             enemies.add(e);
             enemies.add(l);
-        }*/
+        }
         Thrower t = new Thrower(4900, 500);
         enemies.add(t);
+        enemyStorage.add(enemies);
         
         // create a couple of test coins before starting the Processing sketch
         coins.add(new Coin(100, 100, 1));
@@ -203,10 +205,8 @@ public class KonQuestGame extends PApplet
                 } else if (animationFrame == 30) {
                     p1.outOfBounds = false;
                     setPosition(50, 4950, width, height);
-                    enemies = new ArrayList<>();
-                    for(int i = 0; i < 20; i++) {
-                        enemies.add(new Lizard(100*i + 100, 100));
-                        enemies.add(new Enemy(100*i + 100, 100));
+                    if (enemyStorage.size()>=level) {
+                        enemies = enemyStorage.get(level-1);
                     }
                 } else if (animationFrame < 45) {
                     // Hold black screen for a moment
