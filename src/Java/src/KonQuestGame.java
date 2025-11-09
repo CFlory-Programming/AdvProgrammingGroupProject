@@ -127,6 +127,9 @@ public class KonQuestGame extends PApplet
     public static void nextLevel()
     {
         level++;
+        if (enemyStorage.size()>=level) {
+            enemies = enemyStorage.get(level-1);
+        }
         LevelGeneration level = new LevelGeneration(tiles, tileSize);
         level.readFromFile("data/" + level + ".txt");
         tiles = level.getTiles();
@@ -296,9 +299,9 @@ public class KonQuestGame extends PApplet
             }
 
             p1.update(tiles, collisionTiles, keys[0] || keys[1]);
-            for(Enemy e : enemies) {
-                e.ai(tiles, p1, collisionTiles);
-                e.update(tiles, p1, collisionTiles, enemies);
+            for(int i = 0; i<enemies.size(); i++) {
+                enemies.get(i).ai(tiles, p1, collisionTiles, enemies);
+                enemies.get(i).update(tiles, p1, collisionTiles, enemies);
             }
 
             barrel.update(p1, !interact);
@@ -331,12 +334,17 @@ public class KonQuestGame extends PApplet
             for (int i = 0; i < enemies.size(); i++) {
                 // Check if enemy is out of bounds
                 if (enemies.get(i).outOfBounds && enemies.get(i).y > (tiles[0].length + 1) * tileSize) {
-                    enemies.remove(i);
-                    i--;
+                    enemies.get(i).exists = false;
                 }
 
                 // Check if enemy is dead
                 else if (enemies.get(i).health <= 0) {
+                    enemies.get(i).exists = false;
+                }
+            }
+
+            for (int i = 0; i < enemies.size(); i++) {
+                if (!enemies.get(i).exists) {
                     enemies.remove(i);
                     i--;
                 }

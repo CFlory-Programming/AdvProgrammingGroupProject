@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Lizard extends Enemy{
     boolean direction; //true is right, false is left
     public Lizard(int x, int y) {
@@ -8,7 +10,7 @@ public class Lizard extends Enemy{
         this.y = y;
     }
 
-    public void ai(int[][] tiles, Player p1, int[] collisionTiles)
+    public void ai(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
     {
         boolean distance = Math.abs(p1.x - x) < 300 && Math.abs(p1.y - y) < 300;
         if (distance) {
@@ -17,7 +19,7 @@ public class Lizard extends Enemy{
             } else if (p1.x < x) {
                 direction = false;
             }
-            super.ai(tiles, p1, collisionTiles);
+            super.ai(tiles, p1, collisionTiles, enemies);
         } else {
             if (direction && (!collideX(x, y, tiles, collisionTiles))) {
                 move(2, 'r', false);

@@ -15,6 +15,7 @@ public class Enemy
     int headHeight;
     boolean inAir;
     boolean outOfBounds;
+    boolean exists;
     
     public Enemy(int x, int y)
     {
@@ -29,6 +30,7 @@ public class Enemy
         speedX = 0;
         speedY = 0;
         inAir = true;
+        exists = true;
     }
     
     public void jump(int height, char dir)
@@ -64,7 +66,7 @@ public class Enemy
         this.y = y;
     }
 
-    public void ai(int[][] tiles, Player p1, int[] collisionTiles)
+    public void ai(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
     {
         if (p1.x > x) {
             if (p1.x-x >= 4){
@@ -110,7 +112,51 @@ public class Enemy
 
     public void update(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
     {
-        ai(tiles, p1, collisionTiles);
+        ai(tiles, p1, collisionTiles, enemies);
+        physics();  // Add physics calculation
+
+        // Collision detection for x direction
+        x += speedX;
+        if (collideX(x, y, tiles, collisionTiles)) {
+            handleCollideX();
+        }
+
+        // Collision detection for y direction
+        y += speedY;
+        if (collideY(x, y, tiles, collisionTiles)) {
+            handleCollideY();
+        } else {
+            inAir = true;
+        }
+        if(p1.visible && p1.x + p1.speedX + p1.width >= x + speedX && p1.x + p1.speedX <= x + speedX + width && p1.y + p1.speedY + p1.height >= y + speedY && p1.y + p1.speedY <= y + speedY + height) {
+            if (p1.y + p1.height < y) {
+                topCollide(p1);
+            } else if (p1.y > y + height) {
+                bottomCollide(p1);
+            } else if (p1.x + p1.width < x) {
+                leftCollide(p1);
+            } else if (p1.x > x + width) {
+                rightCollide(p1);
+            } else {
+                // Knockback effect
+                if (speedX < 0) {
+                    leftCollide(p1);
+                } else if (speedX > 0) {
+                    rightCollide(p1);
+                } else {
+                    if (speedY > 0) {
+                        bottomCollide(p1);
+                    } else {
+                        topCollide(p1);
+                    }
+                }
+            }
+        }
+        p1.checkEnemyCollision(enemies);
+    }
+
+    public void physics()
+    {
         // Update enemy position based on speed
         speedY += 0.5; // Gravity
         if (speedY > 15) {
@@ -121,132 +167,87 @@ public class Enemy
         if ((int) speedX == 0) {
             speedX = 0;
         }
+    }
 
-        // Collision detection for x direction
-        x += speedX;
-        if (collideX(x, y, tiles, collisionTiles)) {
-            if(speedX>0) {
-              x = 50*(x/50);
-            } else if(speedX<0) {
-              x = 50*(x/50)+50;
-            }
-            speedX = 0;
+    public void handleCollideX()
+    {
+        if(speedX>0) {
+            x = 50*(x/50);
+        } else if(speedX<0) {
+            x = 50*(x/50)+50;
         }
+        speedX = 0;
+    }
 
-        // Collision detection for y direction
-        y += speedY;
-        if (collideY(x, y, tiles, collisionTiles)) {
-            if(speedY>=0){
-                y = 50*(y/50);
-                inAir = false;
-            } else if(speedY<0){
-              y = 50*(y/50)+50;
-            }
-            speedY = 0;
-        } else {
-            inAir = true;
+    public void handleCollideY()
+    {
+        if(speedY>=0){
+            y = 50*(y/50);
+            inAir = false;
+        } else if(speedY<0){
+            y = 50*(y/50)+50;
         }
-        if(p1.visible && p1.x + p1.speedX + p1.width >= x + speedX && p1.x + p1.speedX <= x + speedX + width && p1.y + p1.speedY + p1.height >= y + speedY && p1.y + p1.speedY <= y + speedY + height) {
-            if (p1.y + p1.height < y) {
-                // Player is above the enemy
-                health -= 100; // Reduce enemy health
-                p1.jump(15); // Make the player bounce up  
-                p1.attacked = true; // Make the player immune for a short time
-            } else if (p1.y > y + height) {
-                jump(10, 'u');
-                p1.speedY = 5;
-                p1.speedX = 0;
-                if (!p1.launched && !p1.attacked) {
-                    // Player is touching the enemy's body
-                    //p1.die(); // Player dies
-                    p1.health -= 5;
-                    //p1.attacked = true; // Make the player immune for a short time
-                    jump(10, 'u');
-                    p1.speedY = 5;
-                    p1.speedX = 0;
-                }
-            } else if (p1.x + p1.width < x) {
-                p1.speedX = -10;
-                p1.speedY = -5;
-                speedX = 5;
-                if (!p1.launched && !p1.attacked) {
-                    // Player is to the left of the enemy
-                    p1.health -= 5;
-                }
-            } else if (p1.x > x + width) {
-                p1.speedX = 10;
-                p1.speedY = -5;
-                speedX = -5;
-                if (!p1.launched && !p1.attacked) {
-                    // Player is to the right of the enemy
-                    p1.health -= 5;
-                }
-            } else {
-                // Player is touching the enemy's body
-            //p1.die(); // Player dies
-            if(!p1.launched && !p1.attacked) {
-            p1.health -= 1;
-            p1.attacked = true; // Make the player immune for a short time
-            }
-            // Knockback effect
-            if (speedX < 0) {
-                // Player is to the left of the enemy
-                p1.speedX = -10;
-                p1.speedY = -5;
-                speedX = 5;
-            } else if (speedX > 0) {
-                // Player is to the right of the enemy
-                p1.speedX = 10;
-                p1.speedY = -5;
-                speedX = -5;
-            } else {
-                if (speedY > 0) {
-                    jump(10, 'u');
-                    p1.speedY = 5;
-                    p1.speedX = 0;
-                }
-            }
-            }
-        }
-        /*// Check if player is touching the enemy's head
-        if (p1.visible && p1.speedY > speedY && p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y + p1.height < y + headHeight) {
-            // Player is touching the enemy's head
-            health -= 100; // Reduce enemy health
-            p1.jump(15); // Make the player bounce up  
-            p1.attacked = true; // Make the player immune for a short time
-        } else if (p1.visible && !p1.launched && !p1.attacked && p1.x + p1.width > x && p1.x < x + width && p1.y + p1.height > y && p1.y < y + height) {
+        speedY = 0;
+    }
+
+    public void topCollide(Player p1)
+    {
+        // Player is above the enemy
+        health -= 100; // Reduce enemy health
+        p1.jump(15); // Make the player bounce up  
+        p1.attacked = true; // Make the player immune for a short time
+    }
+
+    public void bottomCollide(Player p1)
+    {
+        jump(10, 'u');
+        p1.speedY = 5;
+        p1.speedX = 0;
+        if (!p1.launched && !p1.attacked) {
             // Player is touching the enemy's body
             //p1.die(); // Player dies
-            p1.health -= 20;
-            p1.attacked = true; // Make the player immune for a short time
+            p1.health -= 5;
+            //p1.attacked = true; // Make the player immune for a short time
+            jump(10, 'u');
+            p1.speedY = 5;
+            p1.speedX = 0;
+        }
+    }
 
-            // Knockback effect
-            if (speedX < 0) {
-                // Player is to the left of the enemy
-                p1.speedX = -10;
-                p1.speedY = -5;
-                speedX = 5;
-            } else if (speedX > 0) {
-                // Player is to the right of the enemy
-                p1.speedX = 10;
-                p1.speedY = -5;
-                speedX = -5;
-            } else {
-                if (speedY > 0) {
-                    jump(10, 'u');
-                    p1.speedY = 5;
-                    p1.speedX = 0;
-                }
-            }
-        }*/
-        p1.checkEnemyCollision(enemies);
+    public void leftCollide(Player p1)
+    {
+        p1.speedX = -10;
+        p1.speedY = -5;
+        speedX = 5;
+        if (!p1.launched && !p1.attacked) {
+            // Player is to the left of the enemy
+            p1.health -= 5;
+        }
+    }
+
+    public void rightCollide(Player p1)
+    {
+        p1.speedX = 10;
+        p1.speedY = -5;
+        speedX = -5;
+        if (!p1.launched && !p1.attacked) {
+            // Player is to the right of the enemy
+            p1.health -= 5;
+        }
     }
 
     public void display(int camX, int camY)
     {
         KonQuestGame.sketch.noStroke();
         KonQuestGame.sketch.fill(0, 255, 0);
-        KonQuestGame.sketch.rect(x - camX, y - camY, width, height);
+        int screenX = x - camX;
+        int screenY = y - camY;
+        
+        // Only draw if on screen (with some margin)
+        if (screenX > -width && screenX < KonQuestGame.sketch.width + width &&
+            screenY > -height && screenY < KonQuestGame.sketch.height + height) {
+            KonQuestGame.sketch.rect(screenX, screenY, width, height);
+        }
     }
 
     private boolean checkCollision(int tileX, int tileY, int tileSize, int[][] tiles, int[] collisionTiles) {
