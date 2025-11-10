@@ -21,6 +21,7 @@ public class Player
     boolean inAir;
     int frame;
     int animSpeed;
+    int timer;
     String state;
     boolean visible;
     boolean launching;
@@ -28,6 +29,7 @@ public class Player
     boolean attacked;
     boolean dead;
     boolean outOfBounds;
+    boolean immune;
 
     public Player(int height, int width, int x, int y, int score, int lives)
     {
@@ -54,6 +56,8 @@ public class Player
         dead = false;
         outOfBounds = false;
         launching = false;
+        timer = 0;
+        immune = true;
     }
     
     public void jump()
@@ -159,6 +163,8 @@ public class Player
         health = maxHealth;
         stamina = maxStamina;
         lives--;
+        immune = true;
+        timer = 0;
     }
     
     public void display(int camX, int camY)
@@ -247,6 +253,15 @@ public class Player
             speedY = 0;
         } else {
             inAir = true;
+        }
+
+        if (timer == 30) {
+            immune = false;
+            timer = 0;
+        }
+
+        if (immune) {
+            timer++;
         }
 
         if (health <= 0 && !dead) {

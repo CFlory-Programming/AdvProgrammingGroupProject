@@ -42,15 +42,39 @@ public class Enemy
     {
         if (isRunning) {
             if (dir == 'r') {
-                speedX = distance*2;
+                if (speedX == 0) {
+                    speedX = 2;
+                } else if (speedX <= distance - 1) {
+                    speedX += 1;
+                } else {
+                    speedX = distance;
+                }
             } else if (dir == 'l') {
-                speedX = -distance*2;
+                if (speedX == 0) {
+                    speedX = 2;
+                } else if (speedX >= -distance + 1) {
+                    speedX -= 1;
+                } else {
+                    speedX = -distance;
+                }
             }
         } else {
             if (dir == 'r') {
-                speedX = distance;
+                if (speedX == 0) {
+                    speedX = 1;
+                } else if (speedX <= distance - 0.5) {
+                    speedX += 0.5;
+                } else {
+                    speedX = distance;
+                }
             } else if (dir == 'l') {
-                speedX = -distance;
+                if (speedX == 0) {
+                    speedX = 1;
+                } else if (speedX >= -distance + 0.5) {
+                    speedX -= 0.5;
+                } else {
+                    speedX = -distance;
+                }
             }
         }
     }
@@ -72,13 +96,13 @@ public class Enemy
             if (p1.x-x >= 4){
                 move(4, 'r', false);
             } else if (!collideX(p1.x, y, tiles, collisionTiles)) {
-                x = p1.x;
+                move(p1.x - x, 'r', false);
             }
         } else if (p1.x < x) {
             if (x-p1.x >= 4){
                 move(4, 'l', false);
             } else if (!collideX(p1.x, y, tiles, collisionTiles)) {
-                x = p1.x;
+                move(p1.x - x, 'r', false);
             }
         }
         if (!inAir && ((p1.y <= y && x%50>=44 && x%50!=0 && p1.x>x && !checkCollision(x + width, y + height, 50, tiles, collisionTiles)) || (p1.y <= y && p1.x<x && x%50<=6 && !checkCollision(x, y + height, 50, tiles, collisionTiles)) || (x%50==0 && (collideX(x+1, y, tiles, collisionTiles) || collideX(x-1, y, tiles, collisionTiles))))) {
@@ -164,9 +188,9 @@ public class Enemy
         }
 
         speedX *= 0.8; //Friction
-        if ((int) speedX == 0) {
+        /*if ((int) speedX == 0) {
             speedX = 0;
-        }
+        }*/
     }
 
     public void handleCollideX()
@@ -200,6 +224,9 @@ public class Enemy
 
     public void bottomCollide(Player p1)
     {
+        if (p1.immune) {
+            return;
+        }
         jump(10, 'u');
         p1.speedY = 5;
         p1.speedX = 0;
@@ -216,6 +243,9 @@ public class Enemy
 
     public void leftCollide(Player p1)
     {
+        if (p1.immune) {
+            return;
+        }
         p1.speedX = -10;
         p1.speedY = -5;
         speedX = 5;
@@ -227,6 +257,9 @@ public class Enemy
 
     public void rightCollide(Player p1)
     {
+        if (p1.immune) {
+            return;
+        }
         p1.speedX = 10;
         p1.speedY = -5;
         speedX = -5;
