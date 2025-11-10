@@ -8,11 +8,26 @@ public class Projectile extends Enemy{
         super(x, y);
         this.width = width;
         this.height = height;
+        this.x -= width/2;
+        this.y -= height/2;
         this.speed = speed;
         this.homing = homing;
         this.exists = true;
         this.distance = 0;
         changeDirection(p1);
+    }
+    
+    public Projectile(int x, int y, int width, int height, int speed, float direction, boolean homing, Player p1) {
+        super(x, y);
+        this.width = width;
+        this.height = height;
+        this.x -= width/2;
+        this.y -= height/2;
+        this.speed = speed;
+        this.homing = homing;
+        this.direction = direction;
+        this.exists = true;
+        this.distance = 0;
     }
 
     public void update(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)

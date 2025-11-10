@@ -89,6 +89,8 @@ public class KonQuestGame extends PApplet
             enemies.add(l);
         }
         Thrower t = new Thrower(4900, 500);
+        Cannon c = new Cannon(4900, 500);
+        enemies.add(c);
         enemies.add(t);
         enemyStorage.add(enemies);
         
