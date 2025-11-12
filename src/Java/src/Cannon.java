@@ -25,6 +25,10 @@ public class Cannon extends Thrower{
         }
     }
 
+    public void physics() {
+        // No gravity/friction
+    }
+
     public void leftCollide(Player p1) {
         // Ignore
     }

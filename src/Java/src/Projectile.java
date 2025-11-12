@@ -33,6 +33,9 @@ public class Projectile extends Enemy{
     public void update(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
     {
         distance += speed;  // Increment distance before super.update
+        /*if (collideX((int) (x+speedX), (int) (y+speedY), tiles, collisionTiles) || collideY((int) (x+speedX), (int) (y+speedY), tiles, collisionTiles)) {
+            exists = false;
+        }*/
         super.update(tiles, p1, collisionTiles, enemies);
         if (distance > 1000) {
             exists = false;
@@ -94,9 +97,17 @@ public class Projectile extends Enemy{
     }
 
     public void changeDirection(Player p1) {
+        if (p1.x + p1.width/2 == x + width/2) {
+            if (p1.y + p1.height/2 > y + height/2) {
+                direction = (float) Math.PI/2;
+            } else {
+                direction = -(float) Math.PI/2;
+            }
+            return;
+        }
         direction = (float) Math.atan((double) ((p1.y+p1.height/2)-y-height/2)/((p1.x+p1.width/2)-x-width/2));
         if (p1.x - x < 0) {
-            direction += Math.PI;
+            direction += (float) Math.PI;
         }
     }
 
