@@ -42,8 +42,8 @@ public class Button
     {
         PApplet sketch = KonQuestGame.sketch;
         
-        // Draw button background
-        sketch.stroke(255);
+    // Draw button background (gray border)
+    sketch.stroke(120);
         sketch.strokeWeight(3);
         sketch.fill(isHovered ? hoverColor : normalColor);
         sketch.rect(x, y, width, height);
