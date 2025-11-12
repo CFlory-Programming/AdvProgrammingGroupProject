@@ -295,6 +295,13 @@ public class KonQuestGame extends PApplet
                     } else {
                         p1.mount.speedX = 0;
                     }
+
+                    if (keys[2]) {
+                        if (!p1.mount.inAir) {
+                            p1.mount.jump();
+                            p1.mount.inAir = true;
+                        }
+                    }
                 } else {
                     if (keys[0]) {
                         if (keys[3]) {
