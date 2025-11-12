@@ -17,6 +17,7 @@ public class KonQuestGame extends PApplet
     public static int animationFrame = 0;
 
     public static boolean interact = false;
+    public static boolean interacted = false;
 
     // shared coins list so main() can populate it before the sketch starts
     public static ArrayList<Coin> coins = new ArrayList<>();
@@ -273,9 +274,9 @@ public class KonQuestGame extends PApplet
             //Update Player
             if (keyPressed) {
                 if (p1.mount != null) {
-                    if (keys[4]) {
+                    /*if (keys[4]) {
                         p1.mount.dismount(p1);
-                    }
+                    }*/
                     if (keys[0]) {
                         if (keys[3]) {
                             p1.mount.speedX = -8;
@@ -315,19 +316,23 @@ public class KonQuestGame extends PApplet
                             p1.inAir = true;
                         }
                     }
-                    if (keys[4]) {
+                }
+                if (keys[4]) {
+                    if (!interacted){
                         interact = true;
-                    } else {
-                        interact = false;
                     }
+                    interacted = true;
+                } else {
+                    interacted = false;
                 }
             }
 
             p1.update(tiles, collisionTiles, keys[0] || keys[1]);
+            /*
             for(int i = 0; i<enemies.size(); i++) {
                 enemies.get(i).ai(tiles, p1, collisionTiles, enemies);
                 enemies.get(i).update(tiles, p1, collisionTiles, enemies);
-            }
+            }*/
 
             barrel.update(p1, !interact);
             barrel.display(camX, camY);
@@ -336,7 +341,7 @@ public class KonQuestGame extends PApplet
             crate.display(camX, camY);
 
             mount.mount(p1);
-            mount.update(p1);
+            mount.update(p1, interact);
             mount.display(camX, camY);
 
             p1.display(camX, camY);

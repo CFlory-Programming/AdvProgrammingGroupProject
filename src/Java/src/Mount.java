@@ -11,12 +11,22 @@ public class Mount extends Player {
         mounted = false;
     }
 
-    public void mount(Player player ) {
+    public void mount(Player player) {
         if (!mounted && collidesWithPlayer(player)) {
             mounted = true;
             player.x = this.x;
             player.y = this.y - this.height;
             player.mount = this;
+        }
+    }
+
+    public void handleMounts(Player player, boolean interact) {
+        if (interact) {
+            if (mounted) {
+                dismount(player);
+            } else {
+                mount(player);
+            }
         }
     }
 
@@ -27,7 +37,7 @@ public class Mount extends Player {
         }
     }
 
-    public void update(Player player) {
+    public void update(Player player, boolean interact) {
                 int[][] tiles = KonQuestGame.tiles;
                 int[] collisionTiles = KonQuestGame.collisionTiles;
                 int tileSize = KonQuestGame.tileSize;
@@ -75,6 +85,8 @@ public class Mount extends Player {
             inAir = true;
         }
         
+        handleMounts(player, interact);
+
         if (mounted) {
             player.x = this.x + this.width / 2 - player.width / 2;
             player.y = this.y - this.height;
