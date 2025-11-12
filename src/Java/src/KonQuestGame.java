@@ -38,6 +38,8 @@ public class KonQuestGame extends PApplet
     public static int[][] tiles = new int[102][102];
 
     public static boolean[] keys = new boolean[5];
+    // Track previous-frame key state to detect "just pressed" events
+    public static boolean[] prevKeys = new boolean[5];
 
     public static PImage[] tilesImg = new PImage[4];
     public static int[] collisionTiles = {1, 2};
@@ -325,18 +327,18 @@ public class KonQuestGame extends PApplet
                         }
                     }
                 }
-                if (keys[4]) {
-                    if (!interacting) {
-                        interact = true;
-                    } else {
-                        interact = false;
-                    }
-                    interacting = true;
-                } else if (!keys[4]) {
-                    interact = false;
-                    interacting = false;
-                }
+                // (Note: interact edge detection handled below every frame)
             }
+
+            // Edge-detect the interact key so we get a clean "just pressed" event
+            // This avoids odd toggling where the interact key needs another key
+            // to be pressed before it will work again.
+            boolean justPressedInteract = keys[4] && !prevKeys[4];
+            interact = justPressedInteract;
+            // Keep interacting as a simple reflection of the physical key state
+            interacting = keys[4];
+            // Update prevKeys for the next frame
+            prevKeys[4] = keys[4];
 
             p1.update(tiles, collisionTiles, keys[0] || keys[1]);
             /*
@@ -419,7 +421,7 @@ public class KonQuestGame extends PApplet
             fill(255, 0, 0);
             textAlign(RIGHT, TOP);
             textSize(16);
-            text("Total value: " + keys[4]+interacting+interact, width - 10, 10); //x is 10px from the right edge, y is 10px from the top
+            text("Total value: " + totalCoins + " (keys[4]=" + keys[4] + ", interacting=" + interacting + ", interact=" + interact + ")", width - 10, 10); //x is 10px from the right edge, y is 10px from the top
         }
     }
 

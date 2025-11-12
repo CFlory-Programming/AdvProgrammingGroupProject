@@ -35,6 +35,12 @@ public class LaunchBarrel extends LevelObject
             player.x = x + (width - player.width) / 2;
             player.y = y + (height - player.height) / 2;
         } else {
+            // If we're performing the actual launch, make sure the player
+            // is not mounted to something else and is visible again so
+            // movement/physics take effect properly.
+            player.mount = null;
+            player.visible = true;
+            player.launching = false;
         switch (direction) {
             case 1: // Up
                 player.speedY = -power;
@@ -63,6 +69,46 @@ public class LaunchBarrel extends LevelObject
             case 8: // Up-Left
                 player.speedX = -power*0.7071;
                 player.speedY = -power*0.7071;
+                break;
+        }
+        // After applying the launch velocity, nudge the player just outside
+        // the barrel so the collision test won't immediately detect them as
+        // still inside and re-center them on the next frame.
+        // Position depends on launch direction.
+        int centerX = x + (width - player.width) / 2;
+        int centerY = y + (height - player.height) / 2;
+        switch (direction) {
+            case 1: // Up
+                player.x = centerX;
+                player.y = y - player.height - 1;
+                break;
+            case 3: // Right
+                player.x = x + width + 1;
+                player.y = centerY;
+                break;
+            case 5: // Down
+                player.x = centerX;
+                player.y = y + height + 1;
+                break;
+            case 7: // Left
+                player.x = x - player.width - 1;
+                player.y = centerY;
+                break;
+            case 2: // Up-Right
+                player.x = x + width + 1;
+                player.y = y - player.height - 1;
+                break;
+            case 4: // Down-Right
+                player.x = x + width + 1;
+                player.y = y + height + 1;
+                break;
+            case 6: // Down-Left
+                player.x = x - player.width - 1;
+                player.y = y + height + 1;
+                break;
+            case 8: // Up-Left
+                player.x = x - player.width - 1;
+                player.y = y - player.height - 1;
                 break;
         }
         }
