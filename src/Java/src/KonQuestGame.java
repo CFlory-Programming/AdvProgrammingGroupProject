@@ -170,7 +170,7 @@ public class KonQuestGame extends PApplet
 
         barrel = new LaunchBarrel(loadImage("Barrel.png"), 500, 5000, 50, 50, 2, 30);
         crate = new Crate(loadImage("Crate.png"), 600, 5000, 50, 50, "Score");
-        mount = new Mount(loadImage("Barrel.png"), 700, 5000, 100, 70);
+        mount = new Mount(loadImage("Barrel.png"), 700, 4900, 100, 70);
 
     // main menu image and buttons initialized in GameUI.setupUI()
     }
@@ -272,31 +272,54 @@ public class KonQuestGame extends PApplet
 
             //Update Player
             if (keyPressed) {
-                if (keys[0]) {
-                    if (keys[3]) {
-                        p1.run('l');
-                    } else 
-                    {
-                        p1.walk('l');
+                if (p1.mount != null) {
+                    if (keys[4]) {
+                        p1.mount.dismount(p1);
                     }
-                } else if (keys[1]) {
-                    if (keys[3]) {
-                        p1.run('r');
-                    } else 
-                    {
-                        p1.walk('r');
+                    if (keys[0]) {
+                        if (keys[3]) {
+                            p1.mount.speedX = -8;
+                        } else 
+                        {
+                            p1.mount.speedX = -4;
+                        }
+                    } else if (keys[1]) {
+                        if (keys[3]) {
+                            p1.mount.speedX = 8;
+                        } else 
+                        {
+                            p1.mount.speedX = 4;
+                        }
+                    } else {
+                        p1.mount.speedX = 0;
                     }
-                }
-                if (keys[2]) {
-                    if (!p1.inAir) {
-                        p1.jump();
-                        p1.inAir = true;
-                    }
-                }
-                if (keys[4]) {
-                    interact = true;
                 } else {
-                    interact = false;
+                    if (keys[0]) {
+                        if (keys[3]) {
+                            p1.run('l');
+                        } else 
+                        {
+                            p1.walk('l');
+                        }
+                    } else if (keys[1]) {
+                        if (keys[3]) {
+                            p1.run('r');
+                        } else 
+                        {
+                            p1.walk('r');
+                        }
+                    }
+                    if (keys[2]) {
+                        if (!p1.inAir) {
+                            p1.jump();
+                            p1.inAir = true;
+                        }
+                    }
+                    if (keys[4]) {
+                        interact = true;
+                    } else {
+                        interact = false;
+                    }
                 }
             }
 

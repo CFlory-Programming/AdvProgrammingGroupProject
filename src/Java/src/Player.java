@@ -31,6 +31,8 @@ public class Player
     boolean outOfBounds;
     boolean immune;
 
+    Mount mount;
+
     public Player(int height, int width, int x, int y, int score, int lives)
     {
         this.height = height;
@@ -58,6 +60,7 @@ public class Player
         launching = false;
         timer = 0;
         immune = true;
+        mount = null;
     }
     
     public void jump()
@@ -282,7 +285,7 @@ public class Player
         }
     }
 
-    private boolean checkCollision(int tileX, int tileY, int tileSize, int[][] tiles, int[] collisionTiles) {
+    public boolean checkCollision(int tileX, int tileY, int tileSize, int[][] tiles, int[] collisionTiles) {
         try {
             int tileindex = tiles[tileX / tileSize][tileY / tileSize];
             outOfBounds = false;
