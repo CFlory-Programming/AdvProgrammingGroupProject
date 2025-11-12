@@ -250,7 +250,8 @@ public class KonQuestGame extends PApplet
         else
         {
             // clear
-            background(0,118,248);
+            //background(0,118,248);
+            background(161, 44, 95);
             //background((int)random(255), (int)random(255), (int)random(255));
 
             HUD.display(p1);
