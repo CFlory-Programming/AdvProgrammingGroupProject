@@ -17,6 +17,7 @@ public class KonQuestGame extends PApplet
     public static int animationFrame = 0;
 
     public static boolean interact = false;
+    public static boolean interacting = false;
 
     // shared coins list so main() can populate it before the sketch starts
     public static ArrayList<Coin> coins = new ArrayList<>();
@@ -317,9 +318,15 @@ public class KonQuestGame extends PApplet
                     }
                 }
                 if (keys[4]) {
-                    interact = true;
-                } else {
+                    if (!interacting) {
+                        interact = true;
+                    } else {
+                        interact = false;
+                    }
+                    interacting = true;
+                } else if (!keys[4]) {
                     interact = false;
+                    interacting = false;
                 }
             }
 
@@ -404,7 +411,7 @@ public class KonQuestGame extends PApplet
             fill(255, 0, 0);
             textAlign(RIGHT, TOP);
             textSize(16);
-            text("Total value: " + totalCoins, width - 10, 10); //x is 10px from the right edge, y is 10px from the top
+            text("Total value: " + keys[4]+interacting+interact, width - 10, 10); //x is 10px from the right edge, y is 10px from the top
         }
     }
 
