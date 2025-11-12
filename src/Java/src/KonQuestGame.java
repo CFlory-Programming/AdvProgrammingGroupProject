@@ -170,7 +170,7 @@ public class KonQuestGame extends PApplet
 
         barrel = new LaunchBarrel(loadImage("Barrel.png"), 500, 5000, 50, 50, 2, 30);
         crate = new Crate(loadImage("Crate.png"), 600, 5000, 50, 50, "Score");
-        mount = new Mount(loadImage("Barrel.png"), 700, 4900, 100, 70);
+        mount = new Mount(loadImage("Barrel.png"), 2000, 4900, 100, 70);
 
     // main menu image and buttons initialized in GameUI.setupUI()
     }

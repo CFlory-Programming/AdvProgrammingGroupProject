@@ -168,6 +168,11 @@ public class Player
         lives--;
         immune = true;
         timer = 0;
+
+        if (mount != null) {
+            mount.dismount(this);
+            mount = null;
+        }
     }
     
     public void display(int camX, int camY)
