@@ -76,7 +76,7 @@ public class Mount extends Player {
         }
         
         if (mounted) {
-            player.x = this.x;
+            player.x = this.x + this.width / 2 - player.width / 2;
             player.y = this.y - this.height;
         }
     }
