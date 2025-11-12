@@ -23,7 +23,7 @@ public class GameUI {
     // (offset and offset + width) so it wraps seamlessly.
     private float menuOffset = 0.0f;
     // Scrolling speed in pixels per frame. Increase for faster scroll.
-    private float menuScrollSpeed = 3.0f;
+    private float menuScrollSpeed = 2.0f;
 
     // Keybinding UI state
     private String[] keyBindings;
@@ -81,17 +81,27 @@ public class GameUI {
         int MAIN_MENU_BUTTON_WIDTH = 200;
         int MAIN_MENU_BUTTON_HEIGHT = 60;
 
-        playButton = new Button(buttonX-50, startY-10,
-                                MAIN_MENU_BUTTON_WIDTH+100, MAIN_MENU_BUTTON_HEIGHT+20, "PLAY",
-                                game.color(0, 150, 0), game.color(100, 200, 100));
+    // Create main menu buttons with color scheme; derive hover colors
+    // Play: bluish (normal) -> hover explicitly set (lighter blue)
+    int playNormal = game.color(11, 33, 98);
+    int playHover = game.color(60, 100, 200);
+    playButton = new Button(buttonX-200, startY-100,
+                MAIN_MENU_BUTTON_WIDTH+100, MAIN_MENU_BUTTON_HEIGHT+20, "PLAY",
+                playNormal, playHover);
 
-        optionsButton = new Button(buttonX, startY + MAIN_MENU_BUTTON_HEIGHT + buttonSpacing,
-                                   MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "OPTIONS",
-                                   game.color(0, 0, 150), game.color(100, 100, 200));
+    // Options: purple/magenta (normal) -> hover explicitly set (lighter magenta)
+    int optionsNormal = game.color(161, 44, 95);
+    int optionsHover = game.color(200, 120, 170);
+    optionsButton = new Button(buttonX-150, startY-90 + MAIN_MENU_BUTTON_HEIGHT + buttonSpacing,
+                   MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "OPTIONS",
+                   optionsNormal, optionsHover);
 
-        exitButton = new Button(buttonX, startY + (MAIN_MENU_BUTTON_HEIGHT + buttonSpacing) * 2,
-                                MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "EXIT",
-                                game.color(150, 0, 0), game.color(200, 100, 100));
+    // Exit: softer red/burgundy (normal) -> hover explicitly set (lighter red)
+    int exitNormal = game.color(140, 60, 60);
+    int exitHover = game.color(190, 110, 110);
+    exitButton = new Button(buttonX-150, startY-90 + (MAIN_MENU_BUTTON_HEIGHT + buttonSpacing) * 2,
+                MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "EXIT",
+                exitNormal, exitHover);
 
     mainMenuImg = game.loadImage("Jungle.png");
     if (mainMenuImg != null)
@@ -104,15 +114,11 @@ public class GameUI {
     public void drawMainMenu() {
         game.background(0, 0, 0);
         if (mainMenuImg != null) {
-            //game.tint(255, 50); // Transparency: Lower the y value for more transparency
-            game.imageMode(PConstants.CORNER);
-
             // First copy at offset, second copy immediately after it
             game.image(mainMenuImg, menuOffset, 0, game.width, game.height);
             game.image(mainMenuImg, menuOffset + game.width, 0, game.width, game.height);
 
-            // Advance offset to scroll left. When a full image has moved off
-            // the left edge, wrap by adding width.
+            // Advance offset to scroll left. When a full image has moved off the left edge, wrap by adding width.
             menuOffset -= menuScrollSpeed;
             if (menuOffset <= -game.width) {
                 menuOffset += game.width;
@@ -129,10 +135,10 @@ public class GameUI {
         game.textAlign(PConstants.LEFT, PConstants.TOP);
         game.textSize(100);
         // Shadow
-        game.fill(0, 150);
+        game.fill(255, 150);
         game.text("KonQuest", titleX + 2, titleY + 2);
         // Main title
-        game.fill(255, 255, 0);
+        game.fill(255, 199, 37);
         game.text("KonQuest", titleX, titleY);
 
 
