@@ -336,7 +336,7 @@ public class KonQuestGame extends PApplet
             crate.update(p1);
             crate.display(camX, camY);
 
-            mount.mount(p1);
+            //mount.mount(p1);
             mount.update(p1, interact);
             mount.display(camX, camY);
 
