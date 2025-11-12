@@ -17,7 +17,6 @@ public class KonQuestGame extends PApplet
     public static int animationFrame = 0;
 
     public static boolean interact = false;
-    public static boolean interacted = false;
 
     // shared coins list so main() can populate it before the sketch starts
     public static ArrayList<Coin> coins = new ArrayList<>();
@@ -318,12 +317,9 @@ public class KonQuestGame extends PApplet
                     }
                 }
                 if (keys[4]) {
-                    if (!interacted){
-                        interact = true;
-                    }
-                    interacted = true;
+                    interact = true;
                 } else {
-                    interacted = false;
+                    interact = false;
                 }
             }
 
