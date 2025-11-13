@@ -24,6 +24,11 @@ public class LevelObject
         KonQuestGame.sketch.image(sprite, x - camX, y - camY);
     }
 
+    public void update(Player player)
+    {
+        // Default implementation does nothing.
+    }
+
     public boolean collidesWith(Player player)
     {
         if (player.x + player.width > x && player.x < x + width &&

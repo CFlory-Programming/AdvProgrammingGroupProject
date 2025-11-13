@@ -26,8 +26,9 @@ public class KonQuestGame extends PApplet
     public static ArrayList<ArrayList<Enemy>> enemyStorage = new ArrayList<ArrayList<Enemy>>();
     public static ArrayList<Enemy> enemies = new ArrayList<>();
 
-    public static LaunchBarrel barrel;
-    public static Crate crate;
+    //public static LaunchBarrel barrel;
+    //public static Crate crate;
+    public static ArrayList<LevelObject> levelObjects = new ArrayList<>();
     public static Mount mount;
 
     public static int score = 0, lives = 3, level = 1, camX = 50, camY = 50, tileSize = 50;
@@ -171,9 +172,11 @@ public class KonQuestGame extends PApplet
             tilesImg[i] = loadImage("Tile" + i + ".png");
         }
 
-        barrel = new LaunchBarrel(loadImage("Barrel.png"), 500, 5000, 50, 50, 2, 30);
-        crate = new Crate(loadImage("Crate.png"), 600, 5000, 50, 50, "Score");
-        mount = new Mount(loadImage("Barrel.png"), 2000, 4900, 100, 70);
+        levelObjects.add(new LaunchBarrel(loadImage("Barrel.png"), 500, 5000, 50, 50, 2, 30));
+        levelObjects.add(new Crate(loadImage("Crate.png"), 600, 5000, 50, 50, "Score"));
+        levelObjects.add(new Crate(loadImage("Crate.png"), 2700, 5000, 50, 50, "Mount"));
+        //mount = new Mount(loadImage("Barrel.png"), 2000, 4900, 100, 70);
+        mount = null;
 
     // main menu image and buttons initialized in GameUI.setupUI()
     }
@@ -206,7 +209,9 @@ public class KonQuestGame extends PApplet
                     for(Enemy e : enemies) {
                         e.display(camX, camY);
                     }
-                    barrel.display(camX, camY);
+
+                    //barrel.display(camX, camY);
+
                     // Play death animation (simple fade out for example)
                     fill(0, 0, 0, map(animationFrame, 0, 30, 0, 255));
                     rect(0, 0, width, height);
@@ -238,7 +243,9 @@ public class KonQuestGame extends PApplet
                     for(Enemy e : enemies) {
                         e.display(camX, camY);
                     }
-                    barrel.display(camX, camY);
+
+                    //barrel.display(camX, camY);
+
                     fill(0, 0, 0, map(75 - animationFrame, 0, 30, 0, 255));
                     rect(0, 0, width, height);
                 } else {
@@ -347,15 +354,21 @@ public class KonQuestGame extends PApplet
                 enemies.get(i).update(tiles, p1, collisionTiles, enemies);
             }*/
 
-            barrel.update(p1, !interact);
-            barrel.display(camX, camY);
+            // barrel.update(p1, !interact);
+            // barrel.display(camX, camY);
 
-            crate.update(p1);
-            crate.display(camX, camY);
+            // crate.update(p1);
+            // crate.display(camX, camY);
+            for (LevelObject lo : levelObjects) {
+                lo.update(p1);
+                lo.display(camX, camY);
+            }
 
             //mount.mount(p1);
-            mount.update(p1, interact);
-            mount.display(camX, camY);
+            if (mount != null) {
+                mount.update(p1, interact);
+                mount.display(camX, camY);
+            }
 
             p1.display(camX, camY);
             for(Enemy e : enemies) {

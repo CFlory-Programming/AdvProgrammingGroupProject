@@ -14,8 +14,8 @@ public class Mount extends Player {
     public void mount(Player player) {
         if (!mounted && collidesWithPlayer(player)) {
             mounted = true;
-            player.x = this.x;
-            player.y = this.y - this.height;
+            //player.x = this.x;
+            //player.y = this.y - this.height - player.height;
             player.mount = this;
         }
     }
@@ -89,7 +89,7 @@ public class Mount extends Player {
 
         if (mounted) {
             player.x = this.x + this.width / 2 - player.width / 2;
-            player.y = this.y - this.height;
+            player.y = this.y - player.height;
         }
     }
 

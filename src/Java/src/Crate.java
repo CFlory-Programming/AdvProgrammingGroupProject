@@ -41,6 +41,11 @@ public class Crate extends LevelObject
                 case "Score":
                     player.score += 100;
                     break;
+                case "Life":
+                    player.lives += 1;
+                    break;
+                case "Mount":
+                    KonQuestGame.mount = new Mount(KonQuestGame.sketch.loadImage("Barrel.png"), x, y - 100, 50, 70);
                 default:
                     // No loot
                     break;

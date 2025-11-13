@@ -13,13 +13,13 @@ public class LaunchBarrel extends LevelObject
         this.power = power;
     }
 
-    public void update(Player player, boolean wait)
+    public void update(Player player)
     {
         if (collidesWith(player)) {
             player.launching = true;
             player.launched = true;
             player.visible = false;
-            launch(player, wait);
+            launch(player, !KonQuestGame.interact);
         } else {
             player.launching = false;
             player.visible = true;
