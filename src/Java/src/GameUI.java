@@ -81,22 +81,22 @@ public class GameUI {
         int MAIN_MENU_BUTTON_WIDTH = 200;
         int MAIN_MENU_BUTTON_HEIGHT = 60;
 
-    // Create main menu buttons with color scheme; derive hover colors
-    // Play: bluish (normal) -> hover explicitly set (lighter blue)
+    // Create main menu buttons with color scheme
+    // Play Button: bluish (normal) -> lighter blue (hover)
     int playNormal = game.color(11, 33, 98);
     int playHover = game.color(60, 100, 200);
     playButton = new Button(buttonX-200, startY-100,
                 MAIN_MENU_BUTTON_WIDTH+100, MAIN_MENU_BUTTON_HEIGHT+20, "PLAY",
                 playNormal, playHover);
 
-    // Options: purple/magenta (normal) -> hover explicitly set (lighter magenta)
+    // Options Button: purple/magenta (normal) -> lighter magenta (hover)
     int optionsNormal = game.color(161, 44, 95);
     int optionsHover = game.color(200, 120, 170);
     optionsButton = new Button(buttonX-150, startY-90 + MAIN_MENU_BUTTON_HEIGHT + buttonSpacing,
                    MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "OPTIONS",
                    optionsNormal, optionsHover);
 
-    // Exit: softer red/burgundy (normal) -> hover explicitly set (lighter red)
+    // Exit Button: softer red/burgundy (normal) -> lighter red (hover)
     int exitNormal = game.color(140, 60, 60);
     int exitHover = game.color(190, 110, 110);
     exitButton = new Button(buttonX-150, startY-90 + (MAIN_MENU_BUTTON_HEIGHT + buttonSpacing) * 2,
