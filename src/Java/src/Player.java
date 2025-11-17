@@ -177,7 +177,7 @@ public class Player
     
     public void display(int camX, int camY)
     {
-        if (!visible) {
+        if (!visible || timer % 10 >= 5) {
             return;
         }
         KonQuestGame.sketch.noStroke();
@@ -263,7 +263,7 @@ public class Player
             inAir = true;
         }
 
-        if (timer == 30) {
+        if (timer == 60) {
             immune = false;
             timer = 0;
         }
@@ -284,6 +284,16 @@ public class Player
             if ((x + width > enemy.x && x < enemy.x + enemy.width && y + height > enemy.y && y < enemy.y + enemy.height)) {
                 touchingEnemy = true;
             }
+        }
+        if (!touchingEnemy) {
+            attacked = false; // Reset player's attacked status when not colliding with any enemy
+        }
+    }
+
+    public void checkEnemyCollision(Projectile projectile) {
+        boolean touchingEnemy = false;
+        if ((x + width > projectile.x && x < projectile.x + projectile.width && y + height > projectile.y && y < projectile.y + projectile.height)) {
+            touchingEnemy = true;
         }
         if (!touchingEnemy) {
             attacked = false; // Reset player's attacked status when not colliding with any enemy
