@@ -142,6 +142,43 @@ public class KonQuestGame extends PApplet
         setPosition(50, 4950, sketch.width, sketch.height);
     }
 
+    public void drawLevel()
+    {
+        // clear
+        //background(0,118,248);
+        background(161, 44, 95);
+        //background((int)random(255), (int)random(255), (int)random(255));
+
+        HUD.display(p1);
+        
+        // Draw tiles
+        fill(0);
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j] != 0) {
+                    //Only draw tiles that are on screen (with a little buffer)
+                    if (i * tileSize - camX < -tileSize || i * tileSize - camX > width + tileSize || j * tileSize - camY < -tileSize || j * tileSize - camY > height + tileSize) {
+                        continue;
+                    }
+
+                    //rect(i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
+                    image(tilesImg[tiles[i][j]], i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
+                }
+            }
+        }
+        p1.display(camX, camY);
+        for(Enemy e : enemies) {
+            e.display(camX, camY);
+        }
+        if (mount != null) {
+            mount.display(camX, camY);
+        }
+        for (LevelObject lo : levelObjects) {
+            lo.update(p1);
+            lo.display(camX, camY);
+        }
+    }
+
     public void display()
     {
         
@@ -190,25 +227,7 @@ public class KonQuestGame extends PApplet
         else if(animationPlaying) {
             if (p1.dead) {
                 if (animationFrame < 30) {
-                    background(0,118,248);
-                    fill(0);
-                    for (int i = 0; i < tiles.length; i++) {
-                        for (int j = 0; j < tiles[i].length; j++) {
-                            if (tiles[i][j] != 0) {
-                                //Only draw tiles that are on screen (with a little buffer)
-                                if (i * tileSize - camX < -tileSize || i * tileSize - camX > width + tileSize || j * tileSize - camY < -tileSize || j * tileSize - camY > height + tileSize) {
-                                continue;
-                                }
-
-                                //rect(i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
-                                image(tilesImg[tiles[i][j]], i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
-                            }
-                        }
-                    }
-                    p1.display(camX, camY);
-                    for(Enemy e : enemies) {
-                        e.display(camX, camY);
-                    }
+                    drawLevel();
 
                     //barrel.display(camX, camY);
 
@@ -224,25 +243,7 @@ public class KonQuestGame extends PApplet
                 } else if (animationFrame < 45) {
                     // Hold black screen for a moment
                 } else if (animationFrame < 75) {
-                    background(0,118,248);
-                    fill(0);
-                    for (int i = 0; i < tiles.length; i++) {
-                        for (int j = 0; j < tiles[i].length; j++) {
-                            if (tiles[i][j] != 0) {
-                                //Only draw tiles that are on screen (with a little buffer)
-                                if (i * tileSize - camX < -tileSize || i * tileSize - camX > width + tileSize || j * tileSize - camY < -tileSize || j * tileSize - camY > height + tileSize) {
-                                continue;
-                                }
-
-                                //rect(i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
-                                image(tilesImg[tiles[i][j]], i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
-                            }
-                        }
-                    }
-                    p1.display(camX, camY);
-                    for(Enemy e : enemies) {
-                        e.display(camX, camY);
-                    }
+                    drawLevel();
 
                     //barrel.display(camX, camY);
 
@@ -258,28 +259,7 @@ public class KonQuestGame extends PApplet
         }
         else
         {
-            // clear
-            //background(0,118,248);
-            background(161, 44, 95);
-            //background((int)random(255), (int)random(255), (int)random(255));
-
-            HUD.display(p1);
-            
-            // Draw tiles
-            fill(0);
-            for (int i = 0; i < tiles.length; i++) {
-                for (int j = 0; j < tiles[i].length; j++) {
-                    if (tiles[i][j] != 0) {
-                        //Only draw tiles that are on screen (with a little buffer)
-                        if (i * tileSize - camX < -tileSize || i * tileSize - camX > width + tileSize || j * tileSize - camY < -tileSize || j * tileSize - camY > height + tileSize) {
-                            continue;
-                        }
-
-                        //rect(i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
-                        image(tilesImg[tiles[i][j]], i * tileSize - camX, j * tileSize - camY, tileSize, tileSize);
-                    }
-                }
-            }
+            drawLevel();
 
             //Update Player
             if (keyPressed) {
@@ -348,11 +328,11 @@ public class KonQuestGame extends PApplet
             prevKeys[4] = keys[4];
 
             p1.update(tiles, collisionTiles, keys[0] || keys[1]);
-            /*
+            
             for(int i = 0; i<enemies.size(); i++) {
                 enemies.get(i).ai(tiles, p1, collisionTiles, enemies);
                 enemies.get(i).update(tiles, p1, collisionTiles, enemies);
-            }*/
+            }
 
             // barrel.update(p1, !interact);
             // barrel.display(camX, camY);
@@ -361,18 +341,11 @@ public class KonQuestGame extends PApplet
             // crate.display(camX, camY);
             for (LevelObject lo : levelObjects) {
                 lo.update(p1);
-                lo.display(camX, camY);
             }
 
             //mount.mount(p1);
             if (mount != null) {
                 mount.update(p1, interact);
-                mount.display(camX, camY);
-            }
-
-            p1.display(camX, camY);
-            for(Enemy e : enemies) {
-                e.display(camX, camY);
             }
 
             if (p1.outOfBounds && p1.x >= tiles.length * tileSize) {
