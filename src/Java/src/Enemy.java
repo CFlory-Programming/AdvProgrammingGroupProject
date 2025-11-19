@@ -105,7 +105,7 @@ public class Enemy
                 move(p1.x - x, 'r', false);
             }
         }
-        if (!inAir && ((p1.y <= y && x%50>=44 && x%50!=0 && p1.x>x && !checkCollision(x + width, y + height, 50, tiles, collisionTiles)) || (p1.y <= y && p1.x<x && x%50<=6 && !checkCollision(x, y + height, 50, tiles, collisionTiles)) || (x%50==0 && (collideX(x+1, y, tiles, collisionTiles) || collideX(x-1, y, tiles, collisionTiles))))) {
+        if (!inAir && ((p1.y <= y && !collideY((int)(x+speedX), (int)(y+1), tiles, collisionTiles)) || (x%50==0 && (collideX(x+1, y, tiles, collisionTiles) || collideX(x-1, y, tiles, collisionTiles))))) {
             jump(10, 'u');
         }
     }
