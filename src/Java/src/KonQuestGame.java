@@ -207,6 +207,7 @@ public class KonQuestGame extends PApplet
         levelObjects.add(new LaunchBarrel(loadImage("Barrel.png"), 500, 5000, 50, 50, 2, 30));
         levelObjects.add(new Crate(loadImage("Crate.png"), 600, 5000, 50, 50, "Score"));
         levelObjects.add(new Crate(loadImage("Crate.png"), 2700, 5000, 50, 50, "Mount"));
+        levelObjects.add(new SpeedBoost(loadImage("Crate.png"), 3500, 5000, 30, 30, 1.5f));
         //mount = new Mount(loadImage("Barrel.png"), 2000, 4900, 100, 70);
         mount = null;
 
@@ -336,6 +337,7 @@ public class KonQuestGame extends PApplet
             // crate.display(camX, camY);
             for (LevelObject lo : levelObjects) {
                 lo.update(p1);
+                System.out.println(lo.jackpot());
             }
 
             //mount.mount(p1);

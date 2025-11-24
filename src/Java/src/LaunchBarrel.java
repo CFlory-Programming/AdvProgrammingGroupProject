@@ -128,4 +128,9 @@ public class LaunchBarrel extends LevelObject
         KonQuestGame.sketch.imageMode(PConstants.CORNER);
         KonQuestGame.sketch.popMatrix();
     }
+
+    public String jackpot()
+    {
+        return "JACKPOT: Launch Barrel @" + power;
+    }
 }
