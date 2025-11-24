@@ -26,7 +26,12 @@ public class LevelObject
 
     public void update(Player player)
     {
-        // Default implementation does nothing.
+        // Default implementation does nothing
+    }
+
+    public void jackpot()
+    {
+        // Default implementation does nothing
     }
 
     public boolean collidesWith(Player player)

@@ -336,6 +336,7 @@ public class KonQuestGame extends PApplet
             // crate.display(camX, camY);
             for (LevelObject lo : levelObjects) {
                 lo.update(p1);
+                System.out.println(lo.jackpot());
             }
 
             //mount.mount(p1);
