@@ -11,7 +11,7 @@ public class SpeedBoost extends PowerUp {
 
     @Override
     public void applyEffect(Player player) {
-        player.immune = true;
+        player.health = 100;
         player.speedX *= speedMultiplier;
         if (Math.abs(player.speedX) > 20) {
             player.speedX *= 20 / Math.abs(player.speedX);

@@ -30,13 +30,13 @@ public class PowerUp extends LevelObject{
             int currentTime = KonQuestGame.sketch.millis();
             if (currentTime - timeCollected >= timerDuration) {
                 removeEffect(player);
-                isActive = false;
+                isActive = true;
             }
         }
 
         if (player.attacked && disapearsOnHit && isActive) {
             removeEffect(player);
-            isActive = false;
+            isActive = true;
         }
 
         if (isActive) {
