@@ -29,9 +29,10 @@ public class LevelObject
         // Default implementation does nothing
     }
 
-    public void jackpot()
+    public String jackpot()
     {
         // Default implementation does nothing
+        return "";
     }
 
     public boolean collidesWith(Player player)
