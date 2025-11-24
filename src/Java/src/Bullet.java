@@ -44,6 +44,9 @@ public class Bullet extends Projectile{
     }
 
     public void rightCollide(Player p1) {
+        if (p1.immune) {
+            return;
+        }
         exists = false;
         p1.speedX += speedX*2;
         p1.speedY += speedY*2;
@@ -53,6 +56,9 @@ public class Bullet extends Projectile{
     }
 
     public void leftCollide(Player p1) {
+        if (p1.immune) {
+            return;
+        }
         exists = false;
         p1.speedX += speedX*2;
         p1.speedY += speedY*2;

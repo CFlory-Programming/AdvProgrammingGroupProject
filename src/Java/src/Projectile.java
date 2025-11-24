@@ -138,6 +138,9 @@ public class Projectile{
     }
 
     public void bottomCollide(Player p1) {
+        if (p1.immune) {
+            return;
+        }
         p1.speedX += speedX/speed*5;
         p1.speedY += speedY/speed*5;
         if (!p1.launched && !p1.attacked) {
@@ -147,6 +150,9 @@ public class Projectile{
     }
 
     public void leftCollide(Player p1) {
+        if (p1.immune) {
+            return;
+        }
         p1.speedX += speedX/speed*5;
         p1.speedY += speedY/speed*5;
         if (!p1.launched && !p1.attacked) {
@@ -156,6 +162,9 @@ public class Projectile{
     }
 
     public void rightCollide(Player p1) {
+        if (p1.immune) {
+            return;
+        }
         p1.speedX += speedX/speed*5;
         p1.speedY += speedY/speed*5;
         if (!p1.launched && !p1.attacked) {
