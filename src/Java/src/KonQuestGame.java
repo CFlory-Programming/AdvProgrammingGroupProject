@@ -179,11 +179,6 @@ public class KonQuestGame extends PApplet
         }
     }
 
-    public void display()
-    {
-        
-    }
-
     @Override
     public void settings() {
         // Set up the window size
