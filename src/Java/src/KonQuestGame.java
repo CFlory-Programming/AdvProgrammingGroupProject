@@ -84,11 +84,11 @@ public class KonQuestGame extends PApplet
         // }
         
         Lizard l;
-        Enemy e;
+        TallEnemy e;
         p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
         for(int i = 0; i < 20; i++) {
             l = new Lizard(100*i + 100, 100);
-            e = new Enemy(100*i + 100, 100);
+            e = new TallEnemy(100*i + 100, 100);
             enemies.add(e);
             enemies.add(l);
         }
