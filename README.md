@@ -86,8 +86,8 @@ This game is referenced from: **Donkey Kong Country** 🐒 and **Super Mario Bro
 
 ## 💻 Prerequisites
 
-- This project requires **JDK 17 or higher** [JDK Download Link](https://www.oracle.com/java/technologies/downloads/) installed on your system.
-- This project requires the **Processing** application [Processing Download Link](https://processing.org/download) installed on your system.
+- This project requires **JDK 17 or higher** ([JDK Download Link](https://www.oracle.com/java/technologies/downloads/)) installed on your system.
+- This project requires the **Processing** application ([Processing Download Link](https://processing.org/download)) installed on your system.
 
 ---
 
