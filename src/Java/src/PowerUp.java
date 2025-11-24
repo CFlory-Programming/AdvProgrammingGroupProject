@@ -39,6 +39,10 @@ public class PowerUp extends LevelObject{
             isActive = false;
         }
 
+        if (isActive) {
+            applyEffect(player);
+        }
+
     }
 
     public void applyEffect(Player player) {
