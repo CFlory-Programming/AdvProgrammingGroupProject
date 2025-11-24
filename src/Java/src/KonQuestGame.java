@@ -323,11 +323,11 @@ public class KonQuestGame extends PApplet
             prevKeys[4] = keys[4];
 
             p1.update(tiles, collisionTiles, keys[0] || keys[1]);
-            
+            /*
             for(int i = 0; i<enemies.size(); i++) {
                 enemies.get(i).ai(tiles, p1, collisionTiles, enemies);
                 enemies.get(i).update(tiles, p1, collisionTiles, enemies);
-            }
+            }*/
 
             // barrel.update(p1, !interact);
             // barrel.display(camX, camY);
