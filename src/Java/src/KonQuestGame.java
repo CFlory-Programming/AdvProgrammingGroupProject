@@ -196,8 +196,8 @@ public class KonQuestGame extends PApplet
         setPosition(50, 4950, width, height);
 
         // Initialize UI helper (delegates menu and options UI)
-    ui = new GameUI(this);
-    ui.setupUI();
+        ui = new GameUI(this);
+        ui.setupUI();
         // Load tile images
         for (int i = 0; i < tilesImg.length; i++) {
             if (i != 0)
