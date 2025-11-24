@@ -88,7 +88,7 @@ This game is referenced from: **Donkey Kong Country** 🐒 and **Super Mario Bro
 This project requires **JDK 17 or higher** installed on your system.
 
 ### For VS-Code IDE
-- Install the ```Processing``` application **[https://processing.org/download](Processing Download)**
+- Install the ```Processing``` application **[https://processing.org/download](Processing)**
 - Install the ```Processing``` extension by **Processing Foundation**
 - Install the ```Extension Pack for Java``` by **Microsoft**
 
