@@ -84,17 +84,22 @@ This game is referenced from: **Donkey Kong Country** 🐒 and **Super Mario Bro
 
 ---
 
-## 📦 Prerequisites
-This project requires **JDK 17 or higher** installed on your system.
+## 💻 Prerequisites
+This project requires **JDK 17 or higher** ([https://www.oracle.com/java/technologies/downloads/](JDK Download Link)) installed on your system.
+This project requires the **Processing** application ([https://processing.org/download](Processing Download Link)) installed on your system.
 
-### For VS-Code IDE
-- Install the ```Processing``` application **[https://processing.org/download](Processing)**
-- Install the ```Processing``` extension by **Processing Foundation**
-- Install the ```Extension Pack for Java``` by **Microsoft**
+---
 
-## ⚙️ How to Run the Project
+## 💡 How to Run the Project From VS-Code
 
-1. ⬇️ Click the green ```Code``` button at the top
+1. 🔌 Install the ```Processing``` extension in VS-Code by **Processing Foundation**
+2. ➕ Install the ```Extension Pack for Java``` extension in VS-Code by **Microsoft**
+
+---
+
+## 🚀 How to Run the Project From the Terminal
+
+1. 🟢 Click the green ```Code``` button at the top
 2. 📥 Click ```Download ZIP```
 3. 🔓 Unzip the file
 4. 📂 Navigate to the project Java directory in a new terminal
