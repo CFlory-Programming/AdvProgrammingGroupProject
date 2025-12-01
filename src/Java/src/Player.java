@@ -83,37 +83,35 @@ public class Player
         launched = false;
         if (!inAir) {
             if (speedX == 0 && direction == 'r') {
-                speedX = 1;
+                speedX = 1 * speedMultiplier;
             } else if (speedX == 0 && direction == 'l') {
-                speedX = -1;
+                speedX = -1 * speedMultiplier;
             }
-            if (direction == 'r' && speedX<=4.5) {
-                speedX += 0.5;
-            } else if (direction == 'l' && speedX>=-4.5) {
-                speedX -= 0.5;
+            if (direction == 'r' && speedX<=4.5 * speedMultiplier) {
+                speedX += 0.5 * speedMultiplier;
+            } else if (direction == 'l' && speedX>=-4.5 * speedMultiplier) {
+                speedX -= 0.5 * speedMultiplier;
             } else if (direction == 'r') {
-                speedX = 5;
+                speedX = 5 * speedMultiplier;
             } else if (direction == 'l') {
-                speedX = -5;
+                speedX = -5 * speedMultiplier;
             }
         } else {
             if (speedX == 0 && direction == 'r') {
-                speedX = 1;
+                speedX = 1 * speedMultiplier;
             } else if (speedX == 0 && direction == 'l') {
-                speedX = -1;
+                speedX = -1 * speedMultiplier;
             }
-            if (direction == 'r' && speedX<=5.875) {
-                speedX += 0.25;
-            } else if (direction == 'l' && speedX>=-5.875) {
-                speedX -= 0.25;
+            if (direction == 'r' && speedX<=5.875 * speedMultiplier) {
+                speedX += 0.25 * speedMultiplier;
+            } else if (direction == 'l' && speedX>=-5.875 * speedMultiplier) {
+                speedX -= 0.25 * speedMultiplier;
             } else if (direction == 'r') {
-                speedX = 5;
+                speedX = 5 * speedMultiplier;
             } else if (direction == 'l') {
-                speedX = -5;
+                speedX = -5 * speedMultiplier;
             }
         }
-
-        speedX *= speedMultiplier;
     }
     
     public void run(char direction)
@@ -125,38 +123,35 @@ public class Player
             stamina = Math.max(0, stamina - 3);  // Prevent negative stamina
             if (!inAir) {
                 if (speedX == 0 && direction == 'r') {
-                    speedX = 1;
+                    speedX = 1 * speedMultiplier;
                 } else if (speedX == 0 && direction == 'l') {
-                    speedX = -1;
+                    speedX = -1 * speedMultiplier;
                 }
-                if (direction == 'r' && speedX<=7.2) {
-                    speedX += 0.8;
-                } else if (direction == 'l' && speedX>=-7.2) {
-                    speedX -= 0.8;
+                if (direction == 'r' && speedX<=7.2 * speedMultiplier) {
+                    speedX += 0.8 * speedMultiplier;
+                } else if (direction == 'l' && speedX>=-7.2 * speedMultiplier) {
+                    speedX -= 0.8 * speedMultiplier;
                 } else if (direction == 'r') {
-                    speedX = 8;
+                    speedX = 8 * speedMultiplier;
                 } else if (direction == 'l') {
-                    speedX = -8;
+                    speedX = -8 * speedMultiplier;
                 }
             } else {
                 if (speedX == 0 && direction == 'r') {
-                    speedX = 1;
+                    speedX = 1 * speedMultiplier;
                 } else if (speedX == 0 && direction == 'l') {
-                    speedX = -1;
+                    speedX = -1 * speedMultiplier;
                 }
-                if (direction == 'r' && speedX<=7.6) {
-                    speedX += 0.4;
-                } else if (direction == 'l' && speedX>=-7.6) {
-                    speedX -= 0.4;
+                if (direction == 'r' && speedX<=7.6 * speedMultiplier) {
+                    speedX += 0.4 * speedMultiplier;
+                } else if (direction == 'l' && speedX>=-7.6 * speedMultiplier) {
+                    speedX -= 0.4 * speedMultiplier;
                 } else if (direction == 'r') {
-                    speedX = 8;
+                    speedX = 8 * speedMultiplier;
                 } else if (direction == 'l') {
-                    speedX = -8;
+                    speedX = -8 * speedMultiplier;
                 }
             }
-
-
-            speedX *= speedMultiplier;
         } else {
             walk(direction);
         }

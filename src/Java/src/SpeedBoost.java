@@ -11,10 +11,10 @@ public class SpeedBoost extends PowerUp {
 
     @Override
     public void applyEffect(Player player) {
-        player.speedX *= speedMultiplier;
-        if (Math.abs(player.speedX) > 20) {
-            player.speedX *= 20 / Math.abs(player.speedX);
-        }
+        // player.speedX *= speedMultiplier;
+        // if (Math.abs(player.speedX) > 20) {
+        //     player.speedX *= 20 / Math.abs(player.speedX);
+        // }
         player.speedMultiplier = speedMultiplier;
     }
 
