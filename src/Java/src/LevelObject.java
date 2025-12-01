@@ -29,12 +29,6 @@ public class LevelObject
         // Default implementation does nothing
     }
 
-    public String jackpot()
-    {
-        // Default implementation does nothing
-        return "";
-    }
-
     public boolean collidesWith(Player player)
     {
         if (player.x + player.width > x && player.x < x + width &&

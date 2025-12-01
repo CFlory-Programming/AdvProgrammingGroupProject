@@ -52,9 +52,4 @@ public class Crate extends LevelObject
             }
         }
     }
-
-    public String jackpot()
-    {
-        return "JACKPOT: " + loot;
-    }
 }
