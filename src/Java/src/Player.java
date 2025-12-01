@@ -19,6 +19,7 @@ public class Player
     double speedX;
     double speedY;
     boolean inAir;
+    double speedMultiplier;
     int frame;
     int animSpeed;
     int timer;
@@ -61,6 +62,7 @@ public class Player
         timer = 0;
         immune = true;
         mount = null;
+        speedMultiplier = 1.0;
     }
     
     public void jump()
@@ -110,6 +112,8 @@ public class Player
                 speedX = -5;
             }
         }
+
+        speedX *= speedMultiplier;
     }
     
     public void run(char direction)
@@ -150,6 +154,9 @@ public class Player
                     speedX = -8;
                 }
             }
+
+
+            speedX *= speedMultiplier;
         } else {
             walk(direction);
         }
