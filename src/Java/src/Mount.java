@@ -35,6 +35,7 @@ public class Mount extends Player {
             mounted = false;
             player.mount = null;
             player.speedY = speedY-5;
+            player.speedX = speedX;
         }
     }
 
