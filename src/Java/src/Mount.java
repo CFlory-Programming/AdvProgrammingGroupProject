@@ -34,6 +34,7 @@ public class Mount extends Player {
         if (mounted) {
             mounted = false;
             player.mount = null;
+            player.speedY = speedY-5;
         }
     }
 
