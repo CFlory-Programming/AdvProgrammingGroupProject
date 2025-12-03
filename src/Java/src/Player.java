@@ -194,7 +194,7 @@ public class Player
             return;
         }
 
-        frame++;
+        if (!KonQuestGame.pauseMenu) frame++;
 
         if (Math.abs(speedX) > 0.5) {
             state = "Walk";
