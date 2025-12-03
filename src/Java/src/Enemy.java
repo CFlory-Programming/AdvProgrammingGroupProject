@@ -99,7 +99,7 @@ public class Enemy
     {
         for(int i = 0; i <= (width)/50; i++) {
             for(int j = 0; j <= (height)/50; j++) {
-                if ((i == 0 || i == (width)/50) && ((int)fx%50 + width > 50*i) && ((int)fy%50 + height > 50*j) && checkCollision((int)fx + i*50, (int)fy + j*50, 50, tiles, collisionTiles)) {
+                if ((i == 0 || i == (width)/50) && (fx%50 + width > 50*i) && (fy%50 + height > 50*j) && checkCollision(fx + i*50, fy + j*50, 50, tiles, collisionTiles)) {
                     return true;
                 }
             }
@@ -111,7 +111,7 @@ public class Enemy
     {
         for(int i = 0; i <= (width)/50; i++) {
             for(int j = 0; j <= (height)/50; j++) {
-                if ((j == 0 || j == (height)/50) && ((int)fx%50 + width > 50*i) && ((int)fy%50 + height > 50*j) && checkCollision((int)fx + i*50, (int)fy + j*50, 50, tiles, collisionTiles)) {
+                if ((j == 0 || j == (height)/50) && (fx%50 + width > 50*i) && (fy%50 + height > 50*j) && checkCollision(fx + i*50, fy + j*50, 50, tiles, collisionTiles)) {
                     return true;
                 }
             }
@@ -268,9 +268,9 @@ public class Enemy
         }
     }
 
-    private boolean checkCollision(int tileX, int tileY, int tileSize, int[][] tiles, int[] collisionTiles) {
+    private boolean checkCollision(float tileX, float tileY, int tileSize, int[][] tiles, int[] collisionTiles) {
         try {
-            int tileindex = tiles[tileX / tileSize][tileY / tileSize];
+            int tileindex = tiles[(int)(tileX / tileSize)][(int)(tileY / tileSize)];
             outOfBounds = false;
             for (int ct : collisionTiles) {
                 if (tileindex == ct) {

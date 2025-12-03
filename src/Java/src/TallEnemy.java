@@ -24,7 +24,7 @@ public class TallEnemy extends Enemy
                 move(p1.x - x, 'r', false);
             }
         }
-        if (!inAir && ((p1.y <= y && !collideY((int)(x+speedX), (int)(y+1), tiles, collisionTiles)) || (x%50==0 && (collideX(x+1, y, tiles, collisionTiles) || collideX(x-1, y, tiles, collisionTiles))))) {
+        if (!inAir && ((p1.y <= y && !collideY(x+speedX, y+speedY+1, tiles, collisionTiles)) || (x%50==0 && (collideX(x+1, y, tiles, collisionTiles) || collideX(x-1, y, tiles, collisionTiles))))) {
             jump(10, 'u');
         }
     }
