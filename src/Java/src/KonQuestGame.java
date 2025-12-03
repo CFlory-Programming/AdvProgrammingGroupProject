@@ -152,7 +152,11 @@ public class KonQuestGame extends PApplet
         background(161, 44, 95);
         //background((int)random(255), (int)random(255), (int)random(255));
 
-        HUD.display(p1);
+
+        // Display HUD (hide when pause menu open)
+        if (ui != null && !ui.pauseMenu) {
+            HUD.display(p1);
+        }
         
         // Draw tiles
         fill(0);
@@ -230,6 +234,11 @@ public class KonQuestGame extends PApplet
     public void draw() {
         if (ui != null && ui.mainMenu) {
             ui.drawMainMenu();
+            return;
+        }
+        else if (ui != null && ui.pauseMenu) {
+            drawLevel();
+            ui.drawPauseMenu();
             return;
         }
         else if(animationPlaying) {
@@ -411,11 +420,13 @@ public class KonQuestGame extends PApplet
                 totalCoins += c.getValue();
             }
 
-            // draw total value in red at the top-right corner
-            fill(255, 0, 0);
-            textAlign(RIGHT, TOP);
-            textSize(16);
-            text("Total value: " + totalCoins + " (keys[4]=" + keys[4] + ", interacting=" + interacting + ", interact=" + interact + ")", width - 10, 10); //x is 10px from the right edge, y is 10px from the top
+            // draw total value in red at the top-right corner (hide when pause menu open)
+            if (ui != null && !ui.pauseMenu) {
+                fill(255, 0, 0);
+                textAlign(RIGHT, TOP);
+                textSize(16);
+                text("Total value: " + totalCoins + " (keys[4]=" + keys[4] + ", interacting=" + interacting + ", interact=" + interact + ")", width - 10, 10); //x is 10px from the right edge, y is 10px from the top
+            }
         }
     }
 

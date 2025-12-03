@@ -7,18 +7,21 @@ public class GameUI {
     // Main menu / options state
     public boolean mainMenu = true;
     private boolean optionsMenu = false;
+    public boolean pauseMenu = false;
 
     // Menu buttons
     private Button playButton;
     private Button optionsButton;
     private Button exitButton;
     private Button backButton;
+    private Button resumeButton;
+    private Button mainMenuButton;
 
     // Main menu image
     private PImage mainMenuImg;
     private PImage playerImg;
 
-    // Scrolling state for main menu background (Globe)
+    // Scrolling state for main menu background
     // menuOffset is the x position of the left-most copy. We draw two copies
     // (offset and offset + width) so it wraps seamlessly.
     private float menuOffset = 0.0f;
@@ -109,6 +112,20 @@ public class GameUI {
     playerImg = game.loadImage("MainMenu.png");
     if (playerImg != null)
         playerImg.resize(200, 200);
+
+    // Resume button for pause screen
+    int resumeNormal = game.color(11, 33, 98);
+    int resumeHover = game.color(60, 100, 200);
+    resumeButton = new Button(buttonX-300, startY-100,
+                MAIN_MENU_BUTTON_WIDTH+100, MAIN_MENU_BUTTON_HEIGHT+20, "RESUME",
+                resumeNormal, resumeHover);
+
+    // Main menu button for pause screen
+    int mainMenuNormal = game.color(140, 60, 60);
+    int mainMenuHover = game.color(190, 110, 110);
+    mainMenuButton = new Button(buttonX-300, startY+100 + MAIN_MENU_BUTTON_HEIGHT + 40,
+                MAIN_MENU_BUTTON_WIDTH+100, MAIN_MENU_BUTTON_HEIGHT+20, "MAIN MENU",
+                mainMenuNormal, mainMenuHover);
     }
 
     public void drawMainMenu() {
@@ -179,7 +196,6 @@ public class GameUI {
             String[] bindingLabels = {"Move Left", "Move Right", "Jump", "Sprint", "Interact"};
 
             // Reset button
-            game.pushStyle();
             int resetBtnWidth = 160;
             int resetBtnHeight = 35;
             int resetBtnX = centerX - resetBtnWidth / 2;
@@ -252,6 +268,40 @@ public class GameUI {
         game.text(game.mouseX + ", " + game.mouseY, 50, 10);
     }
 
+    public void drawPauseMenu() {
+        // Draw a semi-transparent overlay
+        game.fill(0, 0, 0, 150);
+
+        // Draw the pause title at the top-left with a shadow
+        int titleX = 50;
+        int titleY = 40;
+        game.textAlign(PConstants.LEFT, PConstants.TOP);
+        game.textSize(100);
+        // Shadow
+        game.fill(255, 150);
+        game.text("PAUSED", titleX + 2, titleY + 2);
+        // Main title
+        game.fill(255, 199, 37);
+        game.text("PAUSED", titleX, titleY);
+
+        // Resume button
+        resumeButton.update(game.mouseX, game.mouseY, game.mousePressed);
+        resumeButton.display();
+
+        if (resumeButton.consumeClick()) {
+            pauseMenu = false;
+        }
+
+        // Return to main menu button
+        mainMenuButton.update(game.mouseX, game.mouseY, game.mousePressed);
+        mainMenuButton.display();
+
+        if (mainMenuButton.consumeClick()) {
+            pauseMenu = false;
+            mainMenu = true;
+        }
+    }
+
     // Return true if we handled the key event and it should not be processed further
     public boolean handleKeyPressed() {
         // If rebinding in progress
@@ -285,10 +335,10 @@ public class GameUI {
             return true;
         }
 
-        // Toggle main menu with ESC
-        if (game.key == PConstants.ESC) {
+        // Toggle pause menu with ESC (only when not in main menu)
+        if (!mainMenu && game.key == PConstants.ESC) {
             game.key = 0;
-            mainMenu = !mainMenu;
+            pauseMenu = !pauseMenu;
             return true;
         }
 
@@ -303,7 +353,7 @@ public class GameUI {
                 KonQuestGame.keys[i] = true;
             }
         }
-        return false; // didn't fully consume (game may still want to act)
+        return false;
     }
 
     public void handleKeyReleased() {
