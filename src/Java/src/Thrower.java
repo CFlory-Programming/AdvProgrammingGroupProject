@@ -12,6 +12,16 @@ public class Thrower extends Enemy{
         projectiles = new ArrayList<Projectile>();
     }
 
+    public Thrower(Thrower other) {
+        super(other);
+        this.timer = other.timer;
+        this.projectiles = new ArrayList<Projectile>();
+    }
+
+    public Thrower deepCopy(Enemy other) {
+        return new Thrower((Thrower) other);
+    }
+
     public void throwed(Player p1) {
         Projectile projectile = new Projectile(x + width/2, y + height/2, 10, 10, 20, false, p1);
         projectiles.add(projectile);

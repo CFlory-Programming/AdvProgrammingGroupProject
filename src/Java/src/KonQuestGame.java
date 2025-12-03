@@ -1,3 +1,4 @@
+//import java.lang.reflect.Array;
 import java.util.*;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -97,6 +98,8 @@ public class KonQuestGame extends PApplet
         enemies.add(c);
         enemies.add(t);
         enemyStorage.add(enemies);
+
+        enemies = cloneEnemies(enemyStorage.get(0));
         
         // create a couple of test coins before starting the Processing sketch
         coins.add(new Coin(100, 100, 1));
@@ -134,7 +137,7 @@ public class KonQuestGame extends PApplet
     {
         level++;
         if (enemyStorage.size()>=level) {
-            enemies = enemyStorage.get(level-1);
+            enemies = cloneEnemies(enemyStorage.get(level-1));
         }
         LevelGeneration level = new LevelGeneration(tiles, tileSize);
         level.readFromFile("data/" + level + ".txt");
@@ -214,6 +217,15 @@ public class KonQuestGame extends PApplet
     // main menu image and buttons initialized in GameUI.setupUI()
     }
 
+    public static ArrayList<Enemy> cloneEnemies(ArrayList<Enemy> enemies)
+    {
+        ArrayList<Enemy> newEnemies = new ArrayList<Enemy>();
+        for (Enemy e : enemies) {
+            newEnemies.add(e.deepCopy(e));
+        }
+        return newEnemies;
+    }
+
     @Override
     public void draw() {
         if (ui != null && ui.mainMenu) {
@@ -234,7 +246,7 @@ public class KonQuestGame extends PApplet
                     p1.outOfBounds = false;
                     setPosition(50, 4950, width, height);
                     if (enemyStorage.size()>=level) {
-                        enemies = enemyStorage.get(level-1);
+                        enemies = cloneEnemies(enemyStorage.get(level-1));
                     }
                 } else if (animationFrame < 45) {
                     // Hold black screen for a moment

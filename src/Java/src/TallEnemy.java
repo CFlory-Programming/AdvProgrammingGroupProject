@@ -9,6 +9,14 @@ public class TallEnemy extends Enemy
         width = 50;
     }
 
+    public TallEnemy(TallEnemy other) {
+        super(other);
+    }
+
+    public TallEnemy deepCopy(Enemy other) {
+        return new TallEnemy((TallEnemy) other);
+    }
+
     public void ai(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
     {
         if (p1.x > x) {
