@@ -2,12 +2,12 @@ import java.util.ArrayList;
 
 public class Bullet extends Projectile{
     boolean starting;
-    public Bullet(int x, int y, int speed, boolean homing, Player p1) {
+    public Bullet(float x, float y, int speed, boolean homing, Player p1) {
         super(x, y, 50, 50, speed, homing, p1);
         starting = true;
     }
     
-    public Bullet(int x, int y, int speed, float direction, boolean homing, Player p1) {
+    public Bullet(float x, float y, int speed, float direction, boolean homing, Player p1) {
         super(x, y, 50, 50, speed, direction, homing, p1);
         starting = true;
     }

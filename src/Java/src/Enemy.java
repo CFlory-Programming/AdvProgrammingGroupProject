@@ -5,12 +5,12 @@ public class Enemy
 
     int height;
     int width;
-    int x;
-    int startX;
+    float x;
+    float startX;
     float speedX;
     float speedY;
-    int y;
-    int startY;
+    float y;
+    float startY;
     int health;
     int headHeight;
     boolean inAir;
@@ -21,10 +21,10 @@ public class Enemy
     {
         height = 100;
         width = 50;
-        this.x = x;
-        this.y = y;
-        startX = x;
-        startY = y;
+        this.x = (float)x;
+        this.y = (float)y;
+        startX = (float)x;
+        startY = (float)y;
         health = 100;
         headHeight = 10;
         speedX = 0;
@@ -42,17 +42,17 @@ public class Enemy
     {
         if (isRunning) {
             if (dir == 'r') {
-                if (speedX == 0) {
+                if (speedX == 0 && distance >= 2) {
                     speedX = 2;
-                } else if (speedX <= distance - 1) {
+                } else if (speedX <= distance - 1 && speedX != 0) {
                     speedX += 1;
                 } else {
                     speedX = distance;
                 }
             } else if (dir == 'l') {
-                if (speedX == 0) {
-                    speedX = 2;
-                } else if (speedX >= -distance + 1) {
+                if (speedX == 0 && distance <= -2) {
+                    speedX = -2;
+                } else if (speedX >= -distance + 1 && speedX != 0) {
                     speedX -= 1;
                 } else {
                     speedX = -distance;
@@ -60,17 +60,17 @@ public class Enemy
             }
         } else {
             if (dir == 'r') {
-                if (speedX == 0) {
+                if (speedX == 0 && distance >= 1) {
                     speedX = 1;
-                } else if (speedX <= distance - 0.5) {
+                } else if (speedX <= distance - 0.5 && speedX != 0) {
                     speedX += 0.5;
                 } else {
                     speedX = distance;
                 }
             } else if (dir == 'l') {
-                if (speedX == 0) {
-                    speedX = 1;
-                } else if (speedX >= -distance + 0.5) {
+                if (speedX == 0 && distance <= -1) {
+                    speedX = -1;
+                } else if (speedX >= -distance + 0.5 && speedX != 0) {
                     speedX -= 0.5;
                 } else {
                     speedX = -distance;
@@ -86,8 +86,8 @@ public class Enemy
 
     public void setPosition(int x, int y)
     {
-        this.x = x;
-        this.y = y;
+        this.x = (float)x;
+        this.y = (float)y;
     }
 
     public void ai(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
@@ -95,11 +95,11 @@ public class Enemy
         // Placeholder for enemy AI behavior
     }
 
-    public boolean collideX(int fx, int fy, int[][] tiles, int[] collisionTiles)
+    public boolean collideX(float fx, float fy, int[][] tiles, int[] collisionTiles)
     {
         for(int i = 0; i <= (width)/50; i++) {
             for(int j = 0; j <= (height)/50; j++) {
-                if ((i == 0 || i == (width)/50) && (fx%50 + width > 50*i) && (fy%50 + height > 50*j) && checkCollision(fx + i*50, fy + j*50, 50, tiles, collisionTiles)) {
+                if ((i == 0 || i == (width)/50) && ((int)fx%50 + width > 50*i) && ((int)fy%50 + height > 50*j) && checkCollision((int)fx + i*50, (int)fy + j*50, 50, tiles, collisionTiles)) {
                     return true;
                 }
             }
@@ -107,11 +107,11 @@ public class Enemy
         return false;
     }
 
-    public boolean collideY(int fx, int fy, int[][] tiles, int[] collisionTiles)
+    public boolean collideY(float fx, float fy, int[][] tiles, int[] collisionTiles)
     {
         for(int i = 0; i <= (width)/50; i++) {
             for(int j = 0; j <= (height)/50; j++) {
-                if ((j == 0 || j == (height)/50) && (fx%50 + width > 50*i) && (fy%50 + height > 50*j) && checkCollision(fx + i*50, fy + j*50, 50, tiles, collisionTiles)) {
+                if ((j == 0 || j == (height)/50) && ((int)fx%50 + width > 50*i) && ((int)fy%50 + height > 50*j) && checkCollision((int)fx + i*50, (int)fy + j*50, 50, tiles, collisionTiles)) {
                     return true;
                 }
             }
@@ -173,7 +173,7 @@ public class Enemy
         }
 
         speedX *= 0.8; //Friction
-        /*if ((int) speedX == 0) {
+        /*if (Math.abs(speedX) <= 0.5) {
             speedX = 0;
         }*/
     }
@@ -181,9 +181,9 @@ public class Enemy
     public void handleCollideX()
     {
         if(speedX>0) {
-            x = 50*(x/50);
+            x = (float)(50 * Math.floor(x / 50.0));
         } else if(speedX<0) {
-            x = 50*(x/50)+50;
+            x = (float)(50 * (Math.floor(x / 50.0) + 1));
         }
         speedX = 0;
     }
@@ -191,10 +191,10 @@ public class Enemy
     public void handleCollideY()
     {
         if(speedY>=0){
-            y = 50*(y/50);
+            y = (float)(50 * Math.floor(y / 50.0));
             inAir = false;
         } else if(speedY<0){
-            y = 50*(y/50)+50;
+            y = (float)(50 * (Math.floor(y / 50.0) + 1));
         }
         speedY = 0;
     }
@@ -258,8 +258,8 @@ public class Enemy
     {
         KonQuestGame.sketch.noStroke();
         KonQuestGame.sketch.fill(0, 255, 0);
-        int screenX = x - camX;
-        int screenY = y - camY;
+        int screenX = (int)x - camX;
+        int screenY = (int)y - camY;
         
         // Only draw if on screen (with some margin)
         if (screenX > -width && screenX < KonQuestGame.sketch.width + width &&

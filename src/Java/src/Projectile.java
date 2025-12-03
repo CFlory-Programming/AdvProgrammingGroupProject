@@ -6,9 +6,9 @@ public class Projectile{
     boolean exists, inAir, outOfBounds;
     float direction; //direction in radians
     boolean homing;
-    public Projectile(int x, int y, int width, int height, int speed, boolean homing, Player p1) {
-        this.x = x;
-        this.y = y;
+    public Projectile(float x, float y, int width, int height, int speed, boolean homing, Player p1) {
+        this.x = (int)x;
+        this.y = (int)y;
         this.width = width;
         this.height = height;
         this.x -= width/2;
@@ -20,9 +20,9 @@ public class Projectile{
         changeDirection(p1);
     }
     
-    public Projectile(int x, int y, int width, int height, int speed, float direction, boolean homing, Player p1) {
-        this.x = x;
-        this.y = y;
+    public Projectile(float x, float y, int width, int height, int speed, float direction, boolean homing, Player p1) {
+        this.x = (int)x;
+        this.y = (int)y;
         this.width = width;
         this.height = height;
         this.x -= width/2;
