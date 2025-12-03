@@ -34,6 +34,9 @@ public class Player
 
     Mount mount;
 
+    PImage idle;
+    PImage walk[];
+
     public Player(int height, int width, int x, int y, int score, int lives)
     {
         this.height = height;
@@ -63,6 +66,14 @@ public class Player
         immune = true;
         mount = null;
         speedMultiplier = 1.0;
+    }
+
+    public void loadSprites() {
+        idle = KonQuestGame.sketch.loadImage("Idle0.png");
+        walk = new PImage[] {
+            KonQuestGame.sketch.loadImage("Walk0.png"),
+            KonQuestGame.sketch.loadImage("Walk1.png")
+        };
     }
     
     public void jump()
@@ -182,13 +193,38 @@ public class Player
         if (!visible || timer % 10 >= 5) {
             return;
         }
-        KonQuestGame.sketch.noStroke();
-        KonQuestGame.sketch.fill(255,0,0);
-        KonQuestGame.sketch.rect(x - camX, y - camY, width, height);
+
+        frame++;
+
+        if (Math.abs(speedX) > 0.5) {
+            state = "Walk";
+        } else {
+            state = "Idle";
+        }
+
+        // KonQuestGame.sketch.noStroke();
+        // KonQuestGame.sketch.fill(255,0,0);
+        // KonQuestGame.sketch.rect(x - camX, y - camY, width, height);
+
         // PImage sprite = KonQuestGame.sketch.loadImage(state + frame + ".png");
         // sprite.resize(width, height);
         // KonQuestGame.sketch.image(sprite, x - camX, y - camY);
 
+        if (state.equals("Idle")) {
+            PImage sprite = idle;
+            sprite.resize(width, height);
+            KonQuestGame.sketch.image(sprite, x - camX, y - camY);
+        } else if (state.equals("Walk")) {
+            PImage sprite = walk[frame/animSpeed % walk.length];
+            sprite.resize(width, height);
+            KonQuestGame.sketch.image(sprite, x - camX, y - camY);
+        }
+
+        if (frame == 60) {
+            frame = 0;
+        } 
+           
+        
         // Health bar in top right corner of screen
         // KonQuestGame.sketch.fill(0);
         // KonQuestGame.sketch.rect(10, 10, 200, 20);
@@ -206,6 +242,7 @@ public class Player
 
     public void update(int[][] tiles, int[] collisionTiles, boolean pressed)
     {
+
         // Stamina regeneration logic
         if (staminaRechargeCooldown > 0) {
             staminaRechargeCooldown--;

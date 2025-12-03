@@ -95,6 +95,12 @@ public class Mount extends Player {
         }
     }
 
+    public void display(int camX, int camY) {
+        KonQuestGame.sketch.noStroke();
+        KonQuestGame.sketch.fill(255,0,0);
+        KonQuestGame.sketch.rect(x - camX, y - camY, width, height);
+    }
+
     private boolean collidesWithPlayer(Player player) {
         return (player.x < this.x + this.width &&
                 player.x + player.width > this.x &&

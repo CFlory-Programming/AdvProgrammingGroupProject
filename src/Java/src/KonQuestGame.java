@@ -192,6 +192,9 @@ public class KonQuestGame extends PApplet
         sketch = this;
         sketch.windowResizable(true);
 
+        frameRate(60);
+        p1.loadSprites();
+
         background(0,118,248);
         setPosition(50, 4950, width, height);
 
