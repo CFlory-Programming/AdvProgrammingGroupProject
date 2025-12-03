@@ -32,6 +32,26 @@ public class Enemy
         inAir = true;
         exists = true;
     }
+
+    public Enemy(Enemy other)
+    {
+        this.height = other.height;
+        this.width = other.width;
+        this.x = other.x;
+        this.y = other.y;
+        this.startX = other.startX;
+        this.startY = other.startY;
+        this.health = other.health;
+        this.headHeight = other.headHeight;
+        this.speedX = other.speedX;
+        this.speedY = other.speedY;
+        this.inAir = other.inAir;
+        this.exists = other.exists;
+    }
+
+    public Enemy deepCopy(Enemy other) {
+        return new Enemy((int)other.x, (int)other.y);
+    }
     
     public void jump(int height, char dir)
     {

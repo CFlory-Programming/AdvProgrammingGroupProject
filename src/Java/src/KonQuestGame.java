@@ -1,3 +1,4 @@
+//import java.lang.reflect.Array;
 import java.util.*;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -97,6 +98,8 @@ public class KonQuestGame extends PApplet
         enemies.add(c);
         enemies.add(t);
         enemyStorage.add(enemies);
+
+        enemies = cloneEnemies(enemyStorage.get(0));
         
         // create a couple of test coins before starting the Processing sketch
         coins.add(new Coin(100, 100, 1));
@@ -134,7 +137,7 @@ public class KonQuestGame extends PApplet
     {
         level++;
         if (enemyStorage.size()>=level) {
-            enemies = enemyStorage.get(level-1);
+            enemies = cloneEnemies(enemyStorage.get(level-1));
         }
         LevelGeneration level = new LevelGeneration(tiles, tileSize);
         level.readFromFile("data/" + level + ".txt");
@@ -149,7 +152,11 @@ public class KonQuestGame extends PApplet
         background(161, 44, 95);
         //background((int)random(255), (int)random(255), (int)random(255));
 
-        HUD.display(p1);
+
+        // Display HUD (hide when pause menu open)
+        if (ui != null && !ui.pauseMenu) {
+            HUD.display(p1);
+        }
         
         // Draw tiles
         fill(0);
@@ -217,10 +224,24 @@ public class KonQuestGame extends PApplet
     // main menu image and buttons initialized in GameUI.setupUI()
     }
 
+    public static ArrayList<Enemy> cloneEnemies(ArrayList<Enemy> enemies)
+    {
+        ArrayList<Enemy> newEnemies = new ArrayList<Enemy>();
+        for (Enemy e : enemies) {
+            newEnemies.add(e.deepCopy(e));
+        }
+        return newEnemies;
+    }
+
     @Override
     public void draw() {
         if (ui != null && ui.mainMenu) {
             ui.drawMainMenu();
+            return;
+        }
+        else if (ui != null && ui.pauseMenu) {
+            drawLevel();
+            ui.drawPauseMenu();
             return;
         }
         else if(animationPlaying) {
@@ -237,7 +258,7 @@ public class KonQuestGame extends PApplet
                     p1.outOfBounds = false;
                     setPosition(50, 4950, width, height);
                     if (enemyStorage.size()>=level) {
-                        enemies = enemyStorage.get(level-1);
+                        enemies = cloneEnemies(enemyStorage.get(level-1));
                     }
                 } else if (animationFrame < 45) {
                     // Hold black screen for a moment
@@ -402,11 +423,13 @@ public class KonQuestGame extends PApplet
                 totalCoins += c.getValue();
             }
 
-            // draw total value in red at the top-right corner
-            fill(255, 0, 0);
-            textAlign(RIGHT, TOP);
-            textSize(16);
-            text("Total value: " + totalCoins + " (keys[4]=" + keys[4] + ", interacting=" + interacting + ", interact=" + interact + ")", width - 10, 10); //x is 10px from the right edge, y is 10px from the top
+            // draw total value in red at the top-right corner (hide when pause menu open)
+            if (ui != null && !ui.pauseMenu) {
+                fill(255, 0, 0);
+                textAlign(RIGHT, TOP);
+                textSize(16);
+                text("Total value: " + totalCoins + " (keys[4]=" + keys[4] + ", interacting=" + interacting + ", interact=" + interact + ")", width - 10, 10); //x is 10px from the right edge, y is 10px from the top
+            }
         }
     }
 

@@ -8,6 +8,15 @@ public class Cannon extends Thrower{
         width = 50;
     }
 
+    public Cannon(Cannon other) {
+        super(other);
+        this.direct = other.direct;
+    }
+
+    public Cannon deepCopy(Enemy other) {
+        return new Cannon((Cannon) other);
+    }
+
     public void throwed(Player p1) {
         Bullet bullet;
         if(direct) {

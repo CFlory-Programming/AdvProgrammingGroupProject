@@ -10,6 +10,15 @@ public class Lizard extends Enemy{
         this.y = y;
     }
 
+    public Lizard(Lizard other) {
+        super(other);
+        this.direction = other.direction;
+    }
+
+    public Lizard deepCopy(Enemy other) {
+        return new Lizard((Lizard) other);
+    }
+
     public void ai(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
     {
         boolean distance = Math.abs(p1.x - x) < 300 && Math.abs(p1.y - y) < 300;
