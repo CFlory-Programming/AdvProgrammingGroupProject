@@ -86,7 +86,7 @@ public class KonQuestGame extends PApplet
         
         Lizard l;
         TallEnemy e;
-        p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
+        p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);/*
         for(int i = 0; i < 20; i++) {
             l = new Lizard(100*i + 100, 100);
             e = new TallEnemy(100*i + 100, 100);
@@ -96,7 +96,8 @@ public class KonQuestGame extends PApplet
         Thrower t = new Thrower(2000, 4950);
         Cannon c = new Cannon(4900, 4950);
         enemies.add(c);
-        enemies.add(t);
+        enemies.add(t);*/
+        enemies.add(new Lizard(800, 4900));
         enemyStorage.add(enemies);
 
         enemies = cloneEnemies(enemyStorage.get(0));
@@ -143,6 +144,22 @@ public class KonQuestGame extends PApplet
         level.readFromFile("data/" + level + ".txt");
         tiles = level.getTiles();
         setPosition(50, 4950, sketch.width, sketch.height);
+    }
+
+    public void displayDetails()
+    {
+        fill(255, 0, 0);
+        textAlign(LEFT, TOP);
+        textSize(16);
+        String details = "";
+        for (int i = 0; i < enemies.size(); i++) {
+            details += "Enemy " + i + ": (x=" + enemies.get(i).x + ", y=" + enemies.get(i).y + ")\n";
+            details += "speedX=" + enemies.get(i).speedX + ", speedY=" + enemies.get(i).speedY + "\n";
+            details += "inAir=" + enemies.get(i).inAir + ", cy=" + enemies.get(i).cy + "\n";
+            details += "tryJump=" + enemies.get(i).tryJump + "\n";
+            details += "\n";
+        }
+        text(details, 10, 10);
     }
 
     public void drawLevel()
@@ -242,6 +259,7 @@ public class KonQuestGame extends PApplet
         else if (ui != null && ui.pauseMenu) {
             drawLevel();
             ui.drawPauseMenu();
+            displayDetails();
             return;
         }
         else if(animationPlaying) {

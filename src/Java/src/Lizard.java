@@ -61,6 +61,9 @@ public class Lizard extends Enemy{
         }
         if (!inAir && ((p1.y <= y && !collideY(x+speedX, y+speedY+1, tiles, collisionTiles)) || (x%50==0 && (collideX(x+1, y, tiles, collisionTiles) || collideX(x-1, y, tiles, collisionTiles))))) {
             jump(10, 'u');
+            tryJump = true;
+        } else {
+            tryJump = false;
         }
     }
 }

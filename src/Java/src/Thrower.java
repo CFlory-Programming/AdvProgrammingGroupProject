@@ -46,7 +46,10 @@ public class Thrower extends Enemy{
             }
         }
         if (!inAir && ((p1.y <= y && !collideY(x+speedX, y+speedY+1, tiles, collisionTiles)) || (x%50==0 && (collideX(x+1, y, tiles, collisionTiles) || collideX(x-1, y, tiles, collisionTiles))))) {
+            tryJump = true;
             jump(10, 'u');
+        } else {
+            tryJump = false;
         }
     }
 

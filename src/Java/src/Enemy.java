@@ -16,6 +16,8 @@ public class Enemy
     boolean inAir;
     boolean outOfBounds;
     boolean exists;
+    boolean cy;
+    boolean tryJump;
     
     public Enemy(int x, int y)
     {
@@ -31,6 +33,7 @@ public class Enemy
         speedY = 0;
         inAir = true;
         exists = true;
+        tryJump = false;
     }
 
     public Enemy(Enemy other)
@@ -154,8 +157,10 @@ public class Enemy
         y += speedY;
         if (collideY(x, y, tiles, collisionTiles)) {
             handleCollideY();
+            cy = true;
         } else {
             inAir = true;
+            cy = false;
         }
         if(p1.visible && p1.x + p1.speedX + p1.width >= x + speedX && p1.x + p1.speedX <= x + speedX + width && p1.y + p1.speedY + p1.height >= y + speedY && p1.y + p1.speedY <= y + speedY + height) {
             if (p1.y + p1.height < y) {
