@@ -210,15 +210,16 @@ public class Player
         // sprite.resize(width, height);
         // KonQuestGame.sketch.image(sprite, x - camX, y - camY);
 
+        PImage sprite = null;
+
         if (state.equals("Idle")) {
-            PImage sprite = idle;
-            sprite.resize(width, height);
-            KonQuestGame.sketch.image(sprite, x - camX, y - camY);
+            sprite = idle;
         } else if (state.equals("Walk")) {
-            PImage sprite = walk[frame/animSpeed % walk.length];
+            sprite = walk[frame/animSpeed % walk.length];
+        }
+
             sprite.resize(width, height);
             KonQuestGame.sketch.image(sprite, x - camX, y - camY);
-        }
 
         if (frame == 60) {
             frame = 0;
