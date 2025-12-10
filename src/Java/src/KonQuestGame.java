@@ -86,7 +86,7 @@ public class KonQuestGame extends PApplet
         
         Lizard l;
         TallEnemy e;
-        p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);/*
+        p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
         for(int i = 0; i < 20; i++) {
             l = new Lizard(100*i + 100, 100);
             e = new TallEnemy(100*i + 100, 100);
@@ -96,7 +96,7 @@ public class KonQuestGame extends PApplet
         Thrower t = new Thrower(2000, 4950);
         Cannon c = new Cannon(4900, 4950);
         enemies.add(c);
-        enemies.add(t);*/
+        enemies.add(t);
         enemies.add(new Lizard(800, 4900));
         enemyStorage.add(enemies);
 
@@ -155,14 +155,19 @@ public class KonQuestGame extends PApplet
         details += "Player: (x=" + p1.x + ", y=" + p1.y + ")\n";
         details += "speedX=" + p1.speedX + ", speedY=" + p1.speedY + "\n";
         details += "\n";
+        text(details, 260, 10);
+        details = "";
         for (int i = 0; i < enemies.size(); i++) {
             details += "Enemy " + i + ": (x=" + enemies.get(i).x + ", y=" + enemies.get(i).y + ")\n";
             details += "speedX=" + enemies.get(i).speedX + ", speedY=" + enemies.get(i).speedY + "\n";
             details += "inAir=" + enemies.get(i).inAir + ", cy=" + enemies.get(i).cy + "\n";
             details += "tryJump=" + enemies.get(i).tryJump + "\n";
             details += "\n";
+            if (details.length() > 700) {
+                text(details, 260 + 40 * i, 10);
+                details = "";
+            }
         }
-        text(details, 10, 10);
     }
 
     public void drawLevel()
