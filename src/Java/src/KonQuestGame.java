@@ -152,6 +152,9 @@ public class KonQuestGame extends PApplet
         textAlign(LEFT, TOP);
         textSize(16);
         String details = "";
+        details += "Player: (x=" + p1.x + ", y=" + p1.y + ")\n";
+        details += "speedX=" + p1.speedX + ", speedY=" + p1.speedY + "\n";
+        details += "\n";
         for (int i = 0; i < enemies.size(); i++) {
             details += "Enemy " + i + ": (x=" + enemies.get(i).x + ", y=" + enemies.get(i).y + ")\n";
             details += "speedX=" + enemies.get(i).speedX + ", speedY=" + enemies.get(i).speedY + "\n";
@@ -368,7 +371,7 @@ public class KonQuestGame extends PApplet
             p1.update(tiles, collisionTiles, keys[0] || keys[1]);
             
             for(int i = 0; i<enemies.size(); i++) {
-                enemies.get(i).ai(tiles, p1, collisionTiles, enemies);
+                // enemies.get(i).ai(tiles, p1, collisionTiles, enemies);
                 enemies.get(i).update(tiles, p1, collisionTiles, enemies);
             }
 

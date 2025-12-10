@@ -215,11 +215,12 @@ public class Enemy
 
     public void handleCollideY()
     {
-        if(speedY>=0){
+        if(speedY>0){
             y = (float)(50 * Math.floor(y / 50.0));
             inAir = false;
-        } else if(speedY<0){
+        } else if(speedY<=0){
             y = (float)(50 * (Math.floor(y / 50.0) + 1));
+            inAir = true;
         }
         speedY = 0;
     }
@@ -290,12 +291,21 @@ public class Enemy
         if (screenX > -width && screenX < KonQuestGame.sketch.width + width &&
             screenY > -height && screenY < KonQuestGame.sketch.height + height) {
             KonQuestGame.sketch.rect(screenX, screenY, width, height);
+            /*for(int i = 0; i <= (width)/50; i++) {
+                for(int j = 0; j <= (height)/50; j++) {
+                    if((j == 0 || j == (height)/50) && (x%50 + width > 50*i) && (y%50 + height > 50*j)) {
+                        KonQuestGame.sketch.noStroke();
+                        KonQuestGame.sketch.fill(0, 0, 0);
+                        KonQuestGame.sketch.rect(x - x%50 - camX + i*50, y - y%50 - camY + j*50, 50, 50);
+                    }
+                }
+            }*/
         }
     }
 
     private boolean checkCollision(float tileX, float tileY, int tileSize, int[][] tiles, int[] collisionTiles) {
         try {
-            int tileindex = tiles[(int)(tileX / tileSize)][(int)(tileY / tileSize)];
+            int tileindex = tiles[(int)(tileX) / tileSize][(int)(tileY) / tileSize];
             outOfBounds = false;
             for (int ct : collisionTiles) {
                 if (tileindex == ct) {
