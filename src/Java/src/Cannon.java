@@ -33,6 +33,14 @@ public class Cannon extends Thrower{
             throwed(p1);
         }
     }
+    
+    public void handleCollideX() {
+        // Ignore
+    }
+
+    public void handleCollideY() {
+        // Ignore
+    }
 
     public void physics() {
         // No gravity/friction

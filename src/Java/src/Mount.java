@@ -64,9 +64,9 @@ public class Mount extends Player {
             if (collideX) {
             launched = false;
             if(speedX>0) {
-                            x = tileSize*(x/tileSize);
+                            x = (float)(tileSize * Math.floor(x / tileSize));
             } else if(speedX<0) {
-                            x = tileSize*(x/tileSize)+tileSize;
+                            x = (float)(tileSize * Math.floor(x / tileSize))+ tileSize;
             }
             speedX = 0;
         }
@@ -77,10 +77,10 @@ public class Mount extends Player {
         if (collideY) {
             launched = false;
             if(speedY>=0){
-                            y = tileSize*(y/tileSize);
+                            y = (float)(tileSize * Math.floor(y / tileSize));
                 inAir = false;
             } else if(speedY<0){
-                            y = tileSize*(y/tileSize)+tileSize;
+                            y = (float)(tileSize * Math.floor(y / tileSize))+ tileSize;
             }
             speedY = 0;
         } else {

@@ -6,8 +6,8 @@ public class Player
 
     int height;
     int width;
-    int x;
-    int y;
+    float x;
+    float y;
     int score;
     int lives;
     int health;
@@ -280,9 +280,9 @@ public class Player
         if (collideX) {
             launched = false;
             if(speedX>0) {
-              x = 50*(x/50);
+                x = (float)(50 * Math.floor(x / 50.0));;
             } else if(speedX<0) {
-              x = 50*(x/50)+50;
+                x = (float)(50 * (Math.floor(x / 50.0) + 1));
             }
             speedX = 0;
         }
@@ -293,10 +293,10 @@ public class Player
         if (collideY) {
             launched = false;
             if(speedY>=0){
-              y = 50*(y/50);
+                y = (float)(50 * Math.floor(y / 50.0));
                 inAir = false;
             } else if(speedY<0){
-              y = 50*(y/50)+50;
+                y = (float)(50 * (Math.floor(y / 50.0) + 1));
             }
             speedY = 0;
         } else {
@@ -340,9 +340,9 @@ public class Player
         }
     }
 
-    public boolean checkCollision(int tileX, int tileY, int tileSize, int[][] tiles, int[] collisionTiles) {
+    public boolean checkCollision(float tileX, float tileY, int tileSize, int[][] tiles, int[] collisionTiles) {
         try {
-            int tileindex = tiles[tileX / tileSize][tileY / tileSize];
+            int tileindex = tiles[(int)tileX / tileSize][(int)tileY / tileSize];
             outOfBounds = false;
             for (int ct : collisionTiles) {
                 if (tileindex == ct) {

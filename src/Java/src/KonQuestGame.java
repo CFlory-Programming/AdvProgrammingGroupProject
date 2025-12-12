@@ -97,7 +97,6 @@ public class KonQuestGame extends PApplet
         Cannon c = new Cannon(4900, 4950);
         enemies.add(c);
         enemies.add(t);
-        enemies.add(new Lizard(800, 4900));
         enemyStorage.add(enemies);
 
         enemies = cloneEnemies(enemyStorage.get(0));
@@ -123,14 +122,14 @@ public class KonQuestGame extends PApplet
         } else if (p1.x+cameraRightMargin > tiles.length * tileSize - width / 2) {
             camX = tiles.length * tileSize - width - cameraRightMargin;
         } else {
-            camX = p1.x - width / 2;
+            camX = (int) p1.x - width / 2;
         }
         if (p1.y-cameraTopMargin < height / 2) {
             camY = cameraTopMargin;
         } else if (p1.y+cameraBottomMargin > (tiles[0].length) * tileSize - height / 2) {
             camY = (tiles[0].length) * tileSize - height - cameraBottomMargin;
         } else {
-            camY = p1.y - height / 2;
+            camY = (int) p1.y - height / 2;
         }
     }
 
