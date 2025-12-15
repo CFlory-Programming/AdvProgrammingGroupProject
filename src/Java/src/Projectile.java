@@ -183,7 +183,7 @@ public class Projectile{
             return;
         }
         direction = (float) Math.atan((double) ((p1.y+p1.height/2)-y-height/2)/((p1.x+p1.width/2)-x-width/2));
-        if (p1.x - x < 0) {
+        if (p1.x + p1.width/2 - x - width/2 < 0) {
             direction += (float) Math.PI;
         }
     }
