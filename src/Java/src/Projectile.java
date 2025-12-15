@@ -174,16 +174,20 @@ public class Projectile{
     }
 
     public void changeDirection(Player p1) {
-        if (p1.x + p1.width/2 == x + width/2) {
-            if (p1.y + p1.height/2 > y + height/2) {
+        float actualPx = (float) (p1.x + p1.width/2 + 0.5*p1.speedX);
+        float actualPy = (float) (p1.y + p1.height/2 + 0.5*p1.speedY);
+        float actualX = (float) (x + width/2);
+        float actualY = (float) (y + height/2);
+        if (actualPx == actualX) {
+            if (actualPy > actualY) {
                 direction = (float) Math.PI/2;
             } else {
                 direction = -(float) Math.PI/2;
             }
             return;
         }
-        direction = (float) Math.atan((double) ((p1.y+p1.height/2)-y-height/2)/((p1.x+p1.width/2)-x-width/2));
-        if (p1.x + p1.width/2 - x - width/2 < 0) {
+        direction = (float) Math.atan((double) ((actualPy)-actualY)/((actualPx)-actualX));
+        if (actualPx - actualX < 0) {
             direction += (float) Math.PI;
         }
     }
