@@ -48,13 +48,6 @@ public class KonQuestGame extends PApplet
 
     public static void main(String[] args)
     {
-<<<<<<< Updated upstream
-        // Initialize player and empty enemies list
-        p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
-        
-        // Create empty enemy storage - levels will populate this when selected
-        enemyStorage.add(new ArrayList<Enemy>());
-=======
         // Random random = new Random();
 
         // for (int i = 0; i < tiles.length; i++) {
@@ -107,7 +100,6 @@ public class KonQuestGame extends PApplet
         enemyStorage.add(enemies);
 
         enemies = cloneEnemies(enemyStorage.get(0));*/
->>>>>>> Stashed changes
         
         // create a couple of test coins before starting the Processing sketch
         coins.add(new Coin(100, 100, 1));
