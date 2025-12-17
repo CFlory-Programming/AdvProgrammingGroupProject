@@ -48,64 +48,16 @@ public class KonQuestGame extends PApplet
 
     public static void main(String[] args)
     {
-        // Random random = new Random();
-
-        // for (int i = 0; i < tiles.length; i++) {
-        //     for (int j = 0; j < tiles[i].length; j++) {
-        //         //randomly assign 1 or 0 to each tile
-        //         if (random.nextDouble() < 0.1 || j == tiles[i].length - 1 || i == 0 || i == tiles.length - 1 || j == 0) {
-        //             if (random.nextDouble() < 0.5) {
-        //                 tiles[i][j] = 2;
-        //             } else {
-        //                 tiles[i][j] = 1;
-        //             }
-        //             if (random.nextDouble() < 0.15 && j != 0 && (j != 1 && tiles[i][j-2] != 3)) {
-        //                 tiles[i][j-1] = 3;
-        //             }
-        //         }
-        //         else {
-        //             tiles[i][j] = 0;
-        //         }
-        //     }
-        // }
-        // tiles[1][1] = 0;
-        // tiles[1][2] = 0;
-
-        LevelGeneration level1 = new LevelGeneration(tiles, tileSize);
-        level1.readFromFile("data/1.txt");
-        tiles = level1.getTiles();
-
-        // print out the tiles array to the console for verification
-        // for (int j = 0; j < tiles[0].length; j++) {
-        //     String row = "";
-        //     for (int i = 0; i < tiles.length; i++) {
-        //         row += tiles[i][j];
-        //     }
-        //     System.out.println(row);
-        // }
-        
-        Lizard l;
-        TallEnemy e;
+        // Initialize player and empty enemies list
         p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
-        for(int i = 0; i < 20; i++) {
-            l = new Lizard(100*i + 100, 100);
-            e = new TallEnemy(100*i + 100, 100);
-            enemies.add(e);
-            enemies.add(l);
-        }
-        Thrower t = new Thrower(2000, 4950);
-        Cannon c = new Cannon(4900, 4950);
-        enemies.add(c);
-        enemies.add(t);
-        enemyStorage.add(enemies);
-
-        enemies = cloneEnemies(enemyStorage.get(0));
+        
+        // Create empty enemy storage - levels will populate this when selected
+        enemyStorage.add(new ArrayList<Enemy>());
         
         // create a couple of test coins before starting the Processing sketch
         coins.add(new Coin(100, 100, 1));
         coins.add(new Coin(200, 150, 1));
         coins.add(new Coin(300, 80, 1));
-
 
         // start the Processing sketch
         PApplet.main("KonQuestGame");
@@ -133,15 +85,65 @@ public class KonQuestGame extends PApplet
         }
     }
 
+    public static void loadLevel(int levelNum)
+    {
+        level = levelNum;
+        // Load the level data from file
+        LevelGeneration levelGen = new LevelGeneration(tiles, tileSize);
+        levelGen.readFromFile("data/" + levelNum + ".txt");
+        tiles = levelGen.getTiles();
+        
+        // Initialize enemies and level objects based on file data
+        ArrayList<Enemy> levelEnemies = new ArrayList<Enemy>();
+        levelObjects.clear();
+        
+        // Process entity codes from the level file
+        for (LevelGeneration.EntityData entity : levelGen.getEntities()) {
+            int code = entity.code;
+            int x = entity.x;
+            int y = entity.y;
+            
+            if (code == 4) {
+                // Code 4: Crate
+                levelObjects.add(new Crate(sketch.loadImage("Crate.png"), x, y, 50, 50, "Score"));
+            } else if (code == 5) {
+                // Code 5: Launch Barrel
+                levelObjects.add(new LaunchBarrel(sketch.loadImage("Barrel.png"), x, y, 50, 50, 2, 30));
+            } else if (code == 6) {
+                // Code 6: Lizard
+                levelEnemies.add(new Lizard(x, y));
+            } else if (code == 7) {
+                // Code 7: TallEnemy
+                levelEnemies.add(new TallEnemy(x, y));
+            } else if (code == 8) {
+                // Code 8: Thrower
+                levelEnemies.add(new Thrower(x, y));
+            } else if (code == 9) {
+                // Code 9: Cannon
+                levelEnemies.add(new Cannon(x, y));
+            }
+        }
+        
+        // Store in enemyStorage and use for current level
+        while (enemyStorage.size() <= levelNum) {
+            enemyStorage.add(new ArrayList<Enemy>());
+        }
+        enemyStorage.set(levelNum - 1, levelEnemies);
+        enemies = cloneEnemies(levelEnemies);
+        
+        // Position player
+        setPosition(50, 4950, sketch.width, sketch.height);
+    }
+
     public static void nextLevel()
     {
         level++;
         if (enemyStorage.size()>=level) {
             enemies = cloneEnemies(enemyStorage.get(level-1));
         }
-        LevelGeneration level = new LevelGeneration(tiles, tileSize);
-        level.readFromFile("data/" + level + ".txt");
-        tiles = level.getTiles();
+        LevelGeneration levelGen = new LevelGeneration(tiles, tileSize);
+        levelGen.readFromFile("data/" + level + ".txt");
+        tiles = levelGen.getTiles();
         setPosition(50, 4950, sketch.width, sketch.height);
     }
 
@@ -238,7 +240,7 @@ public class KonQuestGame extends PApplet
             tilesImg[i] = loadImage("Tile" + i + ".png");
         }
 
-        levelObjects.add(new LaunchBarrel(loadImage("Barrel.png"), 500, 5000, 50, 50, 2, 30));
+        levelObjects.add(new LaunchBarrel(loadImage("Barrel.png"), 500, 5000,  50, 50, 2, 30));
         levelObjects.add(new Crate(loadImage("Crate.png"), 600, 5000, 50, 50, "Score"));
         levelObjects.add(new Crate(loadImage("Crate.png"), 2700, 5000, 50, 50, "Mount"));
         levelObjects.add(new SpeedBoost(loadImage("Crate.png"), 3500, 5000, 30, 30, 2.0f));

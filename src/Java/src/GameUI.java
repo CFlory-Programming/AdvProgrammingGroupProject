@@ -7,6 +7,7 @@ public class GameUI {
     // Main menu / options state
     public boolean mainMenu = true;
     private boolean optionsMenu = false;
+    public boolean levelSelector = false;
     public boolean pauseMenu = false;
 
     // Menu buttons
@@ -16,10 +17,12 @@ public class GameUI {
     private Button backButton;
     private Button resumeButton;
     private Button mainMenuButton;
+    private Button[] levelButtons = new Button[4];
 
     // Main menu image
     private PImage mainMenuImg;
     private PImage playerImg;
+    private PImage mapImg;
 
     // Scrolling state for main menu background
     // menuOffset is the x position of the left-most copy. We draw two copies
@@ -84,6 +87,16 @@ public class GameUI {
         int MAIN_MENU_BUTTON_WIDTH = 200;
         int MAIN_MENU_BUTTON_HEIGHT = 60;
 
+        // Level selector buttons (round)
+        int selectorY = game.height / 2;
+        int selectorStartX = game.width / 2 - 550;
+        int selectorSpacing = 400;
+        int selectorRadius = 60;
+        for (int i = 0; i < 4; i++) {
+            int buttonX2 = selectorStartX + i * selectorSpacing;
+            levelButtons[i] = new Button(buttonX2, selectorY, selectorRadius, selectorRadius, "" + (i+1), game.color(80,180,220), game.color(120,220,255));
+        }
+
     // Create main menu buttons with color scheme
     // Play Button: bluish (normal) -> lighter blue (hover)
     int playNormal = game.color(11, 33, 98);
@@ -112,6 +125,9 @@ public class GameUI {
     playerImg = game.loadImage("MainMenu.png");
     if (playerImg != null)
         playerImg.resize(200, 200);
+    mapImg = game.loadImage("map.png");
+    if (mapImg != null)
+        mapImg.resize(game.width, game.height);
 
     // Resume button for pause screen
     int resumeNormal = game.color(11, 33, 98);
@@ -129,6 +145,11 @@ public class GameUI {
     }
 
     public void drawMainMenu() {
+        if (levelSelector) {
+            drawLevelSelector();
+            return;
+        }
+        
         game.background(0, 0, 0);
         if (mainMenuImg != null) {
             // First copy at offset, second copy immediately after it
@@ -170,7 +191,7 @@ public class GameUI {
             exitButton.display();
 
             if (playButton.consumeClick()) {
-                mainMenu = false;
+                levelSelector = true;
             }
             if (optionsButton.consumeClick()) {
                 optionsMenu = true;
@@ -266,6 +287,30 @@ public class GameUI {
         }
 
         game.text(game.mouseX + ", " + game.mouseY, 50, 10);
+    }
+
+    // Draw level selector UI
+    public void drawLevelSelector() {
+        if (mapImg != null) {
+            game.image(mapImg, 0, 0);
+        }
+        // Draw 4 round buttons
+        int lineY = game.height / 2;
+        for (int i = 0; i < 4; i++) {
+            levelButtons[i].update(game.mouseX, game.mouseY, game.mousePressed);
+            levelButtons[i].display();
+            if (levelButtons[i].consumeClick()) {
+                // Load level i+1
+                mainMenu = false;
+                levelSelector = false;
+                KonQuestGame.loadLevel(i+1);
+            }
+        }
+        // Draw text
+        game.fill(60);
+        game.textAlign(PConstants.CENTER, PConstants.TOP);
+        game.textSize(40);
+        game.text("Select Level", game.width/2, lineY- 500);
     }
 
     public void drawPauseMenu() {
