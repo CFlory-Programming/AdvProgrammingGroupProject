@@ -39,20 +39,75 @@ public class KonQuestGame extends PApplet
     public static int cameraBottomMargin = 0;
     public static int[][] tiles = new int[102][102];
 
-    public static boolean[] keys = new boolean[5];
+    public static boolean[] keys = new boolean[6];
     // Track previous-frame key state to detect "just pressed" events
-    public static boolean[] prevKeys = new boolean[5];
+    public static boolean[] prevKeys = new boolean[6];
 
     public static PImage[] tilesImg = new PImage[4];
     public static int[] collisionTiles = {1, 2};
 
     public static void main(String[] args)
     {
+<<<<<<< Updated upstream
         // Initialize player and empty enemies list
         p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);
         
         // Create empty enemy storage - levels will populate this when selected
         enemyStorage.add(new ArrayList<Enemy>());
+=======
+        // Random random = new Random();
+
+        // for (int i = 0; i < tiles.length; i++) {
+        //     for (int j = 0; j < tiles[i].length; j++) {
+        //         //randomly assign 1 or 0 to each tile
+        //         if (random.nextDouble() < 0.1 || j == tiles[i].length - 1 || i == 0 || i == tiles.length - 1 || j == 0) {
+        //             if (random.nextDouble() < 0.5) {
+        //                 tiles[i][j] = 2;
+        //             } else {
+        //                 tiles[i][j] = 1;
+        //             }
+        //             if (random.nextDouble() < 0.15 && j != 0 && (j != 1 && tiles[i][j-2] != 3)) {
+        //                 tiles[i][j-1] = 3;
+        //             }
+        //         }
+        //         else {
+        //             tiles[i][j] = 0;
+        //         }
+        //     }
+        // }
+        // tiles[1][1] = 0;
+        // tiles[1][2] = 0;
+
+        LevelGeneration level1 = new LevelGeneration(tiles, tileSize);
+        level1.readFromFile("data/1.txt");
+        tiles = level1.getTiles();
+
+        // print out the tiles array to the console for verification
+        // for (int j = 0; j < tiles[0].length; j++) {
+        //     String row = "";
+        //     for (int i = 0; i < tiles.length; i++) {
+        //         row += tiles[i][j];
+        //     }
+        //     System.out.println(row);
+        // }
+        
+        Lizard l;
+        TallEnemy e;
+        p1 = new Player(2*tileSize, tileSize, 50, 50, score, lives);/*
+        for(int i = 0; i < 20; i++) {
+            l = new Lizard(100*i + 100, 100);
+            e = new TallEnemy(100*i + 100, 100);
+            enemies.add(e);
+            enemies.add(l);
+        }
+        Thrower t = new Thrower(2000, 4950);
+        Cannon c = new Cannon(4900, 4950);
+        enemies.add(c);
+        enemies.add(t);
+        enemyStorage.add(enemies);
+
+        enemies = cloneEnemies(enemyStorage.get(0));*/
+>>>>>>> Stashed changes
         
         // create a couple of test coins before starting the Processing sketch
         coins.add(new Coin(100, 100, 1));
@@ -332,6 +387,14 @@ public class KonQuestGame extends PApplet
                         p1.mount.speedX = 0;
                     }
 
+                    if(keys[5]) {
+                        float dir = (float) Math.atan2(mouseY-(p1.y-camY + p1.height/2), mouseX-(p1.x-camX + p1.width/2));
+                        if (mouseX-(p1.x-camX + p1.width/2)<0) {
+                            dir += (float)Math.PI;
+                        }
+                        p1.shoot(dir);
+                    }
+
                     if (keys[2]) {
                         if (!p1.mount.inAir) {
                             p1.mount.jump();
@@ -354,8 +417,17 @@ public class KonQuestGame extends PApplet
                             p1.walk('r');
                         }
                     }
+
+                    if(keys[5]) {
+                        float dir = (float) Math.atan2(mouseY-(p1.y-camY + p1.height/2), mouseX-(p1.x-camX + p1.width/2));
+                        if (mouseX-(p1.x-camX + p1.width/2)<0) {
+                            dir += (float)Math.PI;
+                        }
+                        p1.shoot(dir);
+                    }
+
                     if (keys[2]) {
-                        if (!p1.inAir) {
+                        if (true || !p1.inAir) {
                             p1.jump();
                             p1.inAir = true;
                         }

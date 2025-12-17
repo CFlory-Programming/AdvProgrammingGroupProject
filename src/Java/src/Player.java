@@ -31,6 +31,8 @@ public class Player
     boolean dead;
     boolean outOfBounds;
     boolean immune;
+    ArrayList<Arrow> arrows;
+    boolean direction; // true is right, false is left
 
     Mount mount;
 
@@ -66,6 +68,7 @@ public class Player
         immune = true;
         mount = null;
         speedMultiplier = 1.0;
+        arrows = new ArrayList<Arrow>();
     }
 
     public void loadSprites() {
@@ -224,6 +227,10 @@ public class Player
         if (frame == 60) {
             frame = 0;
         } 
+
+        for (int i = 0; i < arrows.size(); i++) {
+            arrows.get(i).display(camX, camY);
+        }
            
         
         // Health bar in top right corner of screen
@@ -315,6 +322,24 @@ public class Player
         if (health <= 0 && !dead) {
             die();
         }
+
+        if (speedX > 0) {
+            direction = true;
+        } else if (speedX < 0) {
+            direction = false;
+        }
+
+        for (int i = 0; i < arrows.size(); i++) {
+            arrows.get(i).update();
+        }
+
+        for (int i = 0; i < arrows.size(); i++) {
+            arrows.get(i).update();
+            if(!arrows.get(i).exists) {
+                arrows.remove(i);
+                i--;
+            }
+        }
     }
 
     public void checkEnemyCollision(ArrayList<Enemy> enemies) {
@@ -328,6 +353,11 @@ public class Player
         if (!touchingEnemy) {
             attacked = false; // Reset player's attacked status when not colliding with any enemy
         }
+    }
+
+    public void shoot(float direction) {
+        Arrow arrow = new Arrow(x + width / 2, y + height / 2, direction, 10, 40, 5);
+        arrows.add(arrow);
     }
 
     public void checkEnemyCollision(Projectile projectile) {

@@ -42,8 +42,8 @@ public class GameUI {
     public GameUI(KonQuestGame game) {
         this.game = game;
         // initialize bindings using Processing constants via the game reference
-        this.keyBindings = new String[]{"a", "d", "w", String.valueOf(PConstants.SHIFT), " "};
-        this.defaultBindings = new String[]{"a", "d", "w", String.valueOf(PConstants.SHIFT), " "};
+        this.keyBindings = new String[]{"a", "d", "w", String.valueOf(PConstants.SHIFT), " ", "e"};
+        this.defaultBindings = new String[]{"a", "d", "w", String.valueOf(PConstants.SHIFT), " ", "e"};
     }
 
     // Human-friendly name for a binding string
@@ -214,7 +214,7 @@ public class GameUI {
             int sectionStartX = centerX - 200;
             int bindingY = startY + 200;
             int bindingSpacing = 45;
-            String[] bindingLabels = {"Move Left", "Move Right", "Jump", "Sprint", "Interact"};
+            String[] bindingLabels = {"Move Left", "Move Right", "Jump", "Sprint", "Interact", "Attack"};
 
             // Reset button
             int resetBtnWidth = 160;
