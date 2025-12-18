@@ -381,9 +381,9 @@ public class KonQuestGame extends PApplet
 
                     if(keys[5]) {
                         float dir = (float) Math.atan2(mouseY-(p1.y-camY + p1.height/2), mouseX-(p1.x-camX + p1.width/2));
-                        if (mouseX-(p1.x-camX + p1.width/2)<0) {
+                        /*if (mouseX-(p1.x-camX + p1.width/2)<0) {
                             dir += (float)Math.PI;
-                        }
+                        }*/
                         p1.shoot(dir);
                     }
 
@@ -412,9 +412,9 @@ public class KonQuestGame extends PApplet
 
                     if(keys[5]) {
                         float dir = (float) Math.atan2(mouseY-(p1.y-camY + p1.height/2), mouseX-(p1.x-camX + p1.width/2));
-                        if (mouseX-(p1.x-camX + p1.width/2)<0) {
+                        /*if (mouseX-(p1.x-camX + p1.width/2)<0) {
                             dir += (float)Math.PI;
-                        }
+                        }*/
                         p1.shoot(dir);
                     }
 
