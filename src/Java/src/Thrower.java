@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Thrower extends Enemy{
@@ -18,6 +17,7 @@ public class Thrower extends Enemy{
         this.projectiles = new ArrayList<Projectile>();
     }
 
+    @Override
     public Thrower deepCopy(Enemy other) {
         return new Thrower((Thrower) other);
     }
@@ -27,6 +27,7 @@ public class Thrower extends Enemy{
         projectiles.add(projectile);
     }
 
+    @Override
     public void ai(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies) {
         if(timer == 30) {
             timer = 0;

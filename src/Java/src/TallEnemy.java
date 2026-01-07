@@ -13,10 +13,12 @@ public class TallEnemy extends Enemy
         super(other);
     }
 
+    @Override
     public TallEnemy deepCopy(Enemy other) {
         return new TallEnemy((TallEnemy) other);
     }
 
+    @Override
     public void ai(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
     {
         if (p1.x > x) {

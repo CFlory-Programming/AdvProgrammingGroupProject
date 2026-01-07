@@ -25,6 +25,9 @@ abstract class LevelObject
     }
 
     abstract void update(Player player);
+    {
+        // ABSTRACT METHOD
+    }
 
     public boolean collidesWith(Player player)
     {

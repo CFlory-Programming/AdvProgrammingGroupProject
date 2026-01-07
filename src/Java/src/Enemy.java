@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Enemy
+abstract class Enemy
 {
 
     int height;
@@ -52,8 +52,9 @@ public class Enemy
         this.exists = other.exists;
     }
 
-    public Enemy deepCopy(Enemy other) {
-        return new Enemy((int)other.x, (int)other.y);
+    abstract Enemy deepCopy(Enemy other);
+    {
+        // ABSTRACT METHOD
     }
     
     public void jump(int height, char dir)
@@ -107,15 +108,9 @@ public class Enemy
         return true;
     }
 
-    public void setPosition(int x, int y)
+    abstract void ai(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies);
     {
-        this.x = (float)x;
-        this.y = (float)y;
-    }
-
-    public void ai(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
-    {
-        // Placeholder for enemy AI behavior
+        // ABSTRACT METHOD
     }
 
     public boolean collideX(float fx, float fy, int[][] tiles, int[] collisionTiles)
