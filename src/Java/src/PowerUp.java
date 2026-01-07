@@ -18,7 +18,7 @@ public class PowerUp extends LevelObject{
         isActive = false;
     }
 
-
+    @Override
     public void update(Player player) {
         if (collidesWith(player) && !isActive) {
             isActive = true;

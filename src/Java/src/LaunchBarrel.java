@@ -13,6 +13,7 @@ public class LaunchBarrel extends LevelObject
         this.power = power;
     }
 
+    @Override
     public void update(Player player)
     {
         if (collidesWith(player)) {
