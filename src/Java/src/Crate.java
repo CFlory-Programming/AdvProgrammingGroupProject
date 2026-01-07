@@ -17,6 +17,7 @@ public class Crate extends LevelObject
         return broken;
     }
 
+    @Override
     public void update(Player player)
     {
         if (collidesWith(player) && !broken && player.speedY > 0) {

@@ -1,6 +1,6 @@
 import processing.core.PImage;
 
-public class LevelObject
+abstract class LevelObject
 {
     public int x;
     public int y;
@@ -24,10 +24,7 @@ public class LevelObject
         KonQuestGame.sketch.image(sprite, x - camX, y - camY);
     }
 
-    public void update(Player player)
-    {
-        // Default implementation does nothing
-    }
+    abstract void update(Player player);
 
     public boolean collidesWith(Player player)
     {
