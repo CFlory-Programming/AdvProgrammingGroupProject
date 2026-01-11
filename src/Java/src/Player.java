@@ -193,6 +193,9 @@ public class Player
     
     public void display(int camX, int camY)
     {
+        for (int i = 0; i < arrows.size(); i++) {
+            arrows.get(i).display(camX, camY);
+        }
         if (!visible || timer % 10 >= 5) {
             return;
         }
@@ -227,10 +230,6 @@ public class Player
         if (frame == 60) {
             frame = 0;
         } 
-
-        for (int i = 0; i < arrows.size(); i++) {
-            arrows.get(i).display(camX, camY);
-        }
            
         
         // Health bar in top right corner of screen
