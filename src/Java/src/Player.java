@@ -189,6 +189,7 @@ public class Player
             mount.dismount(this);
             mount = null;
         }
+        deleteArrows();
     }
     
     public void display(int camX, int camY)
@@ -352,6 +353,10 @@ public class Player
         if (!touchingEnemy) {
             attacked = false; // Reset player's attacked status when not colliding with any enemy
         }
+    }
+
+    public void deleteArrows() {
+        arrows.clear();
     }
 
     public void shoot(float direction) {

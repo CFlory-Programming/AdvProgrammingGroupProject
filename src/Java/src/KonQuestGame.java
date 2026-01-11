@@ -192,6 +192,7 @@ public class KonQuestGame extends PApplet
         levelGen.readFromFile("data/" + level + ".txt");
         tiles = levelGen.getTiles();
         setPosition(50, 4950, sketch.width, sketch.height);
+        p1.deleteArrows();
     }
 
     public void displayDetails()
