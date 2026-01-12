@@ -58,7 +58,7 @@ public class Thrower extends Enemy{
         super.update(tiles, p1, collisionTiles, enemies);
         timer++;
         for(int i = 0; i < projectiles.size(); i++) {
-            projectiles.get(i).update(tiles, p1, collisionTiles, enemies);
+            projectiles.get(i).update();
         }
         for(int i = 0; i < projectiles.size(); i++) {
             if (!projectiles.get(i).exists) {

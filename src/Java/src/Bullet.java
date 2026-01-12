@@ -69,9 +69,9 @@ public class Bullet extends Projectile{
 
     public void update(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
     {
-        if (starting && !collideX(x, y, tiles, collisionTiles) && !collideY(x, y, tiles, collisionTiles)) {
+        if (starting && !checkHit(tiles, collisionTiles)) {
             starting = false;
         }
-        super.update(tiles, p1, collisionTiles, enemies);
+        super.update();
     }
 }

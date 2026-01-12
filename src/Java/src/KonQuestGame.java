@@ -44,7 +44,7 @@ public class KonQuestGame extends PApplet
     public static boolean[] prevKeys = new boolean[6];
 
     public static PImage[] tilesImg = new PImage[4];
-    public static int[] collisionTiles = {1, 2};
+    public static int[] collisionTiles = {1, 2, 9};
 
     public static void main(String[] args)
     {

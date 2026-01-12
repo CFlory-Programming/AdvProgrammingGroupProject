@@ -1,110 +1,84 @@
 import java.util.*;
 
-public class Projectile{
-    public int distance, speed, width, height, x, y;
-    float speedX, speedY;
-    boolean exists, inAir, outOfBounds;
-    float direction; //direction in radians
+public class Projectile extends AbstractProjectile {
+    public float speed;
     boolean homing;
+    Player target;
     public Projectile(float x, float y, int width, int height, int speed, boolean homing, Player p1) {
-        this.x = (int)x;
-        this.y = (int)y;
-        this.width = width;
-        this.height = height;
-        this.x -= width/2;
-        this.y -= height/2;
-        this.speed = speed;
+        super(x, y, 0, speed, width, height); // Initial direction set to 0
         this.homing = homing;
-        this.exists = true;
-        this.distance = 0;
+        this.speed = speed;
+        this.target = p1;
         changeDirection(p1);
+        super.speedX = (float)(Math.cos(direction) * speed);
+        super.speedY = (float)(Math.sin(direction) * speed);
     }
     
     public Projectile(float x, float y, int width, int height, int speed, float direction, boolean homing, Player p1) {
-        this.x = (int)x;
-        this.y = (int)y;
-        this.width = width;
-        this.height = height;
-        this.x -= width/2;
-        this.y -= height/2;
+        super(x, y, direction, speed, width, height);
+        changeDirection(p1);
         this.speed = speed;
         this.homing = homing;
-        this.direction = direction;
-        this.exists = true;
-        this.distance = 0;
+        this.target = p1;
     }
 
-    public boolean collideX(int fx, int fy, int[][] tiles, int[] collisionTiles)
+    public void update()
     {
-        for(int i = 0; i <= (width)/50; i++) {
-            for(int j = 0; j <= (height)/50; j++) {
-                if ((i == 0 || i == (width)/50) && (fx%50 + width > 50*i) && (fy%50 + height > 50*j) && checkCollision(fx + i*50, fy + j*50, 50, tiles, collisionTiles)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean collideY(int fx, int fy, int[][] tiles, int[] collisionTiles)
-    {
-        for(int i = 0; i <= (width)/50; i++) {
-            for(int j = 0; j <= (height)/50; j++) {
-                if ((j == 0 || j == (height)/50) && (fx%50 + width > 50*i) && (fy%50 + height > 50*j) && checkCollision(fx + i*50, fy + j*50, 50, tiles, collisionTiles)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public void update(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
-    {
-        distance += speed;  // Increment distance before super.update
-        /*if (collideX((int) (x+speedX), (int) (y+speedY), tiles, collisionTiles) || collideY((int) (x+speedX), (int) (y+speedY), tiles, collisionTiles)) {
-            exists = false;
-        }*/
-        ai(tiles, p1, collisionTiles, enemies);
         physics();  // Add physics calculation
-
-        // Collision detection for x direction
+        if (homing) {
+            changeDirection(target);
+            super.speedX = (float)(Math.cos(direction) * speed);
+            super.speedY = (float)(Math.sin(direction) * speed);
+        }
         x += speedX;
-        if (collideX(x, y, tiles, collisionTiles)) {
-            handleCollideX();
-        }
-
-        // Collision detection for y direction
         y += speedY;
-        if (collideY(x, y, tiles, collisionTiles)) {
-            handleCollideY();
-        } else {
-            inAir = true;
-        }
-        if(p1.visible && p1.x + p1.speedX + p1.width >= x + speedX && p1.x + p1.speedX <= x + speedX + width && p1.y + p1.speedY + p1.height >= y + speedY && p1.y + p1.speedY <= y + speedY + height) {
-            if (p1.y + p1.height < y) {
-                topCollide(p1);
-            } else if (p1.y > y + height) {
-                bottomCollide(p1);
-            } else if (p1.x + p1.width < x) {
-                leftCollide(p1);
-            } else if (p1.x > x + width) {
-                rightCollide(p1);
+        distance += Math.sqrt(speedX*speedX + speedY*speedY);
+        float[][] corners = getCorners();
+        if(target.visible && checkCollision(new float[]{(float) (target.x+target.speedX), (float) (target.y+target.speedY+target.height)},
+                                            new float[]{(float) (target.x+target.speedX+target.width), (float) (target.y+target.speedY+target.height)},
+                                            new float[]{(float) (target.x+target.speedX), (float) (target.y+target.speedY)},
+                                            new float[]{(float) (target.x+target.speedX+target.width), (float) (target.y+target.speedY)},
+                                            corners[2], corners[3], corners[0], corners[1])) {
+            if (speedY < target.speedY && checkCollision(new float[]{(float) (target.x+target.speedX), (float) (target.y+target.height)},
+                                                        new float[]{(float) (target.x+target.speedX+target.width), (float) (target.y+target.height)},
+                                                        new float[]{(float) (target.x+target.speedX), (float) (target.y)},
+                                                        new float[]{(float) (target.x+target.speedX+target.width), (float) (target.y)},
+                                                        corners[2], corners[3], corners[0], corners[1])) {
+                topCollide(target);
+            } else if (speedY > target.speedY && checkCollision(new float[]{(float) (target.x+target.speedX), (float) (target.y+target.height)},
+                                                        new float[]{(float) (target.x+target.speedX+target.width), (float) (target.y+target.height)},
+                                                        new float[]{(float) (target.x+target.speedX), (float) (target.y)},
+                                                        new float[]{(float) (target.x+target.speedX+target.width), (float) (target.y)},
+                                                        corners[2], corners[3], corners[0], corners[1])) {
+                bottomCollide(target);
+            } else if (speedX < target.speedX && checkCollision(new float[]{(float) (target.x), (float) (target.y+target.speedY+target.height)}, 
+                                                        new float[]{(float) (target.x+target.width), (float) (target.y+target.speedY+target.height)},
+                                                        new float[]{(float) (target.x), (float) (target.y+target.speedY)},
+                                                        new float[]{(float) (target.x+target.width), (float) (target.y+target.speedY)},
+                                                        corners[2], corners[3], corners[0], corners[1])) {
+                leftCollide(target);
+            } else if (speedX > target.speedX && checkCollision(new float[]{(float) (target.x), (float) (target.y+target.speedY+target.height)}, 
+                                                        new float[]{(float) (target.x+target.width), (float) (target.y+target.speedY+target.height)},
+                                                        new float[]{(float) (target.x), (float) (target.y+target.speedY)},
+                                                        new float[]{(float) (target.x+target.width), (float) (target.y+target.speedY)},
+                                                        corners[2], corners[3], corners[0], corners[1])) {
+                rightCollide(target);
             } else {
                 // Knockback effect
                 if (speedX < 0) {
-                    leftCollide(p1);
+                    leftCollide(target);
                 } else if (speedX > 0) {
-                    rightCollide(p1);
+                    rightCollide(target);
                 } else {
                     if (speedY > 0) {
-                        bottomCollide(p1);
+                        bottomCollide(target);
                     } else {
-                        topCollide(p1);
+                        topCollide(target);
                     }
                 }
             }
         }
-        p1.checkEnemyCollision(this);
+        target.checkEnemyCollision(this);
         if (distance > 1000) {
             exists = false;
         }
@@ -112,23 +86,7 @@ public class Projectile{
 
     public void physics()
     {
-        // No air resistance/friction
-    }
-
-    public void ai(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies) {
-        if(homing) {
-            changeDirection(p1);
-        }
-        speedX = speed*(float) Math.cos(direction);
-        speedY = speed*(float) Math.sin(direction);
-    }
-
-    public void handleCollideY() {
-        exists = false;
-    }
-
-    public void handleCollideX() {
-        exists = false;
+        
     }
 
     public void topCollide(Player p1) {
@@ -176,42 +134,17 @@ public class Projectile{
     public void changeDirection(Player p1) {
         float actualPx = (float) (p1.x + p1.width/2 + 0.5*p1.speedX);
         float actualPy = (float) (p1.y + p1.height/2 + 0.5*p1.speedY);
-        float actualX = (float) (x + width/2);
-        float actualY = (float) (y + height/2);
-        if (actualPx == actualX) {
-            if (actualPy > actualY) {
-                direction = (float) Math.PI/2;
-            } else {
-                direction = -(float) Math.PI/2;
-            }
-            return;
-        }
-        direction = (float) Math.atan((double) ((actualPy)-actualY)/((actualPx)-actualX));
-        if (actualPx - actualX < 0) {
-            direction += (float) Math.PI;
-        }
-    }
-
-    private boolean checkCollision(int tileX, int tileY, int tileSize, int[][] tiles, int[] collisionTiles) {
-        try {
-            int tileindex = tiles[tileX / tileSize][tileY / tileSize];
-            outOfBounds = false;
-            for (int ct : collisionTiles) {
-                if (tileindex == ct) {
-                    return true;
-                }
-            }
-            return false;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            outOfBounds = true;
-            return false;
-        }
+        float actualX = (float) (x + width/2*Math.cos(direction) - height/2*Math.sin(direction));
+        float actualY = (float) (y + width/2*Math.sin(direction) + height/2*Math.cos(direction));
+        direction = (float) Math.atan2(((actualPy)-actualY), ((actualPx)-actualX));
     }
 
     public void display(int camX, int camY)
     {
-        KonQuestGame.sketch.noStroke();
-        KonQuestGame.sketch.fill(0, 255, 0);
-        KonQuestGame.sketch.rect(x - camX, y - camY, width, height);
+        KonQuestGame.sketch.pushMatrix();
+        KonQuestGame.sketch.translate((float) (x + width/2*Math.cos(direction) - height/2*Math.sin(direction) - camX), (float) (y - camY + width/2*Math.sin(direction) + height/2*Math.cos(direction)));
+        KonQuestGame.sketch.rotate(direction);
+        KonQuestGame.sketch.rect(-width/2, -height/2, width, height);
+        KonQuestGame.sketch.popMatrix();
     }
 }
