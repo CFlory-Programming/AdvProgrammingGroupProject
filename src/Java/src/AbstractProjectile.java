@@ -18,10 +18,10 @@ abstract class AbstractProjectile {
     public float[][] getCorners() {
         float[][] corners = new float[4][2];
 
-        corners[0] = new float[]{(float) (x), (float) (y)};
-        corners[1] = new float[]{(float) (x + width*Math.cos(direction)), (float) (y + width*Math.sin(direction))};
-        corners[2] = new float[]{(float) (x - height*Math.sin(direction)), (float) (y + height*Math.cos(direction))};
-        corners[3] = new float[]{(float) (x + width*Math.cos(direction) - height*Math.sin(direction)), (float) (y + width*Math.sin(direction) + height*Math.cos(direction))};
+        corners[0] = new float[]{(float) (x - width/2*Math.cos(direction) + height/2*Math.sin(direction)), (float) (y - width/2*Math.sin(direction) - height/2*Math.cos(direction))};
+        corners[1] = new float[]{(float) (x + width/2*Math.cos(direction) + height/2*Math.sin(direction)), (float) (y + width/2*Math.sin(direction) - height/2*Math.cos(direction))};
+        corners[2] = new float[]{(float) (x - width/2*Math.cos(direction) - height/2*Math.sin(direction)), (float) (y - width/2*Math.sin(direction) + height/2*Math.cos(direction))};
+        corners[3] = new float[]{(float) (x + width/2*Math.cos(direction) - height/2*Math.sin(direction)), (float) (y + width/2*Math.sin(direction) + height/2*Math.cos(direction))};
 
         return corners;
     }

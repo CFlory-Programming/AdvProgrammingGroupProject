@@ -1,7 +1,4 @@
 public class Arrow extends AbstractProjectile {
-    float x, y, speedX, speedY, direction;
-    int width, height, distance;
-    boolean exists, outOfBounds;
     public Arrow(float x, float y, float direction, float speed, int width, int height) {
         super(x, y, direction, speed, width, height);
     }
@@ -34,7 +31,7 @@ public class Arrow extends AbstractProjectile {
 
     public void display(int camX, int camY) {
         KonQuestGame.sketch.pushMatrix();
-        KonQuestGame.sketch.translate((float) (x + width/2*Math.cos(direction) - height/2*Math.sin(direction) - camX), (float) (y - camY + width/2*Math.sin(direction) + height/2*Math.cos(direction)));
+        KonQuestGame.sketch.translate((float) (x - camX), (float) (y - camY));
         KonQuestGame.sketch.rotate(direction);
         KonQuestGame.sketch.fill(150, 75, 0);
         KonQuestGame.sketch.rect(-width/2, -height/2, width, height);
