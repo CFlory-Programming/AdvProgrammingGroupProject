@@ -23,7 +23,7 @@ public class Thrower extends Enemy{
     }
 
     public void throwed(Player p1) {
-        Projectile projectile = new Projectile(x + width/2, y + height/2, 10, 10, 20, false, p1);
+        Projectile projectile = new Projectile(x + width/2, y + height/2, 10, 10, 20, true, p1);
         projectiles.add(projectile);
     }
 
@@ -34,14 +34,14 @@ public class Thrower extends Enemy{
             throwed(p1);
         }
         if (p1.x > x) {
-            if (p1.x-x >= 4){
-                move(4, 'r', false);
+            if (p1.x-x >= 6){
+                move(6, 'r', false);
             } else if (!collideX(p1.x, y, tiles, collisionTiles)) {
                 move(p1.x - x, 'r', false);
             }
         } else if (p1.x < x) {
-            if (x-p1.x >= 4){
-                move(4, 'l', false);
+            if (x-p1.x >= 6){
+                move(6, 'l', false);
             } else if (!collideX(p1.x, y, tiles, collisionTiles)) {
                 move(p1.x - x, 'r', false);
             }

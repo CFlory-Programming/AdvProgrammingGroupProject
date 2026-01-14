@@ -66,7 +66,7 @@ abstract class Enemy
     {
         if (isRunning) {
             if (dir == 'r') {
-                if (speedX == 0 && distance >= 2) {
+                if (speedX == 0 && distance >= 6) {
                     speedX = 2;
                 } else if (speedX <= distance - 1 && speedX != 0) {
                     speedX += 1;
@@ -74,7 +74,7 @@ abstract class Enemy
                     speedX = distance;
                 }
             } else if (dir == 'l') {
-                if (speedX == 0 && distance <= -2) {
+                if (speedX == 0 && distance <= -6) {
                     speedX = -2;
                 } else if (speedX >= -distance + 1 && speedX != 0) {
                     speedX -= 1;
@@ -84,16 +84,16 @@ abstract class Enemy
             }
         } else {
             if (dir == 'r') {
-                if (speedX == 0 && distance >= 1) {
-                    speedX = 1;
+                if (speedX == 0 && distance >= 3) {
+                    speedX = 2;
                 } else if (speedX <= distance - 0.5 && speedX != 0) {
                     speedX += 0.5;
                 } else {
                     speedX = distance;
                 }
             } else if (dir == 'l') {
-                if (speedX == 0 && distance <= -1) {
-                    speedX = -1;
+                if (speedX == 0 && distance <= -3) {
+                    speedX = -2;
                 } else if (speedX >= -distance + 0.5 && speedX != 0) {
                     speedX -= 0.5;
                 } else {
@@ -192,7 +192,7 @@ abstract class Enemy
             speedY = 15; // Terminal velocity
         }
 
-        speedX *= 0.8; //Friction
+        speedX *= 0.95; //Friction
         /*if (Math.abs(speedX) <= 0.5) {
             speedX = 0;
         }*/

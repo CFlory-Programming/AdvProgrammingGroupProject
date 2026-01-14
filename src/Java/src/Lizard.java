@@ -33,12 +33,12 @@ public class Lizard extends Enemy{
             advancedAi(tiles, p1, collisionTiles, enemies);
         } else {
             if (direction && (!collideX(x, y, tiles, collisionTiles))) {
-                move(2, 'r', false);
+                move(3, 'r', false);
                 if (collideX(x + 1, y, tiles, collisionTiles) || x + 150 >= 50 * tiles.length) {
                     direction = false;
                 }
             } else if (!direction && (!collideX(x, y, tiles, collisionTiles))) {
-                move(2, 'l', false);
+                move(3, 'l', false);
                 if (collideX(x - 1, y, tiles, collisionTiles) || x <= 0) {
                     direction = true;
                 }
@@ -49,14 +49,14 @@ public class Lizard extends Enemy{
     public void advancedAi(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
     {
         if (p1.x > x) {
-            if (p1.x-x >= 4){
-                move(4, 'r', false);
+            if (p1.x-x >= 6){
+                move(6, 'r', false);
             } else if (!collideX(p1.x, y, tiles, collisionTiles)) {
                 move(p1.x - x, 'r', false);
             }
         } else if (p1.x < x) {
-            if (x-p1.x >= 4){
-                move(4, 'l', false);
+            if (x-p1.x >= 6){
+                move(6, 'l', false);
             } else if (!collideX(p1.x, y, tiles, collisionTiles)) {
                 move(p1.x - x, 'r', false);
             }

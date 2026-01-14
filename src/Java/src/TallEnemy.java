@@ -22,14 +22,14 @@ public class TallEnemy extends Enemy
     public void ai(int[][] tiles, Player p1, int[] collisionTiles, ArrayList<Enemy> enemies)
     {
         if (p1.x > x) {
-            if (p1.x-x >= 4){
-                move(4, 'r', false);
+            if (p1.x-x >= 6){
+                move(6, 'r', false);
             } else if (!collideX(p1.x, y, tiles, collisionTiles)) {
                 move(p1.x - x, 'r', false);
             }
         } else if (p1.x < x) {
-            if (x-p1.x >= 4){
-                move(4, 'l', false);
+            if (x-p1.x >= 6){
+                move(6, 'l', false);
             } else if (!collideX(p1.x, y, tiles, collisionTiles)) {
                 move(p1.x - x, 'r', false);
             }
