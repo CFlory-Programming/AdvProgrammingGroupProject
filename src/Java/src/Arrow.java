@@ -17,6 +17,17 @@ public class Arrow extends AbstractProjectile {
             speedX = 0;
             speedY = 0;
         }
+        float[][] corners = getCorners();
+        for (Enemy e : KonQuestGame.enemies) {
+            if (checkCollision(new float[]{(float) e.x, (float) (e.y + e.height)},
+                               new float[]{(float) (e.x + e.width), (float) (e.y + e.height)},
+                               new float[]{(float) e.x, (float) e.y},
+                               new float[]{(float) (e.x + e.width), (float) e.y},
+                               corners[2], corners[3], corners[0], corners[1])) {
+                e.health -= 10;
+                exists = false;
+            }
+        }
         x += speedX;
         y += speedY;
         distance += Math.sqrt((speedX*speedX) + (speedY*speedY));

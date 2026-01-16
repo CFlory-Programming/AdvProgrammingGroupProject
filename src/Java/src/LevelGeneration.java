@@ -100,19 +100,15 @@ public class LevelGeneration {
                     for (int x = 0; x < widthCols; x++) {
                         if (x < ln.length()) {
                             char c = ln.charAt(x);
-                            if (Character.isDigit(c)) {
-                                int code = c - '0';
-                                // Codes 0-3 are tiles (0=empty, 1=wall, 2=brick, 3=gold coin)
-                                // Codes 4+ are entities
-                                if (code < 4) {
-                                    tiles[x][y] = code;
-                                } else {
-                                    // Store entity data (code, x in pixels, y in pixels)
-                                    entities.add(new EntityData(code, x * tileSize, y * tileSize));
-                                    tiles[x][y] = 0; // Leave tile as empty
-                                }
+                            int code = c - '0';
+                            // Codes 0-3 are tiles (0=empty, 1=wall, 2=brick, 3=gold coin)
+                            // Codes 4+ are entities
+                            if (code < 4) {
+                                tiles[x][y] = code;
                             } else {
-                                tiles[x][y] = 0;
+                                // Store entity data (code, x in pixels, y in pixels)
+                                entities.add(new EntityData(code, x * tileSize, y * tileSize));
+                                tiles[x][y] = 0; // Leave tile as empty
                             }
                         } else {
                             tiles[x][y] = 0; // pad shorter lines with 0

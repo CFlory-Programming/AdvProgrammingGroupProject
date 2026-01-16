@@ -105,7 +105,6 @@ public class KonQuestGame extends PApplet
         coins.add(new Coin(100, 100, 1));
         coins.add(new Coin(200, 150, 1));
         coins.add(new Coin(300, 80, 1));
-
         // start the Processing sketch
         PApplet.main("KonQuestGame");
     }
@@ -168,6 +167,14 @@ public class KonQuestGame extends PApplet
             } else if (code == 9) {
                 // Code 9: Cannon
                 levelEnemies.add(new Cannon(x, y));
+            } else if (code == 10) {
+                // Code 10: SpeedBoost
+                // Char equivalent is ':'
+                levelObjects.add(new SpeedBoost(sketch.loadImage("Crate.png"), x, y, 30, 30, 2.0f));
+            } else if (code == 11) {
+                // Code 11: Bow
+                // Char equivalent is ';'
+                levelObjects.add(new Bow(sketch.loadImage("Crate.png"), x, y, 30, 30));
             }
         }
         
@@ -180,18 +187,13 @@ public class KonQuestGame extends PApplet
         
         // Position player
         setPosition(50, 4950, sketch.width, sketch.height);
+        System.out.println(levelObjects.size());
     }
 
     public static void nextLevel()
     {
         level++;
-        if (enemyStorage.size()>=level) {
-            enemies = cloneEnemies(enemyStorage.get(level-1));
-        }
-        LevelGeneration levelGen = new LevelGeneration(tiles, tileSize);
-        levelGen.readFromFile("data/" + level + ".txt");
-        tiles = levelGen.getTiles();
-        setPosition(50, 4950, sketch.width, sketch.height);
+        loadLevel(level);
         p1.deleteArrows();
     }
 
@@ -291,7 +293,7 @@ public class KonQuestGame extends PApplet
         levelObjects.add(new LaunchBarrel(loadImage("Barrel.png"), 500, 5000,  50, 50, 2, 30));
         levelObjects.add(new Crate(loadImage("Crate.png"), 600, 5000, 50, 50, "Score"));
         levelObjects.add(new Crate(loadImage("Crate.png"), 2700, 5000, 50, 50, "Mount"));
-        levelObjects.add(new SpeedBoost(loadImage("Crate.png"), 3500, 5000, 30, 30, 2.0f));
+        //levelObjects.add(new SpeedBoost(loadImage("Crate.png"), 3500, 5000, 30, 30, 2.0f));
         //mount = new Mount(loadImage("Barrel.png"), 2000, 4900, 100, 70);
         mount = null;
 
@@ -420,7 +422,7 @@ public class KonQuestGame extends PApplet
                     }
 
                     if (keys[2]) {
-                        if (true || !p1.inAir) {
+                        if (!p1.inAir) {
                             p1.jump();
                             p1.inAir = true;
                         }

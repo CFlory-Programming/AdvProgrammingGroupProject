@@ -19,6 +19,7 @@ public class Player
     double speedX;
     double speedY;
     boolean inAir;
+    boolean canShoot;
     double speedMultiplier;
     int frame;
     int animSpeed;
@@ -68,6 +69,7 @@ public class Player
         immune = true;
         mount = null;
         speedMultiplier = 1.0;
+        canShoot = false;
         arrows = new ArrayList<Arrow>();
     }
 
@@ -231,7 +233,13 @@ public class Player
         if (frame == 60) {
             frame = 0;
         } 
-           
+
+        if (canShoot) {
+            KonQuestGame.sketch.fill(150, 75, 0);
+            KonQuestGame.sketch.rect(x - camX - 5, y - camY - 40, 10, 80);
+            KonQuestGame.sketch.noFill();
+            KonQuestGame.sketch.arc(x - camX, y - camY, 40, 40, - (float) Math.PI/2, (float) Math.PI/2);
+        }
         
         // Health bar in top right corner of screen
         // KonQuestGame.sketch.fill(0);
@@ -360,6 +368,9 @@ public class Player
     }
 
     public void shoot(float direction) {
+        if (!canShoot) {
+            return;
+        }
         Arrow arrow = new Arrow(x + width / 2, y + height / 2, direction, 10, 40, 5);
         arrows.add(arrow);
     }
