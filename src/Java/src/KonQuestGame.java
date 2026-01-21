@@ -205,6 +205,7 @@ public class KonQuestGame extends PApplet
         String details = "";
         details += "Player: (x=" + p1.x + ", y=" + p1.y + ")\n";
         details += "speedX=" + p1.speedX + ", speedY=" + p1.speedY + "\n";
+        details += "attacked=" + p1.attacked + ", inAir=" + p1.inAir + "\n";
         details += "\n";
         text(details, 260, 10);
         details = "";
@@ -440,7 +441,6 @@ public class KonQuestGame extends PApplet
             interacting = keys[4];
             // Update prevKeys for the next frame
             prevKeys[4] = keys[4];
-
             p1.update(tiles, collisionTiles, keys[0] || keys[1]);
             
             for(int i = 0; i<enemies.size(); i++) {
@@ -453,9 +453,11 @@ public class KonQuestGame extends PApplet
 
             // crate.update(p1);
             // crate.display(camX, camY);
+
             for (LevelObject lo : levelObjects) {
                 lo.update(p1);
             }
+            
 
             //mount.mount(p1);
             if (mount != null) {

@@ -182,6 +182,11 @@ abstract class Enemy
             }
         }
         p1.checkEnemyCollision(enemies);
+        for (LevelObject pu : KonQuestGame.levelObjects) {
+            if (pu instanceof PowerUp) {
+                pu.update(p1);
+            }
+        }
     }
 
     public void physics()
@@ -241,6 +246,7 @@ abstract class Enemy
             //p1.die(); // Player dies
             p1.health -= 5;
             //p1.attacked = true; // Make the player immune for a short time
+            p1.hit = true;
             jump(10, 'u');
             p1.speedY = 5;
             p1.speedX = 0;
@@ -255,6 +261,7 @@ abstract class Enemy
         p1.speedX = -10;
         p1.speedY = -5;
         speedX = 5;
+        p1.hit = true;
         if (!p1.launched && !p1.attacked) {
             // Player is to the left of the enemy
             p1.health -= 5;
@@ -269,6 +276,7 @@ abstract class Enemy
         p1.speedX = 10;
         p1.speedY = -5;
         speedX = -5;
+        p1.hit = true;
         if (!p1.launched && !p1.attacked) {
             // Player is to the right of the enemy
             p1.health -= 5;

@@ -24,6 +24,7 @@ public class Player
     int frame;
     int animSpeed;
     int timer;
+    int arrowTimer;
     String state;
     boolean visible;
     boolean launching;
@@ -32,6 +33,7 @@ public class Player
     boolean dead;
     boolean outOfBounds;
     boolean immune;
+    boolean hit;
     ArrayList<Arrow> arrows;
     boolean direction; // true is right, false is left
 
@@ -55,6 +57,7 @@ public class Player
         animSpeed = 10;
         state = "Idle";
         attacked = false;
+        hit = false;
         dead = false;
         health = 100;
         maxHealth = 100;
@@ -192,6 +195,11 @@ public class Player
             mount = null;
         }
         deleteArrows();
+        for (LevelObject lo : KonQuestGame.levelObjects) {
+            if (lo instanceof PowerUp && ((PowerUp) lo).isActive) {
+                ((PowerUp) lo).removeEffect(this);
+            }
+        }
     }
     
     public void display(int camX, int camY)
@@ -236,9 +244,12 @@ public class Player
 
         if (canShoot) {
             KonQuestGame.sketch.fill(150, 75, 0);
-            KonQuestGame.sketch.rect(x - camX - 5, y - camY - 40, 10, 80);
+            KonQuestGame.sketch.rect(x - camX - 5 + width/2, y - camY - 20 + height/2, 10, 40);
+            KonQuestGame.sketch.stroke(150, 75, 0);
+            KonQuestGame.sketch.strokeWeight(10);
             KonQuestGame.sketch.noFill();
-            KonQuestGame.sketch.arc(x - camX, y - camY, 40, 40, - (float) Math.PI/2, (float) Math.PI/2);
+            KonQuestGame.sketch.arc(x - camX + width/2, y - camY + height/2, 40, 40, - (float) Math.PI/2, (float) Math.PI/2);
+            KonQuestGame.sketch.strokeWeight(4);
         }
         
         // Health bar in top right corner of screen
@@ -348,6 +359,8 @@ public class Player
                 i--;
             }
         }
+
+        arrowTimer = Math.max(0, arrowTimer - 1);        
     }
 
     public void checkEnemyCollision(ArrayList<Enemy> enemies) {
@@ -360,6 +373,7 @@ public class Player
         }
         if (!touchingEnemy) {
             attacked = false; // Reset player's attacked status when not colliding with any enemy
+            hit = false;
         }
     }
 
@@ -371,6 +385,10 @@ public class Player
         if (!canShoot) {
             return;
         }
+        if (arrowTimer > 0) {
+            return;
+        }
+        arrowTimer = 10;
         Arrow arrow = new Arrow(x + width / 2, y + height / 2, direction, 10, 40, 5);
         arrows.add(arrow);
     }
@@ -382,6 +400,7 @@ public class Player
         }
         if (!touchingEnemy) {
             attacked = false; // Reset player's attacked status when not colliding with any enemy
+            hit = false;
         }
     }
 

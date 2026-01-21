@@ -34,7 +34,7 @@ public class PowerUp extends LevelObject{
             }
         }
 
-        if (player.attacked && disapearsOnHit && isActive) {
+        if (player.hit && disapearsOnHit && isActive) {
             removeEffect(player);
             isActive = false;
         }

@@ -6,10 +6,12 @@ public class Bow extends PowerUp{
     }
 
     public void applyEffect(Player player) {
+        isActive = true;
         player.canShoot = true;
     }
 
     public void removeEffect(Player player) {
+        isActive = false;
         player.canShoot = false;
     }
 }

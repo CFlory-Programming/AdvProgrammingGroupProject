@@ -19,6 +19,9 @@ public class Arrow extends AbstractProjectile {
         }
         float[][] corners = getCorners();
         for (Enemy e : KonQuestGame.enemies) {
+            if (e instanceof Cannon) {
+                continue;
+            }
             if (checkCollision(new float[]{(float) e.x, (float) (e.y + e.height)},
                                new float[]{(float) (e.x + e.width), (float) (e.y + e.height)},
                                new float[]{(float) e.x, (float) e.y},
