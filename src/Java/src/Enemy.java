@@ -198,9 +198,6 @@ abstract class Enemy
         }
 
         speedX *= 0.95; //Friction
-        /*if (Math.abs(speedX) <= 0.5) {
-            speedX = 0;
-        }*/
     }
 
     public void handleCollideX()
