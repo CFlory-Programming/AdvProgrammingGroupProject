@@ -43,8 +43,9 @@ public class KonQuestGame extends PApplet
     // Track previous-frame key state to detect "just pressed" events
     public static boolean[] prevKeys = new boolean[6];
 
-    public static PImage[] tilesImg = new PImage[12];
+    public static PImage[] tilesImg = new PImage[13];
     public static int[] collisionTiles = {1, 2, 9};
+    public static int[] tilesWithImage = {1, 2, 3};
 
     public static void main(String[] args)
     {
@@ -187,7 +188,6 @@ public class KonQuestGame extends PApplet
         
         // Position player
         setPosition(50, 4950, sketch.width, sketch.height);
-        System.out.println(levelObjects.size());
     }
 
     public static void nextLevel()
@@ -287,10 +287,10 @@ public class KonQuestGame extends PApplet
         ui.setupUI();
         // Load tile images
         for (int i = 0; i < tilesImg.length; i++) {
-            try {
-                tilesImg[i] = loadImage("Tile" + i + ".png");
-            } catch (Exception e) {
-                // Ignore
+            for (int j = 0; j < tilesWithImage.length; j++) {
+                if (i == tilesWithImage[j]) {
+                    tilesImg[i] = loadImage("Tile" + i + ".png");
+                }
             }
         }
 
@@ -529,6 +529,7 @@ public class KonQuestGame extends PApplet
                 textSize(16);
                 text("Total value: " + totalCoins + " (keys[4]=" + keys[4] + ", interacting=" + interacting + ", interact=" + interact + ")", width - 10, 10); //x is 10px from the right edge, y is 10px from the top
             }
+            p1.canShoot = true;
         }
     }
 
