@@ -8,6 +8,10 @@
 // 7 = TallEnemy
 // 8 = Thrower
 // 9 = Cannon
+// 10 = SpeedBoost
+// 11 = Bow
+// 12 = Spike Trap
+// 13 = Ice Tile
 
 public class LevelGeneration {
     public int[][] tiles;
@@ -102,8 +106,9 @@ public class LevelGeneration {
                             char c = ln.charAt(x);
                             int code = c - '0';
                             // Codes 0-3 are tiles (0=empty, 1=wall, 2=brick, 3=gold coin)
-                            // Codes 4+ are entities
-                            if (code < 4) {
+                            // Codes 12-13 are tiles (12=spike trap, 13=ice tile)
+                            // Codes 4-11 are entities
+                            if (code < 4 || code == 12 || code == 13) {
                                 tiles[x][y] = code;
                             } else {
                                 // Store entity data (code, x in pixels, y in pixels)
