@@ -43,7 +43,7 @@ public class KonQuestGame extends PApplet
     // Track previous-frame key state to detect "just pressed" events
     public static boolean[] prevKeys = new boolean[6];
 
-    public static PImage[] tilesImg = new PImage[4];
+    public static PImage[] tilesImg = new PImage[12];
     public static int[] collisionTiles = {1, 2, 9};
 
     public static void main(String[] args)
@@ -287,8 +287,11 @@ public class KonQuestGame extends PApplet
         ui.setupUI();
         // Load tile images
         for (int i = 0; i < tilesImg.length; i++) {
-            if (i != 0)
-            tilesImg[i] = loadImage("Tile" + i + ".png");
+            try {
+                tilesImg[i] = loadImage("Tile" + i + ".png");
+            } catch (Exception e) {
+                // Ignore
+            }
         }
 
         levelObjects.add(new LaunchBarrel(loadImage("Barrel.png"), 500, 5000,  50, 50, 2, 30));
