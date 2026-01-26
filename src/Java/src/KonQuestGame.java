@@ -423,7 +423,7 @@ public class KonQuestGame extends PApplet
                     }
 
                     if (keys[2]) {
-                        if (!p1.inAir) {
+                        if (true || !p1.inAir) {
                             p1.jump();
                             p1.inAir = true;
                         }
