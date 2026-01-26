@@ -15,12 +15,14 @@ public class SpeedBoost extends PowerUp {
         // if (Math.abs(player.speedX) > 20) {
         //     player.speedX *= 20 / Math.abs(player.speedX);
         // }
+        isActive = true;
         player.speedMultiplier = speedMultiplier;
     }
 
     @Override
     public void removeEffect(Player player) {
         //player.speedX /= speedMultiplier;
+        isActive = false;
         player.speedMultiplier = 1.0;
     }
     
