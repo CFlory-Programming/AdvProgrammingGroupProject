@@ -22,7 +22,12 @@ public class HUD {
             KonQuestGame.sketch.text("Score: " + player.score, 200, 70);
             KonQuestGame.sketch.text("Lives: " + player.lives, 200, 90);
             KonQuestGame.sketch.text("Level: " + KonQuestGame.level, 200, 110);
-            KonQuestGame.sketch.text("Powerups: " + player.canShoot, 200, 130);
+            if (player.canShoot) {
+                KonQuestGame.sketch.text("Bow Powerup ACTIVATED", 200, 130);
+            }
+            if (player.speedMultiplier > 1.0) {
+                KonQuestGame.sketch.text("Speed Powerup ACTIVATED", 200, 150);
+            }
         }
     }
 }
