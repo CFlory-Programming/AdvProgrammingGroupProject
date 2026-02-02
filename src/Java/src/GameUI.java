@@ -18,6 +18,9 @@ public class GameUI {
     private Button resumeButton;
     private Button mainMenuButton;
     private Button[] levelButtons = new Button[4];
+    private int[] buttonXs = new int[4];
+    private int[] buttonYs = new int[4];
+    private int buttonRadius;
 
     // Main menu image
     private PImage mainMenuImg;
@@ -95,7 +98,10 @@ public class GameUI {
         for (int i = 0; i < 4; i++) {
             int buttonX2 = selectorStartX + i * selectorSpacing;
             levelButtons[i] = new Button(buttonX2, selectorY, selectorRadius, selectorRadius, "" + (i+1), game.color(80,180,220), game.color(120,220,255));
+            buttonXs[i] = buttonX2;
+            buttonYs[i] = selectorY;
         }
+        buttonRadius = selectorRadius;
 
     // Create main menu buttons with color scheme
     // Play Button: bluish (normal) -> lighter blue (hover)
@@ -297,13 +303,23 @@ public class GameUI {
         // Draw 4 round buttons
         int lineY = game.height / 2;
         for (int i = 0; i < 4; i++) {
-            levelButtons[i].update(game.mouseX, game.mouseY, game.mousePressed);
-            levelButtons[i].display();
-            if (levelButtons[i].consumeClick()) {
-                // Load level i+1
-                mainMenu = false;
-                levelSelector = false;
-                KonQuestGame.loadLevel(i+1);
+            if (i + 1 <= KonQuestGame.maxLevel) {
+                levelButtons[i].update(game.mouseX, game.mouseY, game.mousePressed);
+                levelButtons[i].display();
+                if (levelButtons[i].consumeClick()) {
+                    // Load level i+1
+                    mainMenu = false;
+                    levelSelector = false;
+                    KonQuestGame.loadLevel(i+1);
+                }
+            } else {
+                // Display but grayed out
+                game.fill(100, 100, 100, 150);
+                game.rect(buttonXs[i], buttonYs[i], buttonRadius, buttonRadius);
+                game.fill(255);
+                game.textAlign(PConstants.CENTER, PConstants.CENTER);
+                game.textSize(20);
+                game.text("" + (i+1), buttonXs[i] + buttonRadius/2, buttonYs[i] + buttonRadius/2);
             }
         }
         // Draw text

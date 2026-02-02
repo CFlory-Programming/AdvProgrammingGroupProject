@@ -1,7 +1,11 @@
 //import java.lang.reflect.Array;
 import java.util.*;
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.data.JSONObject;
 
 public class KonQuestGame extends PApplet
 {
@@ -33,6 +37,7 @@ public class KonQuestGame extends PApplet
     public static Mount mount;
 
     public static int score = 0, lives = 3, level = 1, camX = 50, camY = 50, tileSize = 50;
+    public static int maxLevel = 1;
     public static int cameraLeftMargin = 50;
     public static int cameraRightMargin = 50;
     public static int cameraTopMargin = 50;
@@ -51,7 +56,7 @@ public class KonQuestGame extends PApplet
     {
 
         LevelGeneration level1 = new LevelGeneration(tiles, tileSize);
-        level1.readFromFile("data/1.txt");
+        level1.readFromFile("src/data/1.txt");
         tiles = level1.getTiles();
 
         Lizard l;
@@ -64,6 +69,40 @@ public class KonQuestGame extends PApplet
         coins.add(new Coin(300, 80, 1));
         // start the Processing sketch
         PApplet.main("KonQuestGame");
+    }
+
+    public static void loadProgress() {
+        try {
+            String jsonStr = Files.readString(Paths.get("src/data/progress.json"));
+            JSONObject json = JSONObject.parse(jsonStr);
+            String user = System.getProperty("user.name");
+            if (json != null && json.hasKey(user)) {
+                maxLevel = json.getInt(user);
+            } else {
+                maxLevel = 1;
+            }
+            maxLevel = Math.min(maxLevel, 4); // Limit to available levels
+        } catch (Exception e) {
+            maxLevel = 1;
+        }
+    }
+
+    public static void saveProgress(int lvl) {
+        JSONObject json;
+        try {
+            String jsonStr = Files.readString(Paths.get("src/data/progress.json"));
+            json = JSONObject.parse(jsonStr);
+        } catch (Exception e) {
+            json = new JSONObject();
+        }
+        String user = System.getProperty("user.name");
+        json.setInt(user, lvl);
+        String path = "src/data/progress.json";
+        try (FileWriter fw = new FileWriter(path)) {
+            fw.write(json.toString());
+        } catch (Exception e) {
+            System.out.println("Error saving progress: " + e.getMessage());
+        }
     }
 
     public static void setPosition(int x, int y, int width, int height)
@@ -93,7 +132,7 @@ public class KonQuestGame extends PApplet
         level = levelNum;
         // Load the level data from file
         LevelGeneration levelGen = new LevelGeneration(tiles, tileSize);
-        levelGen.readFromFile("data/" + levelNum + ".txt");
+        levelGen.readFromFile("src/data/" + levelNum + ".txt");
         tiles = levelGen.getTiles();
         
         // Initialize enemies and level objects based on file data
@@ -149,6 +188,11 @@ public class KonQuestGame extends PApplet
     public static void nextLevel()
     {
         level++;
+        if (level > 4) { // CHANGE THIS BASED ON NUMBER OF LEVELS
+            level = 1;
+        }
+        maxLevel = Math.max(maxLevel, level);
+        saveProgress(maxLevel);
         loadLevel(level);
         p1.deleteArrows();
     }
@@ -227,6 +271,8 @@ public class KonQuestGame extends PApplet
         // Set initial background color
         sketch = this;
         sketch.windowResizable(true);
+
+        loadProgress();
 
         frameRate(60);
         p1.loadSprites();
