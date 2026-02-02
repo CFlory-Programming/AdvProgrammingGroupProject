@@ -503,7 +503,6 @@ public class KonQuestGame extends PApplet
                 textSize(16);
                 text("Total value: " + totalCoins + " (keys[4]=" + keys[4] + ", interacting=" + interacting + ", interact=" + interact + ")", width - 10, 10); //x is 10px from the right edge, y is 10px from the top
             }
-            p1.canShoot = true;
         }
     }
 
