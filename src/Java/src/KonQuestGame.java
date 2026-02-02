@@ -166,7 +166,7 @@ public class KonQuestGame extends PApplet
             } else if (code == 10) {
                 // Code 10: SpeedBoost
                 // Char equivalent is ':'
-                levelObjects.add(new SpeedBoost(sketch.loadImage("Crate.png"), x, y, 30, 30, 2.0f));
+                levelObjects.add(new SpeedBoost(sketch.loadImage("Crate.png"), x, y, 30, 30, 2f));
             } else if (code == 11) {
                 // Code 11: Bow
                 // Char equivalent is ';'
@@ -193,7 +193,7 @@ public class KonQuestGame extends PApplet
         }
         maxLevel = Math.max(maxLevel, level);
         saveProgress(maxLevel);
-        loadLevel(level);
+        animationPlaying = true;
         p1.deleteArrows();
     }
 
@@ -319,7 +319,7 @@ public class KonQuestGame extends PApplet
             return;
         }
         else if(animationPlaying) {
-            if (p1.dead) {
+            if (animationFrame >= 0) {
                 if (animationFrame < 30) {
                     drawLevel();
 
@@ -334,6 +334,7 @@ public class KonQuestGame extends PApplet
                     }
                 } else if (animationFrame < 45) {
                     // Hold black screen for a moment
+                    loadLevel(level);
                 } else if (animationFrame < 75) {
                     drawLevel();
 ;
@@ -342,7 +343,7 @@ public class KonQuestGame extends PApplet
                     rect(0, 0, width, height);
                 } else {
                     animationPlaying = false;
-                    animationFrame = 0;
+                    animationFrame = -1;
                     p1.dead = false;
                 }
             }
