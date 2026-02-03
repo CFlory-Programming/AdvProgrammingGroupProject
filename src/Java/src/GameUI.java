@@ -83,23 +83,23 @@ public class GameUI {
 
     public void setupUI() {
         // Initialize main menu buttons (positions relative to current window size)
-        int buttonX = (game.width / 2) - 500;
-        int startY = (game.height / 2) - 50;
+        int buttonX = (game.width / 2) - game.width/4;
+        int startY = (game.height / 2) - game.height/10;
         int buttonSpacing = game.height / 7;
 
-        int MAIN_MENU_BUTTON_WIDTH = 200;
-        int MAIN_MENU_BUTTON_HEIGHT = 60;
+        int MAIN_MENU_BUTTON_WIDTH = game.width / 10;
+        int MAIN_MENU_BUTTON_HEIGHT = game.height / 19;
 
         // Level selector buttons (round)
         int selectorY = game.height / 2;
-        int selectorStartX = game.width / 2 - 550;
-        int selectorSpacing = 400;
-        int selectorRadius = 60;
+        int selectorStartX = game.width / 6 + game.width / 54;
+        int selectorSpacing = 2*game.width / 9;
+        int selectorRadius = game.width / 34;
         for (int i = 0; i < 4; i++) {
             int buttonX2 = selectorStartX + i * selectorSpacing;
-            levelButtons[i] = new Button(buttonX2, selectorY, selectorRadius, selectorRadius, "" + (i+1), game.color(80,180,220), game.color(120,220,255));
+            levelButtons[i] = new Button(buttonX2 - selectorRadius/2, selectorY - selectorRadius/2, selectorRadius, selectorRadius, "" + (i+1), game.color(80,180,220), game.color(120,220,255));
             buttonXs[i] = buttonX2;
-            buttonYs[i] = selectorY;
+            buttonYs[i] = selectorY - selectorRadius/2;
         }
         buttonRadius = selectorRadius;
 
@@ -107,21 +107,21 @@ public class GameUI {
     // Play Button: bluish (normal) -> lighter blue (hover)
     int playNormal = game.color(11, 33, 98);
     int playHover = game.color(60, 100, 200);
-    playButton = new Button(buttonX-200, startY-100,
-                MAIN_MENU_BUTTON_WIDTH+100, MAIN_MENU_BUTTON_HEIGHT+20, "PLAY",
+    playButton = new Button(buttonX-MAIN_MENU_BUTTON_WIDTH/2 - game.width/41, startY - MAIN_MENU_BUTTON_HEIGHT/2 - game.height/115,
+                MAIN_MENU_BUTTON_WIDTH+2*game.width/41, MAIN_MENU_BUTTON_HEIGHT+2*game.height/115, "PLAY",
                 playNormal, playHover);
 
     // Options Button: purple/magenta (normal) -> lighter magenta (hover)
     int optionsNormal = game.color(161, 44, 95);
     int optionsHover = game.color(200, 120, 170);
-    optionsButton = new Button(buttonX-150, startY-90 + MAIN_MENU_BUTTON_HEIGHT + buttonSpacing,
+    optionsButton = new Button(buttonX-MAIN_MENU_BUTTON_WIDTH/2, startY + MAIN_MENU_BUTTON_HEIGHT/2 + buttonSpacing,
                    MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "OPTIONS",
                    optionsNormal, optionsHover);
 
     // Exit Button: softer red/burgundy (normal) -> lighter red (hover)
     int exitNormal = game.color(140, 60, 60);
     int exitHover = game.color(190, 110, 110);
-    exitButton = new Button(buttonX-150, startY-90 + (MAIN_MENU_BUTTON_HEIGHT + buttonSpacing) * 2,
+    exitButton = new Button(buttonX-MAIN_MENU_BUTTON_WIDTH/2, startY-MAIN_MENU_BUTTON_HEIGHT/2 + (MAIN_MENU_BUTTON_HEIGHT + buttonSpacing) * 2,
                 MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "EXIT",
                 exitNormal, exitHover);
 
@@ -138,15 +138,15 @@ public class GameUI {
     // Resume button for pause screen
     int resumeNormal = game.color(11, 33, 98);
     int resumeHover = game.color(60, 100, 200);
-    resumeButton = new Button(buttonX-300, startY-100,
-                MAIN_MENU_BUTTON_WIDTH+100, MAIN_MENU_BUTTON_HEIGHT+20, "RESUME",
+    resumeButton = new Button(buttonX-MAIN_MENU_BUTTON_WIDTH/2-game.width/41-game.width/14, startY-MAIN_MENU_BUTTON_HEIGHT/2-game.height/115-game.height/19,
+                MAIN_MENU_BUTTON_WIDTH+2*game.width/41, MAIN_MENU_BUTTON_HEIGHT+2*game.height/115, "RESUME",
                 resumeNormal, resumeHover);
 
     // Main menu button for pause screen
     int mainMenuNormal = game.color(140, 60, 60);
     int mainMenuHover = game.color(190, 110, 110);
-    mainMenuButton = new Button(buttonX-300, startY+100 + MAIN_MENU_BUTTON_HEIGHT + 40,
-                MAIN_MENU_BUTTON_WIDTH+100, MAIN_MENU_BUTTON_HEIGHT+20, "MAIN MENU",
+    mainMenuButton = new Button(buttonX-MAIN_MENU_BUTTON_WIDTH/2-game.width/41-game.width/14, startY+MAIN_MENU_BUTTON_HEIGHT/2-game.height/115+game.height/6,
+                MAIN_MENU_BUTTON_WIDTH+2*game.width/41, MAIN_MENU_BUTTON_HEIGHT+2*game.height/115, "MAIN MENU",
                 mainMenuNormal, mainMenuHover);
     }
 
