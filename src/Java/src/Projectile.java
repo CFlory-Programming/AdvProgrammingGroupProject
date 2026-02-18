@@ -9,14 +9,14 @@ public class Projectile extends AbstractProjectile {
         this.homing = homing;
         this.speed = speed;
         this.target = p1;
-        changeDirection(p1);
+        changeDirection(p1, true);
         super.speedX = (float)(Math.cos(direction) * speed);
         super.speedY = (float)(Math.sin(direction) * speed);
     }
     
     public Projectile(float x, float y, int width, int height, int speed, float direction, boolean homing, Player p1) {
         super(x, y, direction, speed, width, height);
-        changeDirection(p1);
+        changeDirection(p1, true);
         this.speed = speed;
         this.homing = homing;
         this.target = p1;
@@ -26,7 +26,7 @@ public class Projectile extends AbstractProjectile {
     {
         physics();  // Add physics calculation
         if (homing) {
-            changeDirection(target);
+            changeDirection(target, false);
             super.speedX = (float)(Math.cos(direction) * speed);
             super.speedY = (float)(Math.sin(direction) * speed);
         }
@@ -131,12 +131,27 @@ public class Projectile extends AbstractProjectile {
         exists = false;
     }
 
-    public void changeDirection(Player p1) {
+    public void changeDirection(Player p1, boolean forced) {
         float actualPx = (float) (p1.x + p1.width/2 + 0.5*p1.speedX);
         float actualPy = (float) (p1.y + p1.height/2 + 0.5*p1.speedY);
         float actualX = (float) (x + width/2*Math.cos(direction) - height/2*Math.sin(direction));
         float actualY = (float) (y + width/2*Math.sin(direction) + height/2*Math.cos(direction));
-        direction = (float) Math.atan2(((actualPy)-actualY), ((actualPx)-actualX));
+        float targDirection = (float) Math.atan2(((actualPy)-actualY), ((actualPx)-actualX));
+        if (forced) {
+            direction = targDirection;
+        } else {
+            float angleDiff = targDirection - direction;
+            if (angleDiff < -Math.PI) {
+                angleDiff += 2*(float)Math.PI;
+            } else if (angleDiff > Math.PI) {
+                angleDiff -= 2*(float)Math.PI;
+            }
+            if (angleDiff > 0) {
+                direction += Math.min(angleDiff, 0.03);
+            } else {
+                direction += Math.max(angleDiff, -0.03);
+            }
+        }
     }
 
     public void display(int camX, int camY)
