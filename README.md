@@ -3,6 +3,7 @@
 </p>
 
 # 🕹️ Advanced Programming Group Project: KongQuest
+Major group project leveraging complex class hierarchies, OOP principles, and data structures.
 
 ## 🧑‍💻 Project Members
 * Cole Flory: Menu and HUD logic
